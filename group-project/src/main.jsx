@@ -6,12 +6,34 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './index.css'
+import UserDashboard from "./UserDashboard.jsx"
+import Test from "./components/Test.jsx"
+import Error404 from "./components/Error404.jsx"
+import Transactions from "./Transactions.jsx"
+import TransactionDisplayByID from "./components/TransactionDisplayByID.jsx"
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <div>Hello world!</div>,
-  },
+    {
+        path: "/",
+        element: <UserDashboard />,
+        errorElement: <Error404 />
+    },
+    {
+        path: "/test",
+        element: <Test />,
+    },
+    {
+        path: "/transactions",
+        element: <Transactions />,
+        children: [
+            {
+                path: "/transactions/:transactionID",
+                element: <TransactionDisplayByID />,
+            },
+        ]
+    },
+
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
