@@ -11,6 +11,7 @@ import Test from "./components/Test.jsx"
 import Error404 from "./components/Error404.jsx"
 import Transactions from "./Transactions.jsx"
 import TransactionDisplayByID from "./components/TransactionDisplayByID.jsx"
+import TransactionAdd from "./components/TransactionAdd.jsx"
 
 const router = createBrowserRouter([
     {
@@ -32,7 +33,10 @@ const router = createBrowserRouter([
             },
         ]
     },
-
+    {
+        path: "/transactions/add",
+        element: <TransactionAdd />,
+    },
 
 ]);
 
