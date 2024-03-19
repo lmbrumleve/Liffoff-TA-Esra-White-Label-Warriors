@@ -12,6 +12,7 @@ import Error404 from "./components/Error404.jsx"
 import Transactions from "./Transactions.jsx"
 import TransactionDisplayByID from "./components/TransactionDisplayByID.jsx"
 import TransactionAdd from "./components/TransactionAdd.jsx"
+import TransactionSearch from "./components/TransactionSearch.jsx"
 
 const router = createBrowserRouter([
     {
@@ -37,7 +38,10 @@ const router = createBrowserRouter([
         path: "/transactions/add",
         element: <TransactionAdd />,
     },
-
+    {
+        path: "/transactions/search",
+        element: <TransactionSearch />,
+    },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

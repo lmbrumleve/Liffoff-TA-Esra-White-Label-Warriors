@@ -25,7 +25,7 @@ export default function TransactionAdd() {
     }
 
     useEffect(()=>{
-        fetch("http://localhost:8080/transactions").then(res=>res.json()).then((result)=>{setTransactions(result);})
+        fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
     },[])
 
     return(
