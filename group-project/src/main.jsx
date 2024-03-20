@@ -12,13 +12,16 @@ import Error404 from "./components/Error404.jsx"
 import Transactions from "./Transactions.jsx"
 import TransactionDisplayByID from "./components/TransactionDisplayByID.jsx"
 import TransactionAdd from "./components/TransactionAdd.jsx"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavBar from './components/NavBar.jsx';
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <UserDashboard />,
-        errorElement: <Error404 />
+            path: "/",
+            element: <UserDashboard />,
+            errorElement: <Error404 />
     },
+
     {
         path: "/test",
         element: <Test />,
@@ -42,6 +45,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+  <RouterProvider router={router} />
+  <App />
   </React.StrictMode>,
 )
