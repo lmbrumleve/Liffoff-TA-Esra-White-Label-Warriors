@@ -1,18 +1,3 @@
-// import './App.css'
-
-// function App() {
-
-//   return (
-// <div>
-//   <Navbar/>
-// </div>
-//   )
-// }
-
-// export default App;
-
-// Previous Way
-
 import './App.css'
 import { RouterProvider } from 'react-router-dom'
 import NavBar from './components/NavBar';
