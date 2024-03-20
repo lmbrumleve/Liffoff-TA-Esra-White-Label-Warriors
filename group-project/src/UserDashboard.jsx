@@ -1,8 +1,9 @@
 import Header from "./components/Header.jsx"
+import NavBar from "./components/NavBar.jsx";
 
 export default function UserDashboard(props) {return (
     <>
-        <Header />
+        <NavBar/>
         <p>Enter Test Information</p>
         <p>Previous Test Entry: {props.test1}</p>
         <form method = "POST">

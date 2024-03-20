@@ -1,3 +1,23 @@
+// import React from 'react';
+// import ReactDOM from 'react-dom/client';
+// import './index.css';
+// import App from './App';
+
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );
+
+
+
+
+
+
+// Previous way 
+
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
@@ -14,6 +34,8 @@ import TransactionDisplayByID from "./components/TransactionDisplayByID.jsx"
 import TransactionAdd from "./components/TransactionAdd.jsx"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/NavBar.jsx';
+import Profile from './Profile.jsx';
+import MyTrips from './components/MyTrips.jsx';
 
 const router = createBrowserRouter([
     {
@@ -40,12 +62,23 @@ const router = createBrowserRouter([
         path: "/transactions/add",
         element: <TransactionAdd />,
     },
+    {
+        path: "/profile",
+        element: <Profile />,
+        errorElement: <Error404 />
+
+    },
+    {
+        path: "/myTrips",
+        element: <MyTrips />,
+        errorElement: <Error404 />
+
+    },
 
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
   <RouterProvider router={router} />
-  <App />
   </React.StrictMode>,
 )
