@@ -27,12 +27,12 @@ const router = createBrowserRouter([
     {
         path: "/transactions",
         element: <Transactions />,
-        children: [
-            {
-                path: "/transactions/:transactionID",
-                element: <TransactionDisplayByID />,
-            },
-        ]
+//         children: [
+//             {
+//                 path: "/transactions/:transactionID",
+//                 element: <TransactionDisplayByID />,
+//             },
+//         ]
     },
     {
         path: "/transactions/add",

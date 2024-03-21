@@ -29,7 +29,7 @@ export default function TransactionAdd() {
     },[])
 
     return(
-    <>
+    <div>
         <Header/>
 
         <form method="POST">
@@ -56,5 +56,5 @@ export default function TransactionAdd() {
 
             <br /><input type = "submit" onClick={submitTransaction}/>
         </form>
-    </>
+    </div>
 );}
