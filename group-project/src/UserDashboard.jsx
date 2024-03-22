@@ -7,9 +7,9 @@ export default function UserDashboard(props) {return (
         <NavBar/>
         <LiveExchangeRates/>
 
-        <form method = "POST">
+        {/* <form method = "POST">
             <input type = "text" name = "test1"/>
             <input type = "submit" />
-        </form>
+        </form> */}
     </>
 );}
