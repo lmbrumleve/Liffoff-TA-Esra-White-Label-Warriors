@@ -16,6 +16,22 @@ export default function Transactions() {
         return (<div>Fetching transactions from database</div>);
     }
 
+
+    const handleDelete = async (id) =>{
+        try{
+            const response = await fetch("https://localhost:8080/transactions/" + id)
+        }
+        catch(err){
+            console.log(err)
+        }
+
+        fetch("https://localhost:8080/transactions/delete",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(response)
+        }).then(()=>{console.log("Record Deleted.")})
+    }
+
     return(
         <>
             <Header />
@@ -43,6 +59,8 @@ export default function Transactions() {
                     <td>{ans.description}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
+                    <button href="/transactions/update">Update</button>
+                    <button onClick={()=>handleDelete(ans.id)}>Delete</button>
                 </tr>
                 ))}
             </table>

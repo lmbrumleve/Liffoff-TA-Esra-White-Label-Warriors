@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -16,10 +17,21 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
+    @PostMapping("/transactions/delete")
+    public String deleteTransaction(@RequestBody Transaction response){
+        transactionService.deleteTransaction(response);
+        return "Transaction Deleted.";
+    }
+
     @PostMapping("/transactions/add")
     public String addTransaction(@RequestBody Transaction transaction) {
         transactionService.saveTransaction(transaction);
         return "New transaction saved";
+    }
+
+    @GetMapping("/transactions/{id}")
+    public Optional<Transaction> transactionById (@PathVariable int id){
+        return transactionService.transactionById(id);
     }
 
     @GetMapping("/transactions/getAll")

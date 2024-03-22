@@ -7,11 +7,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransactionServiceImpl implements TransactionService{
     @Autowired
     private TransactionRepository transactionRepository;
+
+    @Override
+    public Optional<Transaction> transactionById(int id) {return transactionRepository.findById(id);}
+    @Override
+    public void deleteTransaction(Transaction response) {transactionRepository.delete(response);}
     @Override
     public void saveTransaction(Transaction transaction) {
         transactionRepository.save(transaction);
