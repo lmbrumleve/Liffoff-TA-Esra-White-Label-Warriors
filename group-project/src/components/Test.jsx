@@ -1,4 +1,5 @@
 import Header from "./Header.jsx"
+import NavBar from "./NavBar.jsx";
 import React, { useState } from 'react'
 
 export default function Test() {
@@ -7,6 +8,7 @@ export default function Test() {
 
 return(
     <>
+        <NavBar/>
         <Header />
         <div>This is the Test Component</div>
 
