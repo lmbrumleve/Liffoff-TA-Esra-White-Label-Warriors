@@ -1,5 +1,7 @@
-import { React, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Axios from "axios";
+import Table from 'react-bootstrap/Table'
+import ExchangeRatesTable, { allRates } from './ExchangeRatesTable';
 
 export default function LiveExchangeRates () {
     
@@ -9,73 +11,80 @@ export default function LiveExchangeRates () {
     //   console.log(data);
     // });
 
-    const userDefaultCurrency = "USD";
+    // const userDefaultCurrency = "USD";
 
 //FETCH BASE CURRENCY
-    const [baseCurrency, setBaseCurrency] = useState("");
+//     const [baseCurrency, setBaseCurrency] = useState("");
 
-    const fetchBaseCurrency = () => {
-    Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
-        setBaseCurrency(res.data.base);
-    });
-};
+//     const fetchBaseCurrency = () => {
+//     Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
+//         setBaseCurrency(res.data.base);
+//     });
+// };
 
-  useEffect(() => {
-    fetchBaseCurrency();
-  }, []);
 
-//RATE
-const [exchangeRates, setExchangeRates] = useState("");
+//   useEffect(() => {
+//     fetchBaseCurrency();
+//   }, []);
 
-const fetchExchangeRates = () => {
-    Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
-        setExchangeRates(res.data.rates);
-    });
-};
+// //RATE
+// const [exchangeRates, setExchangeRates] = useState("");
 
-    useEffect(() => {
-        fetchExchangeRates();
-    }, []);
+// const fetchExchangeRates = () => {
+//     Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
+//         setExchangeRates(res.data.rates);
+//     });
+// };
 
+//     useEffect(() => {
+//         fetchExchangeRates();
+//     }, []);
 
 
 //TARGET CURRENCY
-const targetCurrency = Object.keys(exchangeRates)[0];
+// const targetCurrency = Object.keys(exchangeRates)[0];
 
-console.log(targetCurrency);
-console.log(exchangeRates[`${targetCurrency}`]);
+// var targetCurrency = Object.keys(exchangeRates)[0];
 
-const targetExchangeRate = exchangeRates[`${targetCurrency}`];
+// for (let i=0; i<exchangeRates.length; i++) {
+//     targetCurrency = Object.keys(exchangeRates)[i];
+//     console.log(targetCurrency);
+// console.log(exchangeRates[`${targetCurrency}`]);
+// }
 
 
+// const targetExchangeRate = exchangeRates[`${targetCurrency}`];
 
-
-// console.log(Object.keys(baseCurrency));
-
+// console.log(exchangeRates);
+// console.log(baseCurrency);
+// console.log(targetCurrency);
+// console.log(targetExchangeRate);
 // console.log(Object.keys(baseCurrency)[0]);
 // console.log(JSON.stringify(baseCurrency));
-
+// console.log(allRates);
   
     return(
         <>
         <div>
-    <table>
-    <thead>
-     <tr>
-       <th>Currency</th>
-       <th>Rate</th>
-       <th>Change</th>
-     </tr>
-     </thead>
-     
-     <tbody>
-     <tr>
-       <td>{baseCurrency}/{targetCurrency}</td>
-       <td>{targetExchangeRate}</td>
-       <td></td>
-     </tr>
-     </tbody>
-   </table>
+            {/* <ExchangeRatesTable /> */}
+        {/* <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>Currency</th>
+          <th>Rate</th>
+          <th>Change</th>
+          <th>Favorite</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{baseCurrency}/{targetCurrency}</td>
+          <td>{targetExchangeRate}</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </Table> */}
         </div>
         </>
 )};
