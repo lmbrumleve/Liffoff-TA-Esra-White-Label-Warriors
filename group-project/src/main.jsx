@@ -13,6 +13,7 @@ import Transactions from "./Transactions.jsx"
 import TransactionDisplayByID from "./components/TransactionDisplayByID.jsx"
 import TransactionAdd from "./components/TransactionAdd.jsx"
 import TransactionSearch from "./components/TransactionSearch.jsx"
+import TransactionUpdate from "./components/TransactionUpdate.jsx"
 
 const router = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
     {
         path: "/transactions/search",
         element: <TransactionSearch />,
+    },
+    {
+        path: "/transactions/update",
+        element: <TransactionUpdate />,
     },
 ]);
 

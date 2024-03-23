@@ -1,6 +1,8 @@
-import {  Link, Outlet } from "react-router-dom"
+import { useNavigate,Link,Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./components/Header.jsx"
+
+
 export default function Transactions() {
 
     const[transactions, setTransactions] = useState([])
@@ -32,6 +34,12 @@ export default function Transactions() {
         }).then(()=>{console.log("Record Deleted.")})
     }
 
+    let navigate = useNavigate('/transactions/update');
+    const handleUpdate = (id,name,description,amount,currency)=>{
+        let path = '/transactions/update';
+        navigate(path);
+    }
+
     return(
         <>
             <Header />
@@ -59,7 +67,7 @@ export default function Transactions() {
                     <td>{ans.description}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
-                    <button href="/transactions/update">Update</button>
+                    <button onClick={()=>handleUpdate(ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button>
                     <button onClick={()=>handleDelete(ans.id)}>Delete</button>
                 </tr>
                 ))}
