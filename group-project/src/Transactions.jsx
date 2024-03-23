@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react'
 import Header from "./components/Header.jsx"
 
 
-export default function Transactions() {
+export default function Transactions(props) {
 
     const[transactions, setTransactions] = useState([])
     const[isLoading, setIsLoading] = useState(false)
+    const navigate = useNavigate();
 
     useEffect(()=>{
         setIsLoading(true)
@@ -34,10 +35,8 @@ export default function Transactions() {
         }).then(()=>{console.log("Record Deleted.")})
     }
 
-    let navigate = useNavigate('/transactions/update');
-    const handleUpdate = (id,name,description,amount,currency)=>{
-        let path = '/transactions/update';
-        navigate(path);
+    const handleUpdate = (id) =>{
+        navigate('/transactions/update', {state:{transactionId:id}})
     }
 
     return(
@@ -67,7 +66,7 @@ export default function Transactions() {
                     <td>{ans.description}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
-                    <button onClick={()=>handleUpdate(ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button>
+                    <button onClick={()=>handleUpdate(ans.id)}>Update</button>
                     <button onClick={()=>handleDelete(ans.id)}>Delete</button>
                 </tr>
                 ))}
