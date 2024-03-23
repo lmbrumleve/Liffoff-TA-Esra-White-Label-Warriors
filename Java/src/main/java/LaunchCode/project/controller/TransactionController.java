@@ -17,6 +17,11 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
+    @PutMapping("/transactions/update")
+    public String updateTransaction(@RequestBody int id, @RequestBody String name, @RequestBody String description, @RequestBody double amount, @RequestBody String currency){
+        transactionService.updateTransaction(id,name,description,amount,currency);
+        return("Transaction Updated");
+    }
     @PostMapping("/transactions/delete")
     public String deleteTransaction(@RequestBody Transaction response){
         transactionService.deleteTransaction(response);

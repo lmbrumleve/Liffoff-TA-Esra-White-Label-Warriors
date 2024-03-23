@@ -15,6 +15,15 @@ public class TransactionServiceImpl implements TransactionService{
     private TransactionRepository transactionRepository;
 
     @Override
+    public void updateTransaction(int id, String name, String description, double amount, String currency){
+        Transaction update = transactionRepository.findById(id).get();
+        update.setName(name);
+        update.setDescription(description);
+        update.setAmount(amount);
+        update.setCurrency(currency);
+        transactionRepository.save(update);
+    ;}
+    @Override
     public Optional<Transaction> transactionById(int id) {return transactionRepository.findById(id);}
     @Override
     public void deleteTransaction(Transaction response) {transactionRepository.delete(response);}
