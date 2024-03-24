@@ -35,10 +35,11 @@ export default function Transactions(props) {
         }).then(()=>{console.log("Record Deleted.")})
     }
 
-    const handleUpdate = (id) =>{
-        navigate('/transactions/update', {state:{transactionId:id}})
+    const handleUpdate = (id,name,description,amount,currency) =>{
+    //route dom useNavigate with state variable to be used with useLocation in other page
+        navigate('/transactions/update', {state:{transactionId:id,name:name,description:description,amount:amount,currency:currency}})
     }
-
+    //buttons used to find by id through @queryParam & to pass data to update page
     return(
         <>
             <Header />
@@ -66,7 +67,7 @@ export default function Transactions(props) {
                     <td>{ans.description}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
-                    <button onClick={()=>handleUpdate(ans.id)}>Update</button>
+                    <button onClick={()=>handleUpdate(ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button>
                     <button onClick={()=>handleDelete(ans.id)}>Delete</button>
                 </tr>
                 ))}
