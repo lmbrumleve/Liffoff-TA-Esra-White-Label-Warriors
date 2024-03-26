@@ -55,10 +55,11 @@ const router = createBrowserRouter([
         errorElement: <Error404 />
 
     },
-
+    {
         path: "/transactions/search",
         element: <TransactionSearch />,
     },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
