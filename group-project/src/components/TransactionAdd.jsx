@@ -1,5 +1,6 @@
 import Header from "./Header.jsx"
 import React, { useEffect, useState } from 'react'
+import NavBar from "./NavBar.jsx"
 
 export default function TransactionAdd() {
 
@@ -29,7 +30,9 @@ export default function TransactionAdd() {
     },[])
 
     return(
+
     <div>
+        <NavBar />
         <Header/>
 
         <form method="POST">
