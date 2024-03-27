@@ -17,6 +17,7 @@ import NavBar from './components/NavBar.jsx';
 import Profile from './Profile.jsx';
 import MyTrips from './MyTrips.jsx';
 import TransactionSearch from "./components/TransactionSearch.jsx"
+import TimeSeriesGraph from "./components/TimeSeriesGraph.jsx"
 
 const router = createBrowserRouter([
     {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
         path: "/transactions/search",
         element: <TransactionSearch />,
     },
+    {
+      path: "/timeSeriesGraph",
+      element: <TimeSeriesGraph />,
+  }
 
 ]);
 

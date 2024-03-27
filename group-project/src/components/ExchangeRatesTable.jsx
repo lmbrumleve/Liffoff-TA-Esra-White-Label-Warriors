@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Axios from "axios";
 import Table from 'react-bootstrap/Table';
+import { Link } from "react-router-dom";
 
 export default function ExchangeRatesTable () {
     const userDefaultCurrency = "USD";
@@ -180,7 +181,7 @@ console.log(targetRateObj);
             return (
                 <tbody>
                     <tr>
-                    <td>{data.base}/{data.target}</td>
+                    <td><Link to="/timeSeriesGraph">{data.base}/{data.target}</Link></td>
                     <td>{data.rate}</td>
                     <td>{data.rateIncrease}</td>
                     <td></td>
