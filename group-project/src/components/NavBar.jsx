@@ -28,14 +28,15 @@ export default class NavBar extends Component {
             <NavDropdown title="Menu" id="navbarScrollingDropdown">
               <NavDropdown.Item as={Link} to="/profile">My Profile</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/myTrips">My Trips</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/transactions/add">New Transaction</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action5">
                 Log Out
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link  as={Link} to={"/transactions/add"}>
+            {/* <Nav.Link  as={Link} to={"/transactions/add"}>
               Create New Transaction
-            </Nav.Link>
+            </Nav.Link> */}
           </Nav>
           <Form className="d-flex">
             <Form.Control

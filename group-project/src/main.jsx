@@ -15,7 +15,7 @@ import TransactionAdd from "./components/TransactionAdd.jsx"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/NavBar.jsx';
 import Profile from './Profile.jsx';
-import MyTrips from './components/MyTrips.jsx';
+import MyTrips from './MyTrips.jsx';
 import TransactionSearch from "./components/TransactionSearch.jsx"
 
 const router = createBrowserRouter([
@@ -55,10 +55,7 @@ const router = createBrowserRouter([
         errorElement: <Error404 />
 
     },
-<<<<<<< HEAD
 
-=======
->>>>>>> 60e815955d5a6d363f0c6e6aef9581f2cc65f0af
     {
         path: "/transactions/search",
         element: <TransactionSearch />,
