@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 import { Link } from "react-router-dom";
 
 export default function ExchangeRatesTable () {
-    const userDefaultCurrency = "USD";
+    var userDefaultCurrency = "USD";
     const today = new Date();
     // console.log(today);
     var yesterday = new Date();
@@ -163,7 +163,7 @@ console.log(targetRateObj);
     console.log(allRates);
 
 }
-
+console.log(targetExchangeRate)
 
     return(
         <>
@@ -177,7 +177,7 @@ console.log(targetRateObj);
           <th>Favorite</th>
         </tr>
       </thead>
-        {allRates.map((data) =>{
+        {allRates?.map((data) =>{
             return (
                 <tbody>
                     <tr>
@@ -197,3 +197,5 @@ console.log(targetRateObj);
 )};
       
 export var allRates;
+export var userDefaultCurrency;
+// export var targetCurrency;
