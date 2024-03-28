@@ -52,6 +52,10 @@ const router = createBrowserRouter([
         path: "/trips/add",
         element: <TripAdd />,
     },
+    {
+         path: "/trips/search",
+         element: <TripSearch />,
+     },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

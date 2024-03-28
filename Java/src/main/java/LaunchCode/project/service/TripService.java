@@ -1,7 +1,6 @@
 package LaunchCode.project.service;
 
 import LaunchCode.project.models.Trip;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,4 +13,6 @@ public interface TripService {
 
     List<Trip> getTripsByName(String name);
     List<Trip> getTripsByDestination(String destination);
+
+    List<Trip> getTripsByBudget(double budget);
 }

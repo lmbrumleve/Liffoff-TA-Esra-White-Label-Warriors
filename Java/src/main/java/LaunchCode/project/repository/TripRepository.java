@@ -10,8 +10,11 @@ import java.util.List;
 @Repository
 public interface TripRepository extends JpaRepository<Trip, Integer> {
     @Query(value="SELECT * FROM Trip t WHERE t.name like ?1", nativeQuery = true)
-    public List<Trip> getTripsByName(String name);
+    List<Trip> getTripsByName(String name);
 
     @Query(value="SELECT * FROM Trip t WHERE t.destination like ?1", nativeQuery = true)
-    public List<Trip> getTripsByDestination(String destination);
+    List<Trip> getTripsByDestination(String destination);
+
+    @Query(value="SELECT * FROM Trip t WHERE t.budget <= ?1", nativeQuery = true)
+    List<Trip> getTripsByBudget(double budget);
 }

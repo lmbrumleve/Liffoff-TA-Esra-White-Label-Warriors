@@ -16,11 +16,7 @@ public class Trip {
     private String destination;
     private double budget;
 
-    public Trip(String name, String destination, double budget) {
-        this.name = name;
-        this.destination = destination;
-        this.budget = budget;
-    }
+
 
     @Override
     public boolean equals(Object o) {
