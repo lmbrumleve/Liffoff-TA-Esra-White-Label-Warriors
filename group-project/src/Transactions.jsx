@@ -35,6 +35,7 @@ export default function Transactions() {
                     <th>Note</th>
                     <th>Amount</th>
                     <th>Currency</th>
+                    <th>Trip</th>
                 </tr>
 
                 {transactions.map(ans=>(
@@ -44,6 +45,7 @@ export default function Transactions() {
                     <td>{ans.description}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
+                    <td>{ans.getTrip().getName()}</td>
                 </tr>
                 ))}
             </table>

@@ -15,6 +15,7 @@ import TransactionAdd from "./components/TransactionAdd.jsx"
 import TransactionSearch from "./components/TransactionSearch.jsx"
 import Trips from "./Trips.jsx"
 import TripAdd from "./components/TripAdd.jsx"
+import TripSearch from "./components/TripSearch.jsx"
 
 const router = createBrowserRouter([
     {

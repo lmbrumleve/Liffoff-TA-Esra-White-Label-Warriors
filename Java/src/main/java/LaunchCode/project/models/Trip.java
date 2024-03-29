@@ -1,10 +1,9 @@
 package LaunchCode.project.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,7 +15,8 @@ public class Trip {
     private String destination;
     private double budget;
 
-
+    @OneToMany(mappedBy = "trip")
+    private final List<Transaction> transactions = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -33,6 +33,10 @@ public class Trip {
 
     public int getId() {
         return id;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 
     public String getName() {

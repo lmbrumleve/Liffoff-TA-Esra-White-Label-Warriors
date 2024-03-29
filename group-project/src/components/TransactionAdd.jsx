@@ -8,6 +8,8 @@ export default function TransactionAdd() {
     const[amount,setAmount]=useState('')
     const[currency,setCurrency]=useState('')
     const[transactions, setTransactions]=useState([])
+    const[trips, setTrips]=useState([])
+    const[thisTrip, setThisTrip]=useState([])
 
     const submitTransaction=(e)=>{
         e.preventDefault()
@@ -26,6 +28,7 @@ export default function TransactionAdd() {
 
     useEffect(()=>{
         fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
+        fetch("http://localhost:8080/trips/getAll").then(res=>res.json()).then((result)=>{setTrips(result);})
     },[])
 
     return(
@@ -41,6 +44,14 @@ export default function TransactionAdd() {
 
             <label for="amount">Transaction Amount</label><br />
             <input type = "text" name = "amount" id="amount" onChange = {(e)=>setAmount(e.target.value)} /><br />
+
+            <label for="trip">Applies to Trip</label><br />
+            <select id="trip" name="trip" onChange = {e=>setThisTrip(e.target.value)}>
+                <option value="">-</option>
+                {trips.map(t=>(
+                    <option value={t.name}>{t.name}</option>
+                ))}
+            </select><br />
 
             <label for="currency">Currency</label><br />
             <select id="currency" name="currency" onChange = {(e)=>setCurrency(e.target.value)}>

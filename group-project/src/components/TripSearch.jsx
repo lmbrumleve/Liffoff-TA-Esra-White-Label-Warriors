@@ -15,8 +15,10 @@ export default function TripSearch(){
             if (isNaN(q)) {
                 console.log('error')
             } else {
-                fetch(`http://localhost:8080/trips/searchByBudget?amount=${q}`).then(res=>res.json()).then((result)=>{setAns(result);})
+                fetch(`http://localhost:8080/trips/searchByBudget?budget=${q}`).then(res=>res.json()).then((result)=>{setAns(result);})
             }
+        } else if (sel == "destination") {
+            fetch(`http://localhost:8080/trips/searchByDestination?destination=${q}`).then(res=>res.json()).then((result)=>{setAns(result);})
         }
     }
 
@@ -27,6 +29,7 @@ export default function TripSearch(){
         <input type="text" name = {q} onChange = {(e)=>setQ(e.target.value)} />
         <select name = {sel} value={sel} onChange = {(e)=>setSel(e.target.value)}>
             <option value="name">Name of Trip</option>
+            <option value="destination">Destination of Trip</option>
             <option value="budget">Trip Budget</option>
         </select>
 
@@ -44,12 +47,12 @@ export default function TripSearch(){
                 <th>Budget</th>
             </tr>
 
-            {ans.map(a=>(
+            {ans.map(ans1=>(
             <tr>
-                <td>{a.id}</td>
-                <td>{a.name}</td>
-                <td>{a.destination}</td>
-                <td>{a.budget}</td>
+                <td>{ans1.id}</td>
+                <td>{ans1.name}</td>
+                <td>{ans1.destination}</td>
+                <td>{ans1.budget}</td>
             </tr>
             ))}
         </table>
