@@ -15,6 +15,7 @@ import TransactionAdd from "./components/TransactionAdd.jsx"
 import TransactionSearch from "./components/TransactionSearch.jsx"
 import TransactionUpdate from "./components/TransactionUpdate.jsx"
 import TransactionDelete from "./components/TransactionDelete.jsx"
+import TotalTransactionsChart from "./components/TotalTransactionsChart.jsx"
 
 const router = createBrowserRouter([
     {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
     {
         path: "/transactions/delete/:id",
         element: <TransactionDelete />,
+    },
+    {
+        path: "transactions/chart",
+        element: <TotalTransactionsChart />,
     },
 ]);
 
