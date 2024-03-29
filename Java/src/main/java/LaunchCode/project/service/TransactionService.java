@@ -8,13 +8,14 @@ import java.util.Optional;
 
 @Service
 public interface TransactionService {
-    void updateTransaction(int id, String name, String description, double amount, String currency);
+    void updateTransaction(Transaction transaction, int id);
     Optional<Transaction> transactionById(int id);
-    void deleteTransaction(Transaction response);
+    void deleteTransaction(int id);
     void saveTransaction(Transaction transaction);
     List<Transaction> getAllTransactions();
 
     List<Transaction> searchTransactionsByName(String name);
 
     List<Transaction> searchTransactionsByAmount(double amount);
+
 }

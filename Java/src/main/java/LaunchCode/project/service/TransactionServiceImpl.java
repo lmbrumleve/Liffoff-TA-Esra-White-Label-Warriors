@@ -15,18 +15,21 @@ public class TransactionServiceImpl implements TransactionService{
     private TransactionRepository transactionRepository;
 
     @Override
-    public void updateTransaction(int id, String name, String description, double amount, String currency){
-        Transaction update = transactionRepository.findById(id).get();
-        update.setName(name);
-        update.setDescription(description);
-        update.setAmount(amount);
-        update.setCurrency(currency);
-        transactionRepository.save(update);
+    public void updateTransaction(Transaction transaction, int id){
+            Transaction transaction1 = transactionRepository.findById(id).get();
+            transaction1.setName(transaction.getName());
+            transaction1.setDescription((transaction.getDescription()));
+            transaction1.setAmount(transaction.getAmount());
+            transaction1.setCurrency(transaction.getCurrency());
+            transactionRepository.save(transaction1);
     ;}
     @Override
     public Optional<Transaction> transactionById(int id) {return transactionRepository.findById(id);}
     @Override
-    public void deleteTransaction(Transaction response) {transactionRepository.delete(response);}
+    public void deleteTransaction(int id) {
+        Transaction transaction = transactionRepository.findById(id).get();
+        transactionRepository.delete(transaction);
+    }
     @Override
     public void saveTransaction(Transaction transaction) {
         transactionRepository.save(transaction);
@@ -46,4 +49,5 @@ public class TransactionServiceImpl implements TransactionService{
     public List<Transaction> searchTransactionsByAmount(double amount) {
         return transactionRepository.queryByAmount(amount);
     }
+
 }

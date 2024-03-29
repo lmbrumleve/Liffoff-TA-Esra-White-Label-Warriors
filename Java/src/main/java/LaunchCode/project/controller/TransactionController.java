@@ -4,52 +4,53 @@ import LaunchCode.project.models.Transaction;
 import LaunchCode.project.service.TransactionService;
 import jakarta.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+@CrossOrigin//(origins = "http://localhost:5173")
 @Table(name = "transaction")
-//@RequestMapping("/transactions")
+@RequestMapping("/transactions")
 public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    @PutMapping("/transactions/update")
-    public String updateTransaction(@RequestBody int id, @RequestBody String name, @RequestBody String description, @RequestBody double amount, @RequestBody String currency){
-        transactionService.updateTransaction(id,name,description,amount,currency);
-        return("Transaction Updated");
+    @PutMapping("/update/{id}")
+    public String updateTransaction (@RequestBody Transaction transaction, @PathVariable int id){
+        transactionService.updateTransaction(transaction, id);
+        return "Transaction Updated";
     }
-    @PostMapping("/transactions/delete")
-    public String deleteTransaction(@RequestBody Transaction response){
-        transactionService.deleteTransaction(response);
+    @DeleteMapping("/{id}")
+    public String deleteTransaction(@PathVariable int id){
+        transactionService.deleteTransaction(id);
         return "Transaction Deleted.";
     }
 
-    @PostMapping("/transactions/add")
+    @PostMapping("/add")
     public String addTransaction(@RequestBody Transaction transaction) {
         transactionService.saveTransaction(transaction);
         return "New transaction saved";
     }
 
-    @GetMapping("/transactions/{id}")
+    @GetMapping("/{id}")
     public Optional<Transaction> transactionById (@PathVariable int id){
         return transactionService.transactionById(id);
     }
 
-    @GetMapping("/transactions/getAll")
+    @GetMapping("/getAll")
     public List<Transaction> getAllTransactions() {
         return transactionService.getAllTransactions();
     }
 
-    @GetMapping("/transactions/searchByName")
+    @GetMapping("/searchByName")
     public List<Transaction> searchTransactionsByName(@RequestParam String name) {
         return transactionService.searchTransactionsByName(name);
     }
 
-    @GetMapping("/transactions/searchByAmount")
+    @GetMapping("/searchByAmount")
     public List<Transaction> searchTransactionsByAmount(@RequestParam double amount) {
         return transactionService.searchTransactionsByAmount(amount);
     }
