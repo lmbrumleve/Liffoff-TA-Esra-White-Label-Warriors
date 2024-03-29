@@ -1,5 +1,6 @@
 import Header from "./Header.jsx"
 import React, { useEffect, useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 
 export default function TransactionAdd() {
 
@@ -8,6 +9,7 @@ export default function TransactionAdd() {
     const[amount,setAmount]=useState('')
     const[currency,setCurrency]=useState('')
     const[transactions, setTransactions]=useState([])
+    const navigate = useNavigate();
 
     const submitTransaction=(e)=>{
         e.preventDefault()
@@ -21,6 +23,8 @@ export default function TransactionAdd() {
                 }
         ).then(
             ()=>{console.log("New record sent")}
+        ).then(
+            ()=>{navigate("/transactions")}
         )
     }
 

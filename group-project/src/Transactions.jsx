@@ -6,13 +6,17 @@ import Header from "./components/Header.jsx"
 export default function Transactions(props) {
 
     const[transactions, setTransactions] = useState([])
+    const[transaction, setTransaction] = useState({})
     const[isLoading, setIsLoading] = useState(false)
+    const[toDelete, setToDelete] = useState({})
     const navigate = useNavigate();
 
     useEffect(()=>{
-        setIsLoading(true)
-        fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
-        setIsLoading(false)
+            setIsLoading(true)
+            fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
+            setIsLoading(false)
+
+
     },[])
 
     if (isLoading) {
@@ -20,24 +24,16 @@ export default function Transactions(props) {
     }
 
 
-    const handleDelete = async (id) =>{
-        try{
-            const response = await fetch("https://localhost:8080/transactions/" + id)
-        }
-        catch(err){
-            console.log(err)
-        }
-
-        fetch("https://localhost:8080/transactions/delete",{
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(response)
-        }).then(()=>{console.log("Record Deleted.")})
+    const handleDelete = async (e,id) =>{
+        e.preventDefault();
+        console.log(id);
+        navigate('/transactions/delete/' + id);
     }
 
-    const handleUpdate = (id,name,description,amount,currency) =>{
+    const handleUpdate = (e,id,name,description,amount,currency) =>{
+        e.preventDefault();
     //route dom useNavigate with state variable to be used with useLocation in other page
-        navigate('/transactions/update', {state:{transactionId:id,name:name,description:description,amount:amount,currency:currency}})
+        navigate('/transactions/update/' + id, {state:{transactionId:id,name:name,description:description,amount:amount,currency:currency}})
     }
     //buttons used to find by id through @queryParam & to pass data to update page
     return(
@@ -67,8 +63,8 @@ export default function Transactions(props) {
                     <td>{ans.description}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
-                    <button onClick={()=>handleUpdate(ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button>
-                    <button onClick={()=>handleDelete(ans.id)}>Delete</button>
+                    <button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button>
+                    <button onClick={(e)=>handleDelete(e,ans.id)}>Delete</button>
                 </tr>
                 ))}
             </table>

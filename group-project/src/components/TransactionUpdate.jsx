@@ -1,32 +1,56 @@
 import Header from "./Header.jsx"
 import React, { useEffect, useState } from 'react'
-import {useLocation} from 'react-router-dom'
+import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import {useForm} from 'react-hook-form'
 
 export default function transactionUpdate() {
-    // vars used to collect and update values to be passed in PUT request
+
     const location = useLocation();
-    const[name,setName]=useState('')
-    const[description,setDescription]=useState('')
-    const[amount,setAmount]=useState('')
-    const[currency,setCurrency]=useState('')
-    const[id, setId] = useState()
+    const navigate = useNavigate();
+    const data = location.state;
+    const { id } = useParams();
+    console.log(data);
+    const [transaction, setTransaction] = useState({
+        id: "",
+        name: "",
+        description: "",
+        amount: 0,
+        currency: "",
+    });
+
+    useEffect(()=>{
+
+        const fetchTransaction = async ()=>{
+            try{
+               const response = await fetch("http://localhost:8080/transactions/" + id).then(res=>res.json()).then((result)=>{setTransaction(result);})
+            }
+            catch(error){
+                console.log(error);
+            }
+        }
+            fetchTransaction();
+            console.log(transaction);
+    }, []);
 
 
-    //create transaction object to PUT to controller to update
-    const updateTransaction = (e) =>{
-    //create transaction object with updated values after submit button in form is pressed
+
+      const updateTransaction = (e) => {
         e.preventDefault();
-        setId(location.state.transactionId);
-        const transaction = {id,name,description,amount,currency};
-        console.log(JSON.stringify(transaction));
-    //send new object to controller through PUT request to be updated
-        fetch("http://localhost:8080/transactions/update", {
+        fetch("http://localhost:8080/transactions/update/" + id, {
             method: "PUT",
-            headers: {"Content-Type":"application/json"},
+            headers:{"Content-Type":"application/json"},
             body:JSON.stringify(transaction)
-        }).then(()=>{console.log("Transaction Updated")})
-    }
+        }).then((response)=>{
+            navigate('/transactions');
+        }).catch((error)=>{
+            console.log(error);
+        })
+      };
+
+      const handleChange = (e) => {
+        const value = e.target.value;
+        setTransaction({ ...transaction, [e.target.name]: value });
+      };
 
     return(
         <div>
@@ -39,16 +63,16 @@ export default function transactionUpdate() {
             <form method="PUT">
 
                 <label for="name">Transaction Name</label><br />
-                <input type="text" name="name" placeholder="name" placeholder="name" id="name" onChange = {(e)=>location.state.name = (e.target.value)}/><br />
+                <input type="text" name="name" value={transaction.name} id="name" onChange = {(e)=>handleChange(e)}/><br />
 
                 <label for="description">Description</label><br />
-                <input type="text" name="description" placeholder="description" id="description" onChange = {(e)=>setDescription(e.target.value)}/><br />
+                <input type="text" name="description" value={transaction.description} id="description" onChange = {(e)=>handleChange(e)}/><br />
 
                 <label for="amount">Amount</label><br />
-                <input type="text" placeholder="0.00" name="amount" id="amount" onChange = {(e)=>setAmount(e.target.value)}/><br />
+                <input type="text" name="amount" value={transaction.amount} id="amount" onChange = {(e)=>handleChange(e)}/><br />
 
                 <label for="currency">Currency</label><br />
-                <select id="currency" name="currency" placeholder="currency" onChange = {(e)=>setCurrency(e.target.value)}>
+                <select id="currency" name="currency" value={transaction.currency} onChange = {(e)=>handleChange(e)}>
                   <option value="">-</option>
                   <option value="USD">US Dollar</option>
                   <option value="MXN">Mexican Peso</option>
