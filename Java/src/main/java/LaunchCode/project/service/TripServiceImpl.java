@@ -36,4 +36,9 @@ public class TripServiceImpl implements TripService {
     public List<Trip> getTripsByBudget(double budget) {
         return tripRepository.getTripsByBudget(budget);
     };
+
+    @Override
+    public Trip getTripByID(int ID) {
+        return tripRepository.findById(ID).get();
+    }
 }

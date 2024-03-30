@@ -15,4 +15,6 @@ public interface TripService {
     List<Trip> getTripsByDestination(String destination);
 
     List<Trip> getTripsByBudget(double budget);
+
+    Trip getTripByID(int ID);
 }

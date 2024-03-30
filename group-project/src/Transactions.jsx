@@ -45,7 +45,7 @@ export default function Transactions() {
                     <td>{ans.description}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
-                    <td>{ans.getTrip().getName()}</td>
+                    <td>{ans.trip.id}</td>
                 </tr>
                 ))}
             </table>

@@ -9,11 +9,17 @@ export default function TransactionAdd() {
     const[currency,setCurrency]=useState('')
     const[transactions, setTransactions]=useState([])
     const[trips, setTrips]=useState([])
-    const[thisTrip, setThisTrip]=useState([])
+    const[tripID, setTripID]=useState([])
+    const[trip, setTrip]=useState([])
 
     const submitTransaction=(e)=>{
         e.preventDefault()
-        const transaction = {name, description, amount, currency}
+
+        fetch(`http://localhost:8080/trips/searchByID?ID=${tripID}`).then(res=>res.json()).then(result=>{
+            setTrip(result);
+            console.log(tripID);
+        })
+        const transaction = {name, description, currency, amount, trip}
         console.log(JSON.stringify(transaction))
 
         fetch("http://localhost:8080/transactions/add", {
@@ -46,10 +52,10 @@ export default function TransactionAdd() {
             <input type = "text" name = "amount" id="amount" onChange = {(e)=>setAmount(e.target.value)} /><br />
 
             <label for="trip">Applies to Trip</label><br />
-            <select id="trip" name="trip" onChange = {e=>setThisTrip(e.target.value)}>
+            <select id="trip" name="trip" onChange = {e=>setTripID(e.target.value)}>
                 <option value="">-</option>
                 {trips.map(t=>(
-                    <option value={t.name}>{t.name}</option>
+                    <option value={t.id}>{t.name}</option>
                 ))}
             </select><br />
 

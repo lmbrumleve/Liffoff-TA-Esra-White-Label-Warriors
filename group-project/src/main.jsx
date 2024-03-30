@@ -16,6 +16,7 @@ import TransactionSearch from "./components/TransactionSearch.jsx"
 import Trips from "./Trips.jsx"
 import TripAdd from "./components/TripAdd.jsx"
 import TripSearch from "./components/TripSearch.jsx"
+import TripByID from "./components/TripByID.jsx"
 
 const router = createBrowserRouter([
     {
@@ -57,6 +58,11 @@ const router = createBrowserRouter([
          path: "/trips/search",
          element: <TripSearch />,
      },
+     {
+         path: "/trips/ID/:ID",
+         element: <TripByID />,
+     },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -44,4 +44,13 @@ public class TripController {
         return tripService.getTripsByBudget(budget);
     }
 
+    @GetMapping("/trips/searchByID")
+    public Trip queryByID(@RequestParam int ID) {
+        return tripService.getTripByID(ID);
+    }
+
+    @GetMapping("/trips/ID/{id}")
+    public Trip queryByID2(@PathVariable int id) {
+        return tripService.getTripByID(id);
+    }
 }

@@ -1,5 +1,6 @@
 package LaunchCode.project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -15,8 +16,9 @@ public class Trip {
     private String destination;
     private double budget;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "trip")
-    private final List<Transaction> transactions = new ArrayList<>();
+    private List<Transaction> transactions = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

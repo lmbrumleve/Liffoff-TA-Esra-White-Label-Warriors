@@ -28,10 +28,11 @@ export default function Trips() {
 
             {trips.map(ans=>(
             <tr>
-                <td>{ans.id}</td>
+                <td><Link to={`/trips/ID/${ans.id}`}>{ans.id}</Link></td>
                 <td>{ans.name}</td>
                 <td>{ans.destination}</td>
                 <td>{ans.budget}</td>
+                <td><Link to={`/trips/ID/${ans.id}`}>See Trip Transactions</Link></td>
             </tr>
             ))}
 
