@@ -28,6 +28,7 @@ export default class NavBar extends Component {
             <NavDropdown title="Menu" id="navbarScrollingDropdown">
               <NavDropdown.Item as={Link} to="/profile">My Profile</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/myTrips">My Trips</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/transactions">Transactions</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/transactions/add">New Transaction</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action5">

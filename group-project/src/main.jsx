@@ -61,6 +61,7 @@ const router = createBrowserRouter([
         path: "/transactions/search",
         element: <TransactionSearch />,
     },
+    
     {
       path: "/timeSeriesGraph",
       element: <TimeSeriesGraph />,
