@@ -38,12 +38,18 @@ export default function TimeSeriesGraph() {
 //DEFINE USER DEFAULT CURRENCY AND TARGET CURRENCY
     const userDefaultCurrency = "USD";
     const targetCurrency = "AUD";
+    const firstDate = "2024-01-01";
+
+    let dateId;
+    let rate;
+    let dateArr = [];
+    let rateArr = [];
 
 //FETCH TIME SERIES RATES:
   const [timeSeriesRates, setTimeSeriesRates] = useState("");
 
   const fetchTimeSeriesRates = () => {
-      Axios.get(`https://api.frankfurter.app/2024-01-01..?from=${userDefaultCurrency}&to=${targetCurrency}`).then((res) => {
+      Axios.get(`https://api.frankfurter.app/${firstDate}..?from=${userDefaultCurrency}&to=${targetCurrency}`).then((res) => {
           setTimeSeriesRates(res.data.rates);
       });
   };
@@ -56,11 +62,8 @@ export default function TimeSeriesGraph() {
 const [chartData, setChartData] = useState({datasets: [],});
 
 const chart = () => {
-    let dateId;
-    let rate;
-    let dateArr = [];
-    let rateArr = [];
-    for (let i=0; i<Object.keys(timeSeriesRates).length - 1; i++) {
+
+    for (let i=0; i<Object.keys(timeSeriesRates).length; i++) {
       // console.log(Object.keys(timeSeriesRates)[i]);
       dateId = Object.keys(timeSeriesRates)[i] //access all of the dates
       // console.log(dateId);
@@ -85,7 +88,7 @@ const chart = () => {
         labels: dateArr,
         datasets: [
             {
-                label: `${userDefaultCurrency}/${targetCurrency}`,
+                label: "Foreign Exchange Rate",
                 data: rateArr, 
                 fill: true,
                 backgroundColor: [
@@ -126,17 +129,17 @@ const options = {
             }
     }
 } 
-
+ 
 useEffect(() => {
-    chart()
+    chart()  
 }, [])
-
-
+ 
 return(
     <>
         <NavBar/>
 
-        <h1>Chart.js Practice</h1>
+        <h1>{userDefaultCurrency}/{targetCurrency} </h1>
+        <h2> </h2>
         <div style = {
             {height: '300px', 
             width: '600px' }
