@@ -8,6 +8,7 @@ import {
     LineElement,
     TimeScale, //x-axis
     LinearScale, //y-axis
+    CategoryScale,
     PointElement, 
     Legend, 
     Tooltip,
@@ -23,6 +24,7 @@ ChartJS.register(
     LineElement,
     TimeScale, //x-axis
     LinearScale, //y-axis
+    CategoryScale,
     PointElement, 
     Legend,
     Tooltip,
@@ -45,90 +47,40 @@ export default function TimeSeriesGraph() {
           setTimeSeriesRates(res.data.rates);
       });
   };
+  console.log(timeSeriesRates);
   
       useEffect(() => {
           fetchTimeSeriesRates();
       }, []);
 
-    //   console.log(timeSeriesRates);
-
-//TRANSFORM TIMESERIESRATES OBJECT INTO USEABLE FORMAT {dateId: 'yyy-mm-dd', rate: 1.4738...}
-// var timeSeriesArray = [];
-// let dateId;
-// // let rate;
-
-// for (let i=0; i<Object.keys(timeSeriesRates).length; i++) {
-//     // console.log(Object.keys(timeSeriesRates)[i]);
-//     dateId = Object.keys(timeSeriesRates) //access all of the dates
-//     // console.log(dateId[i].toString())
-//     // console.log(timeSeriesRates[dateId[i].toString()][targetCurrency.toString()])
-//     // rate = timeSeriesRates[dateId[i].toString()][targetCurrency.toString()]
-//     // console.log(rate)
-
-//     let timeSeriesObj = {
-//             dateId: dateId[i], 
-//             rate: timeSeriesRates[dateId[i].toString()][targetCurrency.toString()],
-//             targetCurrency: targetCurrency
-//     }
-
-//     // console.log(timeSeriesObj);
-
-//     timeSeriesArray.push(timeSeriesObj);
-//     // console.log(timeSeriesArray);
-
-// }
-
 const [chartData, setChartData] = useState({datasets: [],});
-// const [employeeSalary, setEmployeeSalary] = useState([]);
-// const [employeeAge, setEmployeeAge] = useState([]);
-var timeSeriesArray = [];
-let dateId;
-let r;
-let d;
-let rateArr = [];
-let dateArr = [];
 
 const chart = () => {
-    Axios.get(`https://api.frankfurter.app/2024-01-01..?from=${userDefaultCurrency}&to=${targetCurrency}`)
-    .then(res => {
-        // console.log(res.data.rates)
-            for (let i=0; i<Object.keys(res.data.rates).length; i++) {
-                // console.log(Object.keys(timeSeriesRates)[i]);
-                dateId = Object.keys(res.data.rates) //access all of the dates
-                // console.log(dateId[i].toString())
-                // console.log(timeSeriesRates[dateId[i].toString()][targetCurrency.toString()])
-                // rate = timeSeriesRates[dateId[i].toString()][targetCurrency.toString()]
-                // console.log(rate)
-                let timeSeriesObj = {
-                    dateId: dateId[i], 
-                    rate: timeSeriesRates[dateId[i].toString()][targetCurrency.toString()],
-                    targetCurrency: targetCurrency
-            }
-            timeSeriesArray.push(timeSeriesObj);
-    // console.log(timeSeriesArray[0]);
-    for (let i=0; i<timeSeriesArray.length; i++) {
-        // console.log(timeSeriesArray[i].rate)
-         r = timeSeriesArray[i].rate
-        // console.log(r)
-        rateArr.push(r);
-        console.log(rateArr);
-    }
+    let dateId;
+    let rate;
+    let dateArr = [];
+    let rateArr = [];
+    for (let i=0; i<Object.keys(timeSeriesRates).length - 1; i++) {
+      // console.log(Object.keys(timeSeriesRates)[i]);
+      dateId = Object.keys(timeSeriesRates)[i] //access all of the dates
+      // console.log(dateId);
+      dateArr.push(dateId);
+      // console.log(timeSeriesRates[dateId][targetCurrency.toString()])
+      rate = timeSeriesRates[dateId][targetCurrency.toString()]
+      console.log(rate)
+      rateArr.push(rate);
+  //     let timeSeriesObj = {
+  //         dateId: dateId[i], 
+  //         rate: timeSeriesRates[dateId[i].toString()][targetCurrency.toString()],
+  //         targetCurrency: targetCurrency
+  // }
+  // setTimeSeriesArray(timeSeriesArray.push(timeSeriesObj))
 
-    //GET DATES ARRAY
-    for (let i=0; i<timeSeriesArray.length; i++) {
-        // console.log(timeSeriesArray[i].dateId);
-        // d = timeSeriesArray[i].dateId;
-        // console.log(d);
-        if(timeSeriesArray[i].dateId)
-        dateArr.push(timeSeriesArray[i].dateId);
-        // console.log(dateArr);
     }
+      console.log(dateArr);
+      console.log(rateArr);
 
-        }
-})
-    .catch(err => {
-        // console.log(err)
-    })
+
     setChartData({
         labels: dateArr,
         datasets: [
@@ -180,34 +132,6 @@ useEffect(() => {
 }, [])
 
 
-
-//CHART.JS SETUP
-    // const data = {
-    //     labels: ['Mon', 'Tues', 'Wed'],
-    //     datasets: [
-    //         {
-    //             labels: 'Sales of the Week',
-    //             data: [6, 3, 9],
-    //             backgroundColor: 'aqua',
-    //             borderColor: 'black',
-    //             pointBorderColor: 'aqua',
-    //             tension: 0.4
-    //         }
-    //     ]
-    // }
-
-    // const options = {
-    //     plugins: {
-    //         legend: true
-    //     },
-    //     scales: {
-    //         y: {
-    //             // min: 3,
-    //             // max: 6
-    //         }
-    //     }
-    // }
-
 return(
     <>
         <NavBar/>
@@ -222,23 +146,6 @@ return(
             options = {options}
             ></Line>
         </div>
-
-{/* FIRST EXAMPLE CHART */}
-        {/* <div>
-        <h1>Chart JS Experimenting</h1>
-        <div style= {
-            {
-                width: '600px',
-                height: '300px'
-            }
-        }
-        >
-            <Line 
-            data = {data}
-            options = {options}
-            ></Line>
-        </div> */}
-        {/* </div> */}
     </>
 );}
 
