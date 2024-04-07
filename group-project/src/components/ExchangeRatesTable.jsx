@@ -2,42 +2,20 @@ import { useState, useEffect } from 'react'
 import Axios from "axios";
 import Table from 'react-bootstrap/Table';
 import { Link } from "react-router-dom";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Checkbox from "@mui/material/Checkbox";
 
 export default function ExchangeRatesTable () {
-    var userDefaultCurrency = "USD";
+  const [ userDefaultCurrency, setUserDefaultCurrency ] = useState("USD");
+  // const [ targetCurrency, setUserTargetCurrency ] = useState("AUD");
+    // var userDefaultCurrency = "USD";
     const today = new Date();
     // console.log(today);
     var yesterday = new Date();
     yesterday.setDate(today.getDate() - 1);
     // console.log(yesterday);
-
-
-    //FETCH AMOUNT
-    // const [amount, setAmount] = useState("");
-
-    // const fetchAmount = () => {
-    // Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
-    //     setBaseCurrency(res.data.amount);
-    //     });
-    // };
-
-    // useEffect(() => {
-    // fetchAmount();
-    // }, []);
-
-  //FETCH BASE CURRENCY:
-  // const [baseCurrency, setBaseCurrency] = useState("");
-
-  // const fetchBaseCurrency = () => {
-  // Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
-  //       setBaseCurrency(res.data.base);
-  //       });
-  //   };
-
-  //   useEffect(() => {
-  //   fetchBaseCurrency();
-  //   }, []);
-
 
   //FETCH DATE:
 
@@ -52,10 +30,6 @@ export default function ExchangeRatesTable () {
     useEffect(() => {
     fetchDate();
     }, []);
-
-    // console.log(amount);
-    // console.log(baseCurrency);
-    // console.log(date);
 
   //FETCH RATES:
   const [exchangeRates, setExchangeRates] = useState("");
@@ -165,6 +139,15 @@ console.log(targetRateObj);
 }
 console.log(targetExchangeRate)
 
+const [favorites, setFavorites ] = useState([]);
+
+//Handle Click for Favorite Buttons
+const handleClick = () => {
+  console.log("Favorite button was clicked!");
+  // favCurrency.push({data.base}/{data.target})
+  
+}
+
     return(
         <>
         <div>
@@ -174,17 +157,27 @@ console.log(targetExchangeRate)
           <th>Currency</th>
           <th>Rate</th>
           <th>Change</th>
-          <th>Favorite</th>
-        </tr>
+        </tr> 
       </thead>
         {allRates?.map((data) =>{
             return (
                 <tbody>
                     <tr>
-                    <td><Link to="/timeSeriesGraph">{data.base}/{data.target}</Link></td>
+                    <td>
+                                         
+                      <FormControlLabel
+                      control = {
+                        <Checkbox
+                          icon = {<FavoriteBorderIcon />}
+                          checkedIcon = {<FavoriteIcon />}
+                          onClick = {handleClick}
+                        />
+                      }
+                      // label = {data.target}
+                      />
+                      <Link to="/timeSeriesGraph">{data.base}/{data.target}</Link></td>
                     <td>{data.rate}</td>
                     <td>{data.rateIncrease}</td>
-                    <td></td>
                     </tr>
                 </tbody>
             )

@@ -30,7 +30,7 @@ ChartJS.register(
     Tooltip,
     Title,
     Filler,
-    ArcElement
+    ArcElement 
 )
 
 export default function TimeSeriesGraph() {
@@ -38,12 +38,29 @@ export default function TimeSeriesGraph() {
 //DEFINE USER DEFAULT CURRENCY AND TARGET CURRENCY
     const userDefaultCurrency = "USD";
     const targetCurrency = "AUD";
-    const firstDate = "2024-01-01";
+    const firstDate = "2024-01-01"; 
 
     let dateId;
-    let rate;
+    let rate;   
     let dateArr = [];
     let rateArr = [];
+
+//FETCH TODAY'S RATE:
+const [latestRate, setLatestRate] = useState("");
+
+const fetchLatestRate = () => {
+    Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}&to=${targetCurrency}`).then((res) => {
+        setLatestRate(res.data.rates);
+    });
+};
+
+    useEffect(() => {
+        fetchLatestRate();
+    }, []);
+
+    // console.log(latestRate[`${targetCurrency}`]);
+const todayRate = latestRate[`${targetCurrency}`];
+console.log(todayRate)
 
 //FETCH TIME SERIES RATES:
   const [timeSeriesRates, setTimeSeriesRates] = useState("");
@@ -53,7 +70,7 @@ export default function TimeSeriesGraph() {
           setTimeSeriesRates(res.data.rates);
       });
   };
-  console.log(timeSeriesRates);
+//   console.log(timeSeriesRates);
   
       useEffect(() => {
           fetchTimeSeriesRates();
@@ -84,7 +101,7 @@ const chart = () => {
       console.log(rateArr);
 
 
-    setChartData({
+    setChartData({ 
         labels: dateArr,
         datasets: [
             {
@@ -139,8 +156,8 @@ return(
         <NavBar/>
 
         <h1>{userDefaultCurrency}/{targetCurrency} </h1>
-        <h2> </h2>
-        <div style = {
+        <h2>{todayRate} </h2>
+        <div style = { 
             {height: '300px', 
             width: '600px' }
             }>
