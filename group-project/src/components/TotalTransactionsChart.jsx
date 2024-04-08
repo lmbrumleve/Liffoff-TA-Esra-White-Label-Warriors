@@ -6,13 +6,39 @@ import {Doughnut} from 'react-chartjs-2'
 export default function TotalTransactionsChart(){
 
     const [transactions, setTransactions] = useState([]);
+    const [rmb, setRMB] = useState();
 
     useEffect(()=>{
-            fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
-            const sortTransactions = (transactions)=>{
-
+        const fetchTransactions = async ()=>{
+            try{
+                await fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
             }
-    })
+            catch(errors){
+                console.log(errors);
+            }
+        }
+
+            fetchTransactions();
+            console.log(transactions);
+
+            const reduceRMB = transactions.reduce((acc,nextRMB)=>
+            {
+                if(nextRMB.currency==="RMB"){return acc + nextRMB.amount}
+                return acc;
+            },0)
+            console.log(reduceRMB);
+            setRMB({currency: 'RMB', amount: reduceRMB});
+    },[])
+
+        console.log(rmb);
+//         const reduceRMB = transactions.reduce((acc,nextRMB)=>
+//         {
+//             if(nextRMB.currency==="RMB"){return acc + nextRMB.amount}
+//             return acc;
+//         },0)
+//         console.log(reduceRMB);
+//         setRMB("RMB", {reduceRMB});
+
     return(
     <>
     <h2>hello</h2>
