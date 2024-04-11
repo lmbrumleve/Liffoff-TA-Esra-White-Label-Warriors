@@ -1,6 +1,7 @@
 import {  Link, Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./components/Header.jsx"
+import NavBar from "./components/NavBar.jsx"
 
 export default function Transactions() {
 
@@ -19,6 +20,7 @@ export default function Transactions() {
 
     return(
         <>
+            <NavBar />
             <Header />
 
             <br/>
