@@ -54,7 +54,7 @@ export default function TimeSeriesGraph() {
 const [latestRate, setLatestRate] = useState("");
 
 const fetchLatestRate = async () => {
-   await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}&to=${targetCurrency}`).then((res) => {
+   await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
         setLatestRate(res.data.rates);
     });
 };
@@ -63,7 +63,10 @@ const fetchLatestRate = async () => {
         fetchLatestRate();
     }, []);
 
+    console.log(latestRate)
+
 const todayRate = latestRate[`${targetCurrency}`];
+// console.log(todayRate)
 
 
 //FETCH TIME SERIES RATES:

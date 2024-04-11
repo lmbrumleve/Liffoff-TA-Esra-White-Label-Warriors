@@ -34,8 +34,8 @@ export default function ExchangeRatesTable () {
   //FETCH RATES:
   const [exchangeRates, setExchangeRates] = useState("");
 
-  const fetchExchangeRates = () => {
-      Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
+  const fetchExchangeRates = async () => {
+      await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
           setExchangeRates(res.data.rates);
       });
   };
@@ -44,7 +44,7 @@ export default function ExchangeRatesTable () {
           fetchExchangeRates();
       }, []);
   
-// console.log(exchangeRates);
+console.log(exchangeRates);
 
 //DETERMINE CHANGE OF RATE
 
@@ -65,8 +65,8 @@ export default function ExchangeRatesTable () {
 
   const [yesterdayExchangeRates, setYesterdayExchangeRates] = useState("");
 
-  const fetchYesterdayExchangeRates = () => {
-      Axios.get(`https://api.frankfurter.app/${year.toString()}-${yesterdayMonth.toString()}-${yesterdayDate.toString()}?from=${userDefaultCurrency}`).then((res) => {
+  const fetchYesterdayExchangeRates = async () => {
+      await Axios.get(`https://api.frankfurter.app/${year.toString()}-${yesterdayMonth.toString()}-${yesterdayDate.toString()}?from=${userDefaultCurrency}`).then((res) => {
           setYesterdayExchangeRates(res.data.rates);
       });
   };
@@ -91,8 +91,8 @@ export default function ExchangeRatesTable () {
   for(let i=0; i<Object.keys(exchangeRates).length; i++) {
   targetCurrency = Object.keys(exchangeRates)[i];
   targetExchangeRate = exchangeRates[`${targetCurrency}`];
-  console.log(targetCurrency);
-  console.log(targetExchangeRate)
+  // console.log(targetCurrency);
+  // console.log(targetExchangeRate)
 
   targetRateObj =
   {
@@ -103,12 +103,12 @@ export default function ExchangeRatesTable () {
     rate: `${targetExchangeRate}`,
 }
 
-console.log(targetRateObj);
+// console.log(targetRateObj);
 
 yesterdayTargetCurrency = Object.keys(yesterdayExchangeRates)[i];
 yesterdayTargetExchangeRate = yesterdayExchangeRates[`${yesterdayTargetCurrency}`];
-console.log(yesterdayTargetCurrency);
-console.log(yesterdayTargetExchangeRate);
+// console.log(yesterdayTargetCurrency);
+// console.log(yesterdayTargetExchangeRate);
 
 yesterdayTargetRateObj =
 {
@@ -119,25 +119,25 @@ yesterdayTargetRateObj =
   rate: `${yesterdayTargetExchangeRate}`
 }
 
-console.log(yesterdayTargetRateObj);
+// console.log(yesterdayTargetRateObj);
 
 if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
   targetRateObj.rateIncrease = "🔺";
-  console.log(targetRateObj.rateIncrease);
-  console.log(`${userDefaultCurrency}/${targetCurrency} the rate went up`);
+  // console.log(targetRateObj.rateIncrease);
+  // console.log(`${userDefaultCurrency}/${targetCurrency} the rate went up`);
 } else {
   targetRateObj.rateIncrease = "🔻";
-  console.log(targetRateObj.rateIncrease);
-  console.log(`${userDefaultCurrency}/${targetCurrency} the rate went down`);
+  // console.log(targetRateObj.rateIncrease);
+  // console.log(`${userDefaultCurrency}/${targetCurrency} the rate went down`);
 }
-console.log(targetRateObj);
+// console.log(targetRateObj);
 
     allRates.push(targetRateObj);
     JSON.stringify(allRates);
-    console.log(allRates);
+    // console.log(allRates);
 
 }
-console.log(targetExchangeRate)
+// console.log(allRates)
 
 const [favorites, setFavorites ] = useState([]);
 
