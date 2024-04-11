@@ -63,7 +63,7 @@ const router = createBrowserRouter([
     },
     
     {
-      path: "/timeSeriesGraph",
+      path: "/timeSeriesGraph/:userDefaultCurrency/:targetCurrency",
       element: <TimeSeriesGraph />,
   }
 

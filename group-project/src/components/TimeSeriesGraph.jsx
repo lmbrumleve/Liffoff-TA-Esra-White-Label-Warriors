@@ -18,6 +18,7 @@ import {
 } from 'chart.js';
 import { userDefaultCurrency } from './ExchangeRatesTable.jsx';
 import 'chartjs-adapter-date-fns';
+import { useParams } from "react-router-dom";
 
 
 ChartJS.register(
@@ -31,25 +32,29 @@ ChartJS.register(
     Title,
     Filler,
     ArcElement 
-)
+) 
 
 export default function TimeSeriesGraph() {
 
 //DEFINE USER DEFAULT CURRENCY AND TARGET CURRENCY
-    const userDefaultCurrency = "USD";
-    const targetCurrency = "AUD";
+
+    const routeParams = useParams();
+    console.log(routeParams);
+
+    const userDefaultCurrency = routeParams.userDefaultCurrency;
+    const targetCurrency = routeParams.targetCurrency;
     const firstDate = "2024-01-01"; 
 
     let dateId;
     let rate;   
-    let dateArr = [];
-    let rateArr = [];
+    let dates = [];
+    let rates = [];
 
 //FETCH TODAY'S RATE:
 const [latestRate, setLatestRate] = useState("");
 
-const fetchLatestRate = () => {
-    Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}&to=${targetCurrency}`).then((res) => {
+const fetchLatestRate = async () => {
+   await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}&to=${targetCurrency}`).then((res) => {
         setLatestRate(res.data.rates);
     });
 };
@@ -58,25 +63,25 @@ const fetchLatestRate = () => {
         fetchLatestRate();
     }, []);
 
-    // console.log(latestRate[`${targetCurrency}`]);
 const todayRate = latestRate[`${targetCurrency}`];
-console.log(todayRate)
+
 
 //FETCH TIME SERIES RATES:
   const [timeSeriesRates, setTimeSeriesRates] = useState("");
 
-  const fetchTimeSeriesRates = () => {
-      Axios.get(`https://api.frankfurter.app/${firstDate}..?from=${userDefaultCurrency}&to=${targetCurrency}`).then((res) => {
+  const fetchTimeSeriesRates = async () => {
+      await Axios.get(`https://api.frankfurter.app/${firstDate}..?from=${userDefaultCurrency}&to=${targetCurrency}`).then((res) => {
           setTimeSeriesRates(res.data.rates);
       });
   };
-//   console.log(timeSeriesRates);
-  
-      useEffect(() => {
+   
+      useEffect(() => { 
           fetchTimeSeriesRates();
       }, []);
 
 const [chartData, setChartData] = useState({datasets: [],});
+const [dateArr, setDateArr] = useState([]);
+const [rateArr, setRateArr] = useState([]);
 
 const chart = () => {
 
@@ -84,21 +89,18 @@ const chart = () => {
       // console.log(Object.keys(timeSeriesRates)[i]);
       dateId = Object.keys(timeSeriesRates)[i] //access all of the dates
       // console.log(dateId);
-      dateArr.push(dateId);
+      dates.push(dateId);
+      setDateArr(dates);
       // console.log(timeSeriesRates[dateId][targetCurrency.toString()])
       rate = timeSeriesRates[dateId][targetCurrency.toString()]
-      console.log(rate)
-      rateArr.push(rate);
-  //     let timeSeriesObj = {
-  //         dateId: dateId[i], 
-  //         rate: timeSeriesRates[dateId[i].toString()][targetCurrency.toString()],
-  //         targetCurrency: targetCurrency
-  // }
-  // setTimeSeriesArray(timeSeriesArray.push(timeSeriesObj))
+      rates.push(rate);
+    //   console.log(rates)
+      setRateArr(rates);
+
 
     }
-      console.log(dateArr);
-      console.log(rateArr);
+    //   console.log(dateArr);
+    //   console.log(rateArr);
 
 
     setChartData({ 
@@ -133,7 +135,7 @@ const options = {
         //         }
         //     }
         // },
-
+ 
         y: {
                 ticks: {
                     autoSkip: true,
@@ -149,8 +151,8 @@ const options = {
  
 useEffect(() => {
     chart()  
-}, [])
- 
+})
+  
 return(
     <>
         <NavBar/>

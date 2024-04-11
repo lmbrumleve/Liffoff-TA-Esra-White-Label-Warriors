@@ -175,7 +175,7 @@ const handleClick = () => {
                       }
                       // label = {data.target}
                       />
-                      <Link to="/timeSeriesGraph">{data.base}/{data.target}</Link></td>
+                      <Link to={`/timeSeriesGraph/${userDefaultCurrency}/${data.target}`}>{data.base}/{data.target}</Link></td>
                     <td>{data.rate}</td>
                     <td>{data.rateIncrease}</td>
                     </tr>
