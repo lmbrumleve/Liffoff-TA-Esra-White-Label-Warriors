@@ -24,12 +24,10 @@ export default function TotalTransactionsChart(){
                 console.log(errors);
             }
         }
-
             fetchTransactions();
             //console.log(transactions);
-    },[transactions.name, transactions.description,transactions.amount,transactions.currency])
 
-
+            let tempArr = [];
             //Sum of all USD
             const reduceUSD = transactions.reduce((acc,nextUSD)=>
             {
@@ -37,7 +35,7 @@ export default function TotalTransactionsChart(){
                 return acc;
             },0)
             //console.log(reduceUSD);
-            totalTransactions.push({currency: 'USD', amount: reduceUSD});
+            tempArr.push({currency: 'USD', amount: reduceUSD});
             //console.log(usd);
             //Sum of all RMB
             const reduceRMB = transactions.reduce((acc,nextRMB)=>
@@ -46,7 +44,7 @@ export default function TotalTransactionsChart(){
                 return acc;
             },0)
             //console.log(reduceRMB);
-            totalTransactions.push({currency: 'RMB', amount: reduceRMB});
+            tempArr.push({currency: 'RMB', amount: reduceRMB});
            // console.log(rmb);
             //Sum of all GBP
             const reduceGBP = transactions.reduce((acc,nextGBP)=>
@@ -55,7 +53,7 @@ export default function TotalTransactionsChart(){
                 return acc;
             },0)
            // console.log(reduceGBP);
-            totalTransactions.push({currency: 'GBP', amount: reduceGBP});
+            tempArr.push({currency: 'GBP', amount: reduceGBP});
 
             //Sum of all MXN
             const reduceMXN = transactions.reduce((acc,nextMXN)=>
@@ -64,16 +62,16 @@ export default function TotalTransactionsChart(){
                 return acc;
             },0)
            // console.log(reduceMXN);
-            totalTransactions.push({currency: 'MXN', amount: reduceMXN});
+            tempArr.push({currency: 'MXN', amount: reduceMXN});
 
             //Sum of all CAD
             const reduceCAD = transactions.reduce((acc,nextCAD)=>
             {
-                if(nextCAD.currency==="MXN"){return acc + nextCAD.amount}
+                if(nextCAD.currency==="CAD"){return acc + nextCAD.amount}
                 return acc;
             },0)
            // console.log(reduceCAD);
-            totalTransactions.push({currency: 'CAD', amount: reduceCAD});
+            tempArr.push({currency: 'CAD', amount: reduceCAD});
 
             //Sum of all EUR
             const reduceEUR = transactions.reduce((acc,nextEUR)=>
@@ -82,7 +80,7 @@ export default function TotalTransactionsChart(){
                 return acc;
             },0)
            // console.log(reduceEUR);
-            totalTransactions.push({currency: 'EUR', amount: reduceEUR});
+            tempArr.push({currency: 'EUR', amount: reduceEUR});
 
             //Sum of all JPY
             const reduceJPY = transactions.reduce((acc,nextJPY)=>
@@ -91,10 +89,11 @@ export default function TotalTransactionsChart(){
                 return acc;
             },0)
            // console.log(reduceJPY);
-            totalTransactions.push({currency: 'JPY', amount: reduceJPY});
+            tempArr.push({currency: 'JPY', amount: reduceJPY});
 
+            setTotalTransactions(tempArr);
 
-
+    },[transactions])
 
 
 
@@ -123,7 +122,7 @@ export default function TotalTransactionsChart(){
               datasets:[
                 {
                     label: "Amount",
-                    data: transactions.map((data)=> data.amount),
+                    data: totalTransactions.map((data)=> data.amount),
                     backgroundColor:[
                         "rgba(43, 63, 229, 0.8)",
                         "rgba(250, 192, 19, 0.8)",
