@@ -15,8 +15,9 @@ import TransactionAdd from "./components/TransactionAdd.jsx"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/NavBar.jsx';
 import Profile from './Profile.jsx';
-import MyTrips from './components/MyTrips.jsx';
+import MyTrips from './MyTrips.jsx';
 import TransactionSearch from "./components/TransactionSearch.jsx"
+import TimeSeriesGraph from "./components/TimeSeriesGraph.jsx"
 
 const router = createBrowserRouter([
     {
@@ -55,10 +56,16 @@ const router = createBrowserRouter([
         errorElement: <Error404 />
 
     },
+
     {
         path: "/transactions/search",
         element: <TransactionSearch />,
     },
+    
+    {
+      path: "/timeSeriesGraph/:userDefaultCurrency/:targetCurrency",
+      element: <TimeSeriesGraph />,
+  }
 
 ]);
 
