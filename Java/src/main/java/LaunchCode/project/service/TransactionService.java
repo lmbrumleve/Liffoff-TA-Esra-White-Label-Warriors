@@ -4,9 +4,13 @@ import LaunchCode.project.models.Transaction;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface TransactionService {
+    void updateTransaction(Transaction transaction, int id);
+    Optional<Transaction> transactionById(int id);
+    void deleteTransaction(int id);
     void saveTransaction(Transaction transaction);
     List<Transaction> getAllTransactions();
 

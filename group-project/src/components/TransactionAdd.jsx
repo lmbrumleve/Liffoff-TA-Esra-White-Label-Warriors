@@ -1,5 +1,6 @@
 import Header from "./Header.jsx"
 import React, { useEffect, useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import NavBar from "./NavBar.jsx"
 
 export default function TransactionAdd() {
@@ -9,6 +10,7 @@ export default function TransactionAdd() {
     const[amount,setAmount]=useState('')
     const[currency,setCurrency]=useState('')
     const[transactions, setTransactions]=useState([])
+    const navigate = useNavigate();
     const[trips, setTrips]=useState([])
     const[tripID, setTripID]=useState([])
     const[trip, setTrip]=useState([])
@@ -30,6 +32,8 @@ export default function TransactionAdd() {
                 }
         ).then(
             ()=>{console.log("New record sent")}
+        ).then(
+            ()=>{navigate("/transactions")}
         )
     }
 
