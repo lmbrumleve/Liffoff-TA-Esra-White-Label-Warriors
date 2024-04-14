@@ -65,8 +65,8 @@ console.log(exchangeRates);
 
   const [yesterdayExchangeRates, setYesterdayExchangeRates] = useState("");
 
-  const fetchYesterdayExchangeRates = async () => {
-      await Axios.get(`https://api.frankfurter.app/${year.toString()}-${yesterdayMonth.toString()}-${yesterdayDate.toString()}?from=${userDefaultCurrency}`).then((res) => {
+  const fetchYesterdayExchangeRates =  () => {
+       Axios.get(`https://api.frankfurter.app/${year.toString()}-${yesterdayMonth.toString()}-${yesterdayDate.toString()}?from=${userDefaultCurrency}`).then((res) => {
           setYesterdayExchangeRates(res.data.rates);
       });
   };
@@ -75,7 +75,7 @@ console.log(exchangeRates);
           fetchYesterdayExchangeRates();
       }, []);
 
-      // console.log(yesterdayExchangeRates);
+      console.log(yesterdayExchangeRates);
 
   //TARGET CURRENCY + TARGET RATE:
   let targetCurrency;
