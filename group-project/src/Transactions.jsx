@@ -1,9 +1,14 @@
 import { useNavigate,Link,Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./components/Header.jsx"
+import NavBar from "./components/NavBar.jsx"
+
 
 
 export default function Transactions(props) {
+
+
+
 
     const[transactions, setTransactions] = useState([])
     const[transaction, setTransaction] = useState({})
@@ -38,6 +43,7 @@ export default function Transactions(props) {
     //buttons used to find by id through @queryParam & to pass data to update page
     return(
         <>
+            <NavBar />
             <Header />
 
             <br/>
@@ -54,6 +60,7 @@ export default function Transactions(props) {
                     <th>Note</th>
                     <th>Amount</th>
                     <th>Currency</th>
+                    <th>Trip</th>
                 </tr>
 
                 {transactions.map(ans=>(
@@ -65,6 +72,7 @@ export default function Transactions(props) {
                     <td>{ans.currency}</td>
                     <button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button>
                     <button onClick={(e)=>handleDelete(e,ans.id)}>Delete</button>
+
                 </tr>
                 ))}
             </table>
