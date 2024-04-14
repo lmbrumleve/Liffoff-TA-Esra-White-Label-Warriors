@@ -46,7 +46,6 @@ export default function TransactionAdd() {
 
     <div>
         <NavBar />
-        <Header/>
 
         <form method="POST">
             <label for="name">Transaction Name</label><br />

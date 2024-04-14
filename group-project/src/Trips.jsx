@@ -1,6 +1,7 @@
 import {  Link, Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./components/Header.jsx"
+import NavBar from "./components/NavBar.jsx"
 
 export default function Trips() {
     const [trips, setTrips] = useState([])
@@ -11,13 +12,13 @@ export default function Trips() {
 
     return (
     <div>
-        <Header/>
-        <Link to="/trips/add">Add a Trip</Link>
-        <br/>
-        <Link to="/trips/search">Search a Trip</Link>
+        <NavBar/>
+        <button><Link to="/trips/add">Add Trip</Link></button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button><Link to="/trips/search">Search Trips</Link></button>
         <br/>
         <hr/>
-        <h1>All Trips</h1>
+        <h1>Trips</h1>
         <table>
             <tr>
                 <th>ID</th>

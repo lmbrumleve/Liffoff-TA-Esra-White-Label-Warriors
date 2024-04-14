@@ -1,7 +1,8 @@
 import Header from "./Header.jsx"
 import React, { useEffect, useState } from 'react'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
-import {useForm} from 'react-hook-form'
+import NavBar from "./NavBar.jsx";
+// import {useForm} from 'react-hook-form'
 
 export default function transactionUpdate() {
 
@@ -54,9 +55,9 @@ export default function transactionUpdate() {
 
     return(
         <div>
-            <Header />
+            <NavBar/>
 
-            <div>{location.state.transactionId} and {location.state.name}</div>
+            {/* <div>{location.state.transactionId} and {location.state.name}</div> */}
 
             <h2>Update Transaction : {location.state.transactionId}</h2>
 
