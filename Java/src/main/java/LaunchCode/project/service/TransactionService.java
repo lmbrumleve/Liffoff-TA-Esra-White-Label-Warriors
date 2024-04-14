@@ -13,4 +13,6 @@ public interface TransactionService {
     List<Transaction> searchTransactionsByName(String name);
 
     List<Transaction> searchTransactionsByAmount(double amount);
+
+    List<Transaction> searchTransactionsByTripID(int id);
 }

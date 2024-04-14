@@ -1,7 +1,7 @@
 import {  Link, Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./components/Header.jsx"
-import NavBar from "./components/NavBar.jsx";
+import NavBar from "./components/NavBar.jsx"
 
 export default function Transactions() {
 
@@ -37,6 +37,7 @@ export default function Transactions() {
                     <th>Note</th>
                     <th>Amount</th>
                     <th>Currency</th>
+                    <th>Trip</th>
                 </tr>
 
                 {transactions.map(ans=>(
@@ -46,6 +47,7 @@ export default function Transactions() {
                     <td>{ans.description}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
+                    <td>{ans.trip.id}</td>
                 </tr>
                 ))}
             </table>

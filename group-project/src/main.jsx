@@ -17,6 +17,10 @@ import NavBar from './components/NavBar.jsx';
 import Profile from './Profile.jsx';
 import MyTrips from './MyTrips.jsx';
 import TransactionSearch from "./components/TransactionSearch.jsx"
+import Trips from "./Trips.jsx"
+import TripAdd from "./components/TripAdd.jsx"
+import TripSearch from "./components/TripSearch.jsx"
+import TripByID from "./components/TripByID.jsx"
 import TimeSeriesGraph from "./components/TimeSeriesGraph.jsx"
 
 const router = createBrowserRouter([
@@ -61,6 +65,23 @@ const router = createBrowserRouter([
         path: "/transactions/search",
         element: <TransactionSearch />,
     },
+ 
+    {
+        path: "/trips",
+        element: <Trips />,
+    },
+    {
+        path: "/trips/add",
+        element: <TripAdd />,
+    },
+    {
+         path: "/trips/search",
+         element: <TripSearch />,
+     },
+     {
+         path: "/trips/ID/:ID",
+         element: <TripByID />,
+     },
     
     {
       path: "/timeSeriesGraph/:userDefaultCurrency/:targetCurrency",
