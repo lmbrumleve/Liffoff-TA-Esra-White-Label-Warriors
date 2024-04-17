@@ -8,6 +8,8 @@ import Transactions from './Transactions';
 import TransactionDisplayByID from './components/TransactionDisplayByID';
 import TransactionAdd from './components/TransactionAdd';
 import { createBrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Login from './Login'
+import UserRegistration from './components/UserRegistration';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
