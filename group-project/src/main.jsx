@@ -17,6 +17,8 @@ import NavBar from './components/NavBar.jsx';
 import Profile from './Profile.jsx';
 import MyTrips from './MyTrips.jsx';
 import TransactionSearch from "./components/TransactionSearch.jsx"
+import Login from './Login.jsx';
+import UserRegistration from './components/UserRegistration.jsx';
 import TransactionUpdate from "./components/TransactionUpdate.jsx"
 import TransactionDelete from "./components/TransactionDelete.jsx"
 import TotalTransactionsChart from "./components/TotalTransactionsChart.jsx"
@@ -56,6 +58,14 @@ const router = createBrowserRouter([
         element: <Profile />,
         errorElement: <Error404 />
 
+    },
+    {
+        path: "/login",
+        element: <Login />,
+    },
+    {
+        path: "/register",
+        element: <UserRegistration />,
     },
     {
         path: "/myTrips",

@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+
 @Configuration
 public class SecurityConfig {
 
@@ -33,20 +35,25 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain configure(HttpSecurity http) throws Exception {
-
-        http.authenticationProvider(authenticationProvider());
-
-        http.authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/users").authenticated()
-                                .anyRequest().permitAll()
-                )
-                .formLogin(login ->
-                        login.usernameParameter("email")
-                                .defaultSuccessUrl("/users")
-                                .permitAll()
-                )
-                .logout(logout -> logout.logoutSuccessUrl("/").permitAll()
-                );
+        http
+            .csrf(csrf -> csrf
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            )
+            .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/users").authenticated()
+                .anyRequest().permitAll()
+            )
+                    .formLogin(form -> form
+            .loginProcessingUrl("/login")
+            .usernameParameter("email")
+                .defaultSuccessUrl("/users", true)
+                .permitAll()
+            )
+                    .logout(logout -> logout
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/")
+                .permitAll()
+            );
 
         return http.build();
     }

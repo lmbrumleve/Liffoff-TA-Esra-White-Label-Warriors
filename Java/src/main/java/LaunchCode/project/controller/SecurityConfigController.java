@@ -15,9 +15,4 @@ public class SecurityConfigController {
 //        return "This only opens for a user!";
 //        //only opens to authenticated users
 //    }
-//    @GetMapping("/admin")
-//    public String admin() {
-//        return "This only opens for admins!";
-//        //authenticated to admin
-//    }
 }

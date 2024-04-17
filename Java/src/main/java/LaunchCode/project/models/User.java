@@ -53,6 +53,13 @@ public class User {
         this.defaultCurrency = defaultCurrency;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -71,4 +78,7 @@ public class User {
 
     @Column(name="defaultCurrency", length = 3)
     private String defaultCurrency;
+
+    @Column(name="role", nullable = false)
+    private String role;
 }
