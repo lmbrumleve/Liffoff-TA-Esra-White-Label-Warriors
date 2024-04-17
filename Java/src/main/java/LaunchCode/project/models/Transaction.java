@@ -1,9 +1,6 @@
 package LaunchCode.project.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -16,6 +13,10 @@ public class Transaction {
     private String description;
     private double amount;
     private String currency;
+
+    @ManyToOne
+    @JoinColumn(name="trip_id")
+    private Trip trip;
 
     @Override
     public boolean equals(Object o) {
@@ -32,6 +33,14 @@ public class Transaction {
 
     public String getName() {
         return name;
+    }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
 
     public void setName(String name) {
