@@ -16,6 +16,7 @@ import TransactionSearch from "./components/TransactionSearch.jsx"
 import TransactionUpdate from "./components/TransactionUpdate.jsx"
 import TransactionDelete from "./components/TransactionDelete.jsx"
 import TotalTransactionsChart from "./components/TotalTransactionsChart.jsx"
+import ConvertTransactions from "./components/ConvertTransactions.jsx"
 
 const router = createBrowserRouter([
     {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
         path: "transactions/chart",
         element: <TotalTransactionsChart />,
     },
+    {
+        path: "transactions/convert",
+        element: <ConvertTransactions/>,
+    }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
