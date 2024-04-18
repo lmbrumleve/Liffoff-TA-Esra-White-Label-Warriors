@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Header from "./Header.jsx"
 
     export default function convertTransactions(props){
-        const [rate, setRate] = useState(0);
+        const [rate, setRate] = useState({});
         const [number, setNumber] = useState(0);
         const [convertTransaction, setConvertTransaction] = useState({
             amount: 0,
@@ -12,58 +12,34 @@ import Header from "./Header.jsx"
         });
         const [amount,setAmount] = useState();
 
-
+        //React DOM is one render behind and sallow monitors arrays and objects so you have to let it know when to re-render
+        //when rate changes meaning its holding the object returned from the api then setNumber & re render with now updated value making the DOM have the current value
         useEffect(()=>{
-//             const fetchTransactions = async ()=>{
-//                 try{
-//                     await fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
-//                 }
-//                 catch(errors){
-//                     console.log(errors);
-//                 }
-//             }
-//
-//             fetchTransactions();
-//             console.log(transactions);
+            console.log(rate)
+            //const c = '"' + convertTransaction.end + '"';
+            //console.log(c);
+            setNumber(rate.rates);
+        },[rate])
 
-
-                //setConvertTransaction({amount: "10", start: "", end: "",})
-                //console.log(convertTransaction)
-                //setAmount(0)
-
-        },[])
-
-        const convertT = (e) =>{
+        const convertT = async (e) =>{
             e.preventDefault();
             console.log(convertTransaction);
 
+            //Make correct url to pull from api
             const URL = "https://api.frankfurter.app/latest?amount=" + convertTransaction.amount + "&from=" + convertTransaction.start + "&to=" + convertTransaction.end;
-            //console.log(URL);
-            const result = fetch(URL, {
+            //pull & convert using api
+            const result = await fetch(URL, {
                 method: "GET",
                 headers:{"Content-Type":"application/json"},
-            }).then(res=>res.json()).then((result)=>{setRate(result);})
-
-            //console.log(result);
-           // console.log(rate);
-
-            const endCurrency = convertTransaction.end;
-            //console.log(rate.rates.EUR)
-            console.log(rate.rates.endCurrency)
-            //console.log(endCurrency)
-            setNumber(rate.rates);
-            //console.log(number);
+            }).then(res=>res.json()).then((result)=>{setRate(result);});
         }
 
-
+        //update convertTransaction object with new updated values that also allow for values on screen to change using value = {convertTransaction.variableName}
         const handleChange = (e)=>{
             const value= e.target.value;
             setConvertTransaction({...convertTransaction,[e.target.name]: value });
             console.log(convertTransaction);
         }
-
-        //const handleAmount = (e)=>{const value = e.target.value; setAmount(value); console.log(amount)}
-
 
         return(
             <>
