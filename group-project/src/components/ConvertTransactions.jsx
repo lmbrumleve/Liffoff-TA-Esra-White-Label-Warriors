@@ -43,7 +43,7 @@ import Header from "./Header.jsx"
 
         return(
             <>
-                <h2>What currency would you like to convert into?</h2>
+                <h2>Convert Currency Here!</h2>
 
                 <form method="POST">
 
