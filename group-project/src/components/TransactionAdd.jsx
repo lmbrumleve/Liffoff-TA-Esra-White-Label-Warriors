@@ -18,9 +18,10 @@ export default function TransactionAdd() {
     const submitTransaction=(e)=>{
         e.preventDefault()
 
-        fetch(`http://localhost:8080/trips/searchByID?ID=${tripID}`).then(res=>res.json()).then(result=>{
+        fetch("http://localhost:8080/trips/searchByID/" + tripID).then(res=>res.json()).then(result=>{
             setTrip(result);
             console.log(tripID);
+            console.log(trip);
         })
         const transaction = {name, description, currency, amount, trip}
         console.log(JSON.stringify(transaction))

@@ -1,11 +1,13 @@
 import Header from "./Header.jsx"
 import React, { useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 
 export default function TripAdd() {
 
     const [name, setName] = useState("")
     const [destination, setDestination] = useState("")
     const [budget, setBudget] = useState(0)
+    const navigate = useNavigate();
 
 
     function addTrip(e) {
@@ -18,7 +20,7 @@ export default function TripAdd() {
                 }
         ).then(
             ()=>{console.log("New trip record sent")}
-        )
+        ).then(navigate("/trips"))
     }
     return(
     <div>

@@ -4,13 +4,15 @@ import { useParams, Link } from 'react-router-dom'
 
 export default function TripByID(props) {
 
-    const ID = useParams().ID
+    const { ID } = useParams()
     const [trip, setTrip] = useState([])
     const [transactions, setTransactions] = useState([])
 
     useEffect(()=>{
         fetch("http://localhost:8080/trips/ID/" + ID).then(res=>res.json()).then((result)=>{setTrip(result);})
-        fetch("http://localhost:8080/transactions/searchByTripID?ID=" + ID).then(res=>res.json()).then(result=>{setTransactions(result);})
+        fetch("http://localhost:8080/transactions/searchByTripID/" + ID).then(res=>res.json()).then(result=>{setTransactions(result);})
+        console.log(transactions);
+
     },[])
 
     return (
