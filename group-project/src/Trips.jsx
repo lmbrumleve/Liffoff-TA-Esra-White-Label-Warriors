@@ -1,13 +1,24 @@
-import {  Link, Outlet } from "react-router-dom"
+import { useNavigate, Link, Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./components/Header.jsx"
 
 export default function Trips() {
     const [trips, setTrips] = useState([])
+    const navigate = useNavigate();
 
     useEffect(()=>{
         fetch("http://localhost:8080/trips/getAll").then(res=>res.json()).then((result)=>{setTrips(result);})
-    },[])
+    },[trips])
+
+    const handleUpdate = (e,id)=>{
+        e.preventDefault();
+        navigate('/trips/update/' + id);
+    }
+
+    const handleDelete = (e,id)=>{
+        e.preventDefault();
+        navigate("/trips/delete/" + id);
+    }
 
     return (
     <div>
@@ -33,6 +44,8 @@ export default function Trips() {
                 <td>{ans.destination}</td>
                 <td>{ans.budget}</td>
                 <td><Link to={`/trips/ID/${ans.id}`}>See Trip Transactions</Link></td>
+                <button onClick={(e)=>handleUpdate(e,ans.id)}>Update</button>
+                <button onClick={(e)=>handleDelete(e,ans.id)}>Delete</button>
             </tr>
             ))}
 

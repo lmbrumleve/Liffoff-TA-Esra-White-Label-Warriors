@@ -41,7 +41,7 @@ export default function transactionUpdate() {
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(transaction)
         }).then((response)=>{
-            navigate('/transactions');
+            navigate('/trips/ID/' + transaction.trip.id);
         }).catch((error)=>{
             console.log(error);
         })

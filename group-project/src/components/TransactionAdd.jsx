@@ -118,7 +118,7 @@ export default function TransactionAdd() {
                 ()=>{console.log("New record sent")}
             )
             .then(
-                ()=>{navigate("/transactions")}
+                ()=>{navigate("/trips/ID/" + tripID)}
             )
         })
 

@@ -28,6 +28,8 @@ import TripAdd from "./components/TripAdd.jsx"
 import TripSearch from "./components/TripSearch.jsx"
 import TripByID from "./components/TripByID.jsx"
 import TimeSeriesGraph from "./components/TimeSeriesGraph.jsx"
+import TripUpdate from "./components/TripUpdate.jsx"
+import TripDelete from "./components/TripDelete.jsx"
 
 const router = createBrowserRouter([
     {
@@ -113,11 +115,19 @@ const router = createBrowserRouter([
          path: "/trips/ID/:ID",
          element: <TripByID />,
      },
-    
     {
       path: "/timeSeriesGraph/:userDefaultCurrency/:targetCurrency",
       element: <TimeSeriesGraph />,
-  }
+  },
+    {
+        path: "/trips/update/:id",
+        element: <TripUpdate />
+    },
+    {
+        path: "/trips/delete/:id",
+        element: <TripDelete />,
+    },
+
 
 ]);
 
