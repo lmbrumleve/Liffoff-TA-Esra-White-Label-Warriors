@@ -95,8 +95,7 @@ const router = createBrowserRouter([
     {
         path: "transactions/convert",
         element: <ConvertTransactions/>,
-    }
- 
+    },
     {
         path: "/trips",
         element: <Trips />,
