@@ -1,10 +1,16 @@
 package LaunchCode.project.models;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     public int getId() {
         return id;
     }
@@ -19,6 +25,11 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     public String getPassword() {
@@ -45,6 +56,34 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getDefaultCurrency() {
         return defaultCurrency;
     }
@@ -53,32 +92,37 @@ public class User {
         this.defaultCurrency = defaultCurrency;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id")
+    private Integer id;
 
-    @Column(nullable = false, unique = true, length = 45)
+    @Column(nullable = false, unique = true, length = 45, name = "email")
     private String email;
 
-    @Column(nullable = false, length = 64)
+    @Column(nullable = false, length = 64, name = "password")
     private String password;
 
-    @Column(name = "firstName", nullable = false, length = 20)
+    @Column(name = "first_name", nullable = false, length = 20)
     private String firstName;
 
-    @Column(name = "lastName", nullable = false, length = 20)
+    @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
 
-    @Column(name="defaultCurrency", length = 3)
+    @Column(name="default_currency", length = 3)
     private String defaultCurrency;
 
-    @Column(name="role", nullable = false)
-    private String role;
+    @Column(name="username", length = 20, unique = true, nullable = false)
+    private String username;
+
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
 }
