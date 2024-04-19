@@ -55,7 +55,7 @@ public class TransactionController {
         return transactionService.searchTransactionsByAmount(amount);
     }
 
-    @GetMapping("/transactions/searchByTripID")
+    @GetMapping("/transactions/searchByTripID/{ID}")
     public List<Transaction> searchTransactionsByTripID(@RequestParam int ID) {
         return transactionService.searchTransactionsByTripID(ID);
     }

@@ -1,5 +1,6 @@
 package LaunchCode.project.controller;
 
+import LaunchCode.project.models.Transaction;
 import LaunchCode.project.service.TripService;
 import jakarta.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import LaunchCode.project.models.Trip;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -17,6 +19,20 @@ public class TripController {
 
     @Autowired
     private TripService tripService;
+
+
+    @PutMapping("/trips/update/{id}")
+    public String updateTrip(@RequestBody Trip trip, @PathVariable int id)
+    {
+        tripService.updateTrip(trip, id);
+        return("Trip Updated.");
+    }
+
+    @DeleteMapping("/trips/{id}")
+    public String deleteTrip(@PathVariable int id){
+        tripService.deleteTrip(id);
+        return "Trip Deleted.";
+    }
 
     @PostMapping("/trips/add")
     public void saveNewTrip(@RequestBody Trip trip) {
@@ -44,7 +60,7 @@ public class TripController {
         return tripService.getTripsByBudget(budget);
     }
 
-    @GetMapping("/trips/searchByID")
+    @GetMapping("/trips/searchByID/{ID}")
     public Trip queryByID(@RequestParam int ID) {
         return tripService.getTripByID(ID);
     }

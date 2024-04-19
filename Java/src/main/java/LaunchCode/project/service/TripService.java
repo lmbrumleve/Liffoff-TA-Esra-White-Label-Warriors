@@ -7,6 +7,11 @@ import java.util.List;
 
 @Service
 public interface TripService {
+
+    void updateTrip(Trip trip, int id);
+
+    void deleteTrip(int id);
+
     void saveTrip(Trip trip);
 
     List<Trip> getAllTrips();

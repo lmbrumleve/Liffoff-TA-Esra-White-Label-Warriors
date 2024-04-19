@@ -49,4 +49,9 @@ public class TransactionServiceImpl implements TransactionService{
         return transactionRepository.queryByAmount(amount);
     }
 
+    @Override
+    public List<Transaction> searchTransactionsByTripID(int id){
+        return transactionRepository.queryByTripID(id);
+    }
+
 }
