@@ -61,6 +61,8 @@ export default function Transactions(props) {
                     <th>Amount</th>
                     <th>Currency</th>
                     <th>Trip</th>
+                    <th></th>
+                    <th></th>
                 </tr>
 
                 {transactions.map(ans=>(
@@ -70,9 +72,9 @@ export default function Transactions(props) {
                     <td>{ans.description}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
-                    <button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button>
-                    <button onClick={(e)=>handleDelete(e,ans.id)}>Delete</button>
-
+                    <td>{ans.trip.name}</td>
+                    <td><button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
+                    <td><button onClick={(e)=>handleDelete(e,ans.id)}>Delete</button></td>
                 </tr>
                 ))}
             </table>

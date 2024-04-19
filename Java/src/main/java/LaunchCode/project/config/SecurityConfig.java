@@ -1,4 +1,4 @@
-package LaunchCode.project.config;
+//package LaunchCode.project.config;
 
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;

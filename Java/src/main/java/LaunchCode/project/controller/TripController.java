@@ -49,6 +49,7 @@ public class TripController {
         return tripService.getTripByID(ID);
     }
 
+
     @GetMapping("/trips/ID/{id}")
     public Trip queryByID2(@PathVariable int id) {
         return tripService.getTripByID(id);

@@ -9,8 +9,8 @@ import {
     TimeScale, //x-axis
     LinearScale, //y-axis
     CategoryScale,
-    PointElement, 
-    Legend, 
+    PointElement,
+    Legend,
     Tooltip,
     Title,
     Filler,
@@ -26,13 +26,13 @@ ChartJS.register(
     TimeScale, //x-axis
     LinearScale, //y-axis
     CategoryScale,
-    PointElement, 
+    PointElement,
     Legend,
     Tooltip,
     Title,
     Filler,
-    ArcElement 
-) 
+    ArcElement
+)
 
 export default function TimeSeriesGraph() {
 
@@ -43,10 +43,10 @@ export default function TimeSeriesGraph() {
 
     const userDefaultCurrency = routeParams.userDefaultCurrency;
     const targetCurrency = routeParams.targetCurrency;
-    const firstDate = "2024-01-01"; 
+    const firstDate = "2024-01-01";
 
     let dateId;
-    let rate;   
+    let rate;
     let dates = [];
     let rates = [];
 
@@ -77,8 +77,8 @@ const todayRate = latestRate[`${targetCurrency}`];
           setTimeSeriesRates(res.data.rates);
       });
   };
-   
-      useEffect(() => { 
+
+      useEffect(() => {
           fetchTimeSeriesRates();
       }, []);
 
@@ -106,12 +106,12 @@ const chart = () => {
     //   console.log(rateArr);
 
 
-    setChartData({ 
+    setChartData({
         labels: dateArr,
         datasets: [
             {
                 label: "Foreign Exchange Rate",
-                data: rateArr, 
+                data: rateArr,
                 fill: true,
                 backgroundColor: [
                     'rgba(75, 192, 192, 0.6)'  //why is this not working like in the tutorial
@@ -138,11 +138,11 @@ const options = {
         //         }
         //     }
         // },
- 
+
         y: {
                 ticks: {
                     autoSkip: true,
-                    maxTicksLimit: 10, 
+                    maxTicksLimit: 10,
                     beginAtZero: true
                 },
                 grid: {
@@ -150,24 +150,24 @@ const options = {
                 }
             }
     }
-} 
- 
+}
+
 useEffect(() => {
-    chart()  
+    chart()
 })
-  
+
 return(
     <>
         <NavBar/>
 
         <h1>{userDefaultCurrency}/{targetCurrency} </h1>
         <h2>{todayRate} </h2>
-        <div style = { 
-            {height: '300px', 
+        <div style = {
+            {height: '300px',
             width: '600px' }
             }>
-            <Line 
-            data={chartData} 
+            <Line
+            data={chartData}
             options = {options}
             ></Line>
         </div>
