@@ -49,6 +49,7 @@ export default function transactionUpdate() {
 
       const handleChange = (e) => {
         const value = e.target.value;
+        console.log(value);
         setTransaction({ ...transaction, [e.target.name]: value });
       };
 

@@ -22,6 +22,7 @@ import UserRegistration from './components/UserRegistration.jsx';
 import TransactionUpdate from "./components/TransactionUpdate.jsx"
 import TransactionDelete from "./components/TransactionDelete.jsx"
 import TotalTransactionsChart from "./components/TotalTransactionsChart.jsx"
+import ConvertTransactions from "./components/ConvertTransactions.jsx"
 import Trips from "./Trips.jsx"
 import TripAdd from "./components/TripAdd.jsx"
 import TripSearch from "./components/TripSearch.jsx"
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
         path: "transactions/chart",
         element: <TotalTransactionsChart />,
     },
+    {
+        path: "transactions/convert",
+        element: <ConvertTransactions/>,
+    }
  
     {
         path: "/trips",
