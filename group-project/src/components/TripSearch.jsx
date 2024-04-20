@@ -1,5 +1,6 @@
 import Header from "./Header.jsx"
 import React, { useState } from 'react'
+import NavBar from "./NavBar.jsx"
 
 
 export default function TripSearch(){
@@ -24,7 +25,7 @@ export default function TripSearch(){
 
     return (
     <div>
-        <Header/>
+        <NavBar/>
 
         <input type="text" name = {q} onChange = {(e)=>setQ(e.target.value)} />
         <select name = {sel} value={sel} onChange = {(e)=>setSel(e.target.value)}>

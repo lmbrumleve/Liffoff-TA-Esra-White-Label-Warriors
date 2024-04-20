@@ -114,7 +114,7 @@ const chart = () => {
                 data: rateArr,
                 fill: true,
                 backgroundColor: [
-                    'rgba(75, 192, 192, 0.6)'  //why is this not working like in the tutorial
+                    'rgba(75, 192, 192, 0.6)' 
                 ],
                 borderWidth: 4,
                 tension: 0.4,

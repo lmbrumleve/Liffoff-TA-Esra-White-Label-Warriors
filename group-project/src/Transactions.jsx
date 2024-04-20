@@ -2,13 +2,11 @@ import { useNavigate,Link,Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./components/Header.jsx"
 import NavBar from "./components/NavBar.jsx"
+import { Doughnut } from "react-chartjs-2"
 
 
 
 export default function Transactions(props) {
-
-
-
 
     const[transactions, setTransactions] = useState([])
     const[transaction, setTransaction] = useState({})
@@ -44,38 +42,67 @@ export default function Transactions(props) {
     return(
         <>
             <NavBar />
-            <Header />
-
             <br/>
-            <Link to="/transactions/add">Add New Transaction</Link>
             <br/>
-            <Link to="/transactions/search">Search Transactions</Link>
             <br/>
+            <br/>
+            <button ><Link to="/transactions/add">Add Transaction</Link></button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button><Link to="/transactions/search">Search Transactions</Link></button>
+            <br/>
+            <br/>
+            <br/>
+            <Doughnut
+            data={{
+                labels:["A","B","C"],
+                datasets:[{
+                    label:"Revenue",
+                    data:[200,300,400],
+                },],
+            }}
+        />
+        <br/>
+        <br/>
+        <br/>
             <h1>All Transactions</h1>
 
             <table>
-                <tr>
+                <thead>
+                    <tr>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Note</th>
                     <th>Amount</th>
                     <th>Currency</th>
                     <th>Trip</th>
+<<<<<<< HEAD
                     <th></th>
                     <th></th>
                 </tr>
+=======
+                    </tr>
+                </thead>
+>>>>>>> 240414-london
 
                 {transactions.map(ans=>(
-                <tr>
+                <tbody>
+                    <tr>
                     <td>{ans.id}</td>
                     <td>{ans.name}</td>
                     <td>{ans.description}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
+<<<<<<< HEAD
                     <td>{ans.trip.name}</td>
                     <td><button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
                     <td><button onClick={(e)=>handleDelete(e,ans.id)}>Delete</button></td>
                 </tr>
+=======
+                    <td><button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
+                    <td><button onClick={(e)=>handleDelete(e,ans.id)}>Delete</button></td>
+                    </tr>
+                </tbody>
+>>>>>>> 240414-london
                 ))}
             </table>
 

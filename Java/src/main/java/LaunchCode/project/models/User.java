@@ -1,6 +1,7 @@
 //package LaunchCode.project.models;
 //
 //import jakarta.persistence.*;
+<<<<<<< HEAD
 //import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.authority.SimpleGrantedAuthority;
 //import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,12 @@
 //@Entity
 //@Table(name = "users")
 //public class User implements UserDetails {
+=======
+//
+//@Entity
+//@Table(name = "users")
+//public class User {
+>>>>>>> 240414-london
 //    public int getId() {
 //        return id;
 //    }
@@ -27,11 +34,14 @@
 //        this.email = email;
 //    }
 //
+<<<<<<< HEAD
 //    @Override
 //    public Collection<? extends GrantedAuthority> getAuthorities() {
 //        return List.of(new SimpleGrantedAuthority(role.name()));
 //    }
 //
+=======
+>>>>>>> 240414-london
 //    public String getPassword() {
 //        return password;
 //    }
@@ -56,6 +66,7 @@
 //        this.lastName = lastName;
 //    }
 //
+<<<<<<< HEAD
 //    public String getUsername() {
 //        return username;
 //    }
@@ -84,6 +95,8 @@
 //        this.username = username;
 //    }
 //
+=======
+>>>>>>> 240414-london
 //    public String getDefaultCurrency() {
 //        return defaultCurrency;
 //    }
@@ -92,6 +105,7 @@
 //        this.defaultCurrency = defaultCurrency;
 //    }
 //
+<<<<<<< HEAD
 //    public Role getRole() {
 //        return role;
 //    }
@@ -125,4 +139,24 @@
 //
 //    @Enumerated(value = EnumType.STRING)
 //    private Role role;
+=======
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private int id;
+//
+//    @Column(nullable = false, unique = true, length = 45)
+//    private String email;
+//
+//    @Column(nullable = false, length = 64)
+//    private String password;
+//
+//    @Column(name = "firstName", nullable = false, length = 20)
+//    private String firstName;
+//
+//    @Column(name = "lastName", nullable = false, length = 20)
+//    private String lastName;
+//
+//    @Column(name="defaultCurrency", length = 3)
+//    private String defaultCurrency;
+>>>>>>> 240414-london
 //}
