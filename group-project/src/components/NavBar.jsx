@@ -39,15 +39,13 @@ export default class NavBar extends Component {
               Create New Transaction
             </Nav.Link> */}
           </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
+          <Nav.Link  as={Link} to={"/login"}>
+          <Button className="loginbutton" variant="info">Login</Button>
+          <Nav
+            className="loginbutton"
+            style={{border: "1px solid blue"}}
+          />
+          </Nav.Link>
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -17,14 +17,19 @@ import NavBar from './components/NavBar.jsx';
 import Profile from './Profile.jsx';
 import MyTrips from './MyTrips.jsx';
 import TransactionSearch from "./components/TransactionSearch.jsx"
+import Login from './Login.jsx';
+import UserRegistration from './components/UserRegistration.jsx';
 import TransactionUpdate from "./components/TransactionUpdate.jsx"
 import TransactionDelete from "./components/TransactionDelete.jsx"
 import TotalTransactionsChart from "./components/TotalTransactionsChart.jsx"
+import ConvertTransactions from "./components/ConvertTransactions.jsx"
 import Trips from "./Trips.jsx"
 import TripAdd from "./components/TripAdd.jsx"
 import TripSearch from "./components/TripSearch.jsx"
 import TripByID from "./components/TripByID.jsx"
 import TimeSeriesGraph from "./components/TimeSeriesGraph.jsx"
+import TripUpdate from "./components/TripUpdate.jsx"
+import TripDelete from "./components/TripDelete.jsx"
 
 const router = createBrowserRouter([
     {
@@ -58,6 +63,14 @@ const router = createBrowserRouter([
 
     },
     {
+        path: "/login",
+        element: <Login />,
+    },
+    {
+        path: "/register",
+        element: <UserRegistration />,
+    },
+    {
         path: "/myTrips",
         element: <MyTrips />,
         errorElement: <Error404 />
@@ -81,7 +94,14 @@ const router = createBrowserRouter([
         path: "transactions/chart",
         element: <TotalTransactionsChart />,
     },
+    {
+        path: "transactions/convert",
+        element: <ConvertTransactions/>,
+    },
+<<<<<<< HEAD
+=======
  
+>>>>>>> c46867cb77c9d362b98ccd72ec84550adcdbd89c
     {
         path: "/trips",
         element: <Trips />,
@@ -98,11 +118,19 @@ const router = createBrowserRouter([
          path: "/trips/ID/:ID",
          element: <TripByID />,
      },
-    
     {
       path: "/timeSeriesGraph/:userDefaultCurrency/:targetCurrency",
       element: <TimeSeriesGraph />,
-  }
+  },
+    {
+        path: "/trips/update/:id",
+        element: <TripUpdate />
+    },
+    {
+        path: "/trips/delete/:id",
+        element: <TripDelete />,
+    },
+
 
 ]);
 

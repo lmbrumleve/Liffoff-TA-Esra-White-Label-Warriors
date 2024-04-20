@@ -55,8 +55,15 @@ public class TransactionController {
         return transactionService.searchTransactionsByAmount(amount);
     }
 
+<<<<<<< HEAD
+    @GetMapping("/searchByTripID")
+    public List<Transaction> searchTransactionsByTripID(@RequestParam("ID") int ID) {
+        return transactionService.searchTransactionsByTripID(ID);
+    }
+=======
 //    @GetMapping("/transactions/searchByTripID")
 //    public List<Transaction> searchTransactionsByTripID(@RequestParam int ID) {
 //        return transactionService.searchTransactionsByTripID(ID);
 //    }
+>>>>>>> 240414-london
 }

@@ -71,7 +71,7 @@ const currencyArr = Object.keys(currency);
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(transaction)
         }).then((response)=>{
-            navigate('/transactions');
+            navigate('/trips/ID/' + transaction.trip.id);
         }).catch((error)=>{
             console.log(error);
         })
@@ -79,6 +79,7 @@ const currencyArr = Object.keys(currency);
 
       const handleChange = (e) => {
         const value = e.target.value;
+        console.log(value);
         setTransaction({ ...transaction, [e.target.name]: value });
       };
         

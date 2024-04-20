@@ -1,10 +1,23 @@
 //package LaunchCode.project.models;
 //
 //import jakarta.persistence.*;
+<<<<<<< HEAD
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
+//
+//import java.util.Collection;
+//import java.util.List;
+//
+//@Entity
+//@Table(name = "users")
+//public class User implements UserDetails {
+=======
 //
 //@Entity
 //@Table(name = "users")
 //public class User {
+>>>>>>> 240414-london
 //    public int getId() {
 //        return id;
 //    }
@@ -21,6 +34,14 @@
 //        this.email = email;
 //    }
 //
+<<<<<<< HEAD
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return List.of(new SimpleGrantedAuthority(role.name()));
+//    }
+//
+=======
+>>>>>>> 240414-london
 //    public String getPassword() {
 //        return password;
 //    }
@@ -45,6 +66,37 @@
 //        this.lastName = lastName;
 //    }
 //
+<<<<<<< HEAD
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
+//
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
+//
+=======
+>>>>>>> 240414-london
 //    public String getDefaultCurrency() {
 //        return defaultCurrency;
 //    }
@@ -53,6 +105,41 @@
 //        this.defaultCurrency = defaultCurrency;
 //    }
 //
+<<<<<<< HEAD
+//    public Role getRole() {
+//        return role;
+//    }
+//
+//    public void setRole(Role role) {
+//        this.role = role;
+//    }
+//
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id")
+//    private Integer id;
+//
+//    @Column(nullable = false, unique = true, length = 45, name = "email")
+//    private String email;
+//
+//    @Column(nullable = false, length = 64, name = "password")
+//    private String password;
+//
+//    @Column(name = "first_name", nullable = false, length = 20)
+//    private String firstName;
+//
+//    @Column(name = "last_name", nullable = false, length = 20)
+//    private String lastName;
+//
+//    @Column(name="default_currency", length = 3)
+//    private String defaultCurrency;
+//
+//    @Column(name="username", length = 20, unique = true, nullable = false)
+//    private String username;
+//
+//    @Enumerated(value = EnumType.STRING)
+//    private Role role;
+=======
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private int id;
@@ -71,4 +158,5 @@
 //
 //    @Column(name="defaultCurrency", length = 3)
 //    private String defaultCurrency;
+>>>>>>> 240414-london
 //}
