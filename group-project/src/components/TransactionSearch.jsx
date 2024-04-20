@@ -1,5 +1,6 @@
 import Header from "./Header.jsx"
 import React, { useState } from 'react'
+import NavBar from "./NavBar.jsx"
 
 
 export default function TransactionSearch(){
@@ -22,15 +23,20 @@ export default function TransactionSearch(){
 
     return (
     <div>
-        <Header/>
+        <NavBar/>
 
-        <input type="text" name = {q} onChange = {(e)=>setQ(e.target.value)} />
+        <h1>Search Transactions</h1>
+        <br/>
+        <br/>
         <select name = {sel} value={sel} onChange = {(e)=>setSel(e.target.value)}>
             <option value="name">Name of Transaction</option>
             <option value="amount">Amount of Transaction</option>
         </select>
-
         <br />
+        <br/>
+        <input type="text" name = {q} onChange = {(e)=>setQ(e.target.value)} />
+        <br/>
+        <br/>
         <button onClick = {searchTransaction}>Search</button>
         <br />
         <br />

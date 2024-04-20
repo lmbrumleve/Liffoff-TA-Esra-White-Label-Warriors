@@ -1,6 +1,10 @@
 import Header from "./Header.jsx"
 import React, { useState } from 'react'
+<<<<<<< HEAD
 import {useNavigate} from 'react-router-dom'
+=======
+import NavBar from "./NavBar.jsx"
+>>>>>>> 240414-london
 
 export default function TripAdd() {
 
@@ -24,7 +28,7 @@ export default function TripAdd() {
     }
     return(
     <div>
-        <Header/>
+        <NavBar/>
         <form method = "POST">
             <label for="name">Trip Name</label><br/>
                 <input type = "text" name = "name" id = "name" onChange={(e)=>setName(e.target.value)} />

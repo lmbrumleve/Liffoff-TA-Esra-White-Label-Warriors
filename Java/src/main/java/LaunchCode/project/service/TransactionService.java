@@ -18,5 +18,5 @@ public interface TransactionService {
 
     List<Transaction> searchTransactionsByAmount(double amount);
 
-    List<Transaction> searchTransactionsByTripID(int id);
+//    List<Transaction> searchTransactionsByTripID(int id);
 }

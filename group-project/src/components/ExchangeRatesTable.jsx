@@ -21,8 +21,8 @@ export default function ExchangeRatesTable () {
 
   const [date, setDate] = useState("");
 
-  const fetchDate = () => {
-  Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
+  const fetchDate = async () => {
+  await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
         setDate(res.data.date);
         });
     };
