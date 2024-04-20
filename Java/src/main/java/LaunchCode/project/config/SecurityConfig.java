@@ -1,60 +1,56 @@
-//package LaunchCode.project.config;
+package LaunchCode.project.config;
 
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.security.web.SecurityFilterChain;
-//import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import LaunchCode.project.filter.JwtAuthenticationFilter;
+import LaunchCode.project.service.UserServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-//@Configuration
-//public class SecurityConfig {
-//
-//    @Bean
-//    UserDetailsService userDetailsService() {
-//        return new CustomUserDetailService();
-//    }
-//
-//    @Bean
-//    PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService());
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//
-//        return authProvider;
-//    }
-//
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//            .csrf(csrf -> csrf
-//            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-//            )
-//            .authorizeHttpRequests(auth -> auth
-//            .requestMatchers("/users").authenticated()
-//                .anyRequest().permitAll()
-//            )
-//                .formLogin(form -> form
-//            .loginProcessingUrl("/login")
-//            .usernameParameter("email")
-//                .defaultSuccessUrl("/users", true)
-//                .permitAll()
-//            )
-//                .logout(logout -> logout
-//            .logoutUrl("/logout")
-//            .logoutSuccessUrl("/")
-//                .permitAll()
-//            );
-//
-//        return http.build();
-//    }
-//}
-////This Class is to enable users and non-users to access certain parts of the website
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    private final UserServiceImpl userServiceImpl;
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    public SecurityConfig(UserServiceImpl userServiceImpl, JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.userServiceImpl = userServiceImpl;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        req->req.requestMatchers("/login/**", "/register/**")
+                                .permitAll()
+                                .anyRequest()
+                                .authenticated()
+                ).userDetailsService(userServiceImpl)
+                .sessionManagement(session->session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
+}
