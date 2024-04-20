@@ -3,7 +3,7 @@ import NavBar from "./NavBar.jsx";
 import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios';
 
-export default function UserRegistration() { 
+export default function UserRegistration() {
     const [formData, setFormData] = useState({
         email:'',
         password: '',

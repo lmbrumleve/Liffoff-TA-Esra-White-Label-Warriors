@@ -14,6 +14,21 @@ public class TripServiceImpl implements TripService {
     private TripRepository tripRepository;
 
     @Override
+    public void updateTrip(Trip trip, int id){
+        Trip trip1 = tripRepository.findById(id).get();
+        trip1.setName(trip.getName());
+        trip1.setDestination((trip.getDestination()));
+        trip1.setBudget(trip.getBudget());
+        tripRepository.save(trip1);
+        ;}
+
+    @Override
+    public void deleteTrip(int id){
+        Trip trip1 = tripRepository.findById(id).get();
+        tripRepository.delete(trip1);
+    }
+
+    @Override
     public void saveTrip(Trip trip) {
         tripRepository.save(trip);
     };
