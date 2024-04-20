@@ -43,10 +43,7 @@ const fetchCurrency = async () => {
      catch(error){
          console.log(error);
      }
-    // await Axios.get(`https://api.frankfurter.app/currencies`).then((res) => {
-    //       setCurrency(res.data);
-    //       console.log(typeof res.data);
-    //       });
+
       };
 
 useEffect(() => {
