@@ -18,6 +18,19 @@ public class TripController {
     @Autowired
     private TripService tripService;
 
+    @PutMapping("/trips/update/{id}")
+    public String updateTrip(@RequestBody Trip trip, @PathVariable int id)
+    {
+        tripService.updateTrip(trip, id);
+        return("Trip Updated.");
+    }
+
+    @DeleteMapping("/trips/{id}")
+    public String deleteTrip(@PathVariable int id){
+        tripService.deleteTrip(id);
+        return "Trip Deleted.";
+    }
+
     @PostMapping("/trips/add")
     public void saveNewTrip(@RequestBody Trip trip) {
         tripService.saveTrip(trip);
@@ -48,6 +61,7 @@ public class TripController {
     public Trip queryByID(@RequestParam int ID) {
         return tripService.getTripByID(ID);
     }
+
 
     @GetMapping("/trips/ID/{id}")
     public Trip queryByID2(@PathVariable int id) {
