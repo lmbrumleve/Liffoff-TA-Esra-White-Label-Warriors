@@ -1,10 +1,7 @@
 import Header from "./Header.jsx"
 import React, { useState } from 'react'
-<<<<<<< HEAD
 import {useNavigate} from 'react-router-dom'
-=======
 import NavBar from "./NavBar.jsx"
->>>>>>> 240414-london
 
 export default function TripAdd() {
 

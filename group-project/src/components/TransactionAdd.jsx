@@ -101,13 +101,9 @@ export default function TransactionAdd() {
     const[transactions, setTransactions]=useState([])
     const[trips, setTrips]=useState([])
     const[tripID, setTripID]=useState([])
-<<<<<<< HEAD
-        const navigate = useNavigate();
-=======
+    const navigate = useNavigate();
     const[trip, setTrip]=useState([])
 
-
->>>>>>> 240414-london
     const submitTransaction=(e)=>{
         e.preventDefault()
 
@@ -155,13 +151,7 @@ const currencyArr = Object.keys(currency);
 
     return(
     <div>
-<<<<<<< HEAD
         <NavBar/>
-        <Header/>
-=======
-        <NavBar />
->>>>>>> 240414-london
-
         <form method="POST">
             <label for="name">Transaction Name</label><br />
             <input type = "text" name = "name" id="name" onChange = {(e)=>setName(e.target.value)} /><br />

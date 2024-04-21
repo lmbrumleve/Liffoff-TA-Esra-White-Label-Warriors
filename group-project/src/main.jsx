@@ -98,10 +98,6 @@ const router = createBrowserRouter([
         path: "transactions/convert",
         element: <ConvertTransactions/>,
     },
-<<<<<<< HEAD
-=======
- 
->>>>>>> c46867cb77c9d362b98ccd72ec84550adcdbd89c
     {
         path: "/trips",
         element: <Trips />,
@@ -121,7 +117,7 @@ const router = createBrowserRouter([
     {
       path: "/timeSeriesGraph/:userDefaultCurrency/:targetCurrency",
       element: <TimeSeriesGraph />,
-  },
+    },
     {
         path: "/trips/update/:id",
         element: <TripUpdate />
