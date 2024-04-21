@@ -43,7 +43,6 @@ export default class NavBar extends Component {
           <Button className="loginbutton" variant="info">Login</Button>
           <Nav
             className="loginbutton"
-            style={{border: "1px solid blue"}}
           />
           </Nav.Link>
         </Navbar.Collapse>
