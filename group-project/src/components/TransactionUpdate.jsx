@@ -1,7 +1,9 @@
 import Header from "./Header.jsx"
 import React, { useEffect, useState } from 'react'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
-import {useForm} from 'react-hook-form'
+import NavBar from "./NavBar.jsx";
+import Axios from "axios";
+// import {useForm} from 'react-hook-form'
 
 export default function transactionUpdate() {
 
@@ -17,6 +19,7 @@ export default function transactionUpdate() {
         amount: 0,
         currency: "",
     });
+    const [currency, setCurrency] = useState({});
 
     useEffect(()=>{
 
@@ -32,6 +35,23 @@ export default function transactionUpdate() {
             console.log(transaction);
     }, []);
 
+//FETCH CURRENCIES:
+const fetchCurrency = async () => {
+    try{
+        const response = await fetch("https://api.frankfurter.app/currencies").then(res=>res.json()).then((result)=>{setCurrency(result);})
+     }
+     catch(error){
+         console.log(error);
+     }
+
+      };
+
+useEffect(() => {
+        fetchCurrency();
+}, []);
+
+console.log(Object.keys(currency));
+const currencyArr = Object.keys(currency);
 
 
       const updateTransaction = (e) => {
@@ -41,7 +61,7 @@ export default function transactionUpdate() {
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(transaction)
         }).then((response)=>{
-            navigate('/trips/ID/' + transaction.trip.id);
+            navigate('/transactions');
         }).catch((error)=>{
             console.log(error);
         })
@@ -49,15 +69,17 @@ export default function transactionUpdate() {
 
       const handleChange = (e) => {
         const value = e.target.value;
-        console.log(value);
         setTransaction({ ...transaction, [e.target.name]: value });
       };
+        
+   
+
 
     return(
         <div>
-            <Header />
+            <NavBar/>
 
-            <div>{location.state.transactionId} and {location.state.name}</div>
+            {/* <div>{location.state.transactionId} and {location.state.name}</div> */}
 
             <h2>Update Transaction : {location.state.transactionId}</h2>
 
@@ -74,14 +96,19 @@ export default function transactionUpdate() {
 
                 <label for="currency">Currency</label><br />
                 <select id="currency" name="currency" value={transaction.currency} onChange = {(e)=>handleChange(e)}>
-                  <option value="">-</option>
+                  {currencyArr.map((ans) => {
+                    return (
+                    <option value={ans}>{ans}</option>
+                    )
+                    })}
+                  {/* <option value="">-</option>
                   <option value="USD">US Dollar</option>
                   <option value="MXN">Mexican Peso</option>
                   <option value="CAD">Canadian Dollar</option>
                   <option value="EUR">Euro</option>
                   <option value="GBP">British Pound</option>
                   <option value="JPY">Japanese Yen</option>
-                  <option value="RMB">Chinese Yuan</option>
+                  <option value="RMB">Chinese Yuan</option> */}
                 </select><br />
 
                 <br /><input type="submit" value="Update Transaction!" onClick={updateTransaction}/>

@@ -2,6 +2,11 @@ import { useNavigate,Link,Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./components/Header.jsx"
 import NavBar from "./components/NavBar.jsx"
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Checkbox from "@mui/material/Checkbox";
+import checked from "@mui/material/Checkbox";
 
 
 
@@ -14,6 +19,9 @@ export default function Transactions(props) {
     const[transaction, setTransaction] = useState({})
     const[isLoading, setIsLoading] = useState(false)
     const[toDelete, setToDelete] = useState({})
+    // const[favorite, setFavorite] = useState(false);
+    const[isChecked, setIsChecked] = useState({});
+
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -29,6 +37,8 @@ export default function Transactions(props) {
     }
 
 
+
+
     const handleDelete = async (e,id) =>{
         e.preventDefault();
         console.log(id);
@@ -41,6 +51,24 @@ export default function Transactions(props) {
         navigate('/transactions/update/' + id, {state:{transactionId:id,name:name,description:description,amount:amount,currency:currency}})
     }
     //buttons used to find by id through @queryParam & to pass data to update page
+
+    //Handle Click for Favorite Buttons
+const handleFavorite = (e,id,name,description,amount,currency,favorite) => {
+    e.preventDefault();
+    fetch("http://localhost:8080/transactions/favorite/" + id, {
+        method: "PUT",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(transaction)
+    }).then((response)=>{
+        navigate('/transactions', {state:{transactionId:id,favorite:favorite}});
+    }).catch((error)=>{
+        console.log(error);
+    })
+    setIsChecked(checked[id]= !isChecked);
+    
+  }
+
+
     return(
         <>
             <NavBar />
@@ -63,6 +91,7 @@ export default function Transactions(props) {
                     <th>Trip</th>
                     <th></th>
                     <th></th>
+                    <th>Favorite</th>
                 </tr>
 
                 {transactions.map(ans=>(
@@ -75,6 +104,20 @@ export default function Transactions(props) {
                     <td>{ans.trip.name}</td>
                     <td><button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
                     <td><button onClick={(e)=>handleDelete(e,ans.id)}>Delete</button></td>
+                    <td>
+                    <FormControlLabel
+                            control = {
+                                <Checkbox value={checked[ans.id]}
+                                    icon = {<FavoriteBorderIcon />}
+                                    checkedIcon = {<FavoriteIcon />}
+                                    checked = {ans.favorite === false ? false : true}
+                                    onClick = {(e)=>handleFavorite(e, ans.id, ans.favorite)}
+                                    // onValueChange={(newValue) => { setChecked({...checked, [ans.id]: newValue}) }}
+
+                        />
+                              }
+                        />
+                    </td>
                 </tr>
                 ))}
             </table>

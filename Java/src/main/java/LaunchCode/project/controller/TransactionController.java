@@ -23,6 +23,12 @@ public class TransactionController {
         transactionService.updateTransaction(transaction, id);
         return "Transaction Updated";
     }
+
+    @PutMapping("/favorite/{id}")
+    public String favoriteTransaction (@RequestBody Transaction transaction, @PathVariable int id){
+        transactionService.favoriteTransaction(id);
+        return "Transaction Updated";
+    }
     @DeleteMapping("/{id}")
     public String deleteTransaction(@PathVariable int id){
         transactionService.deleteTransaction(id);

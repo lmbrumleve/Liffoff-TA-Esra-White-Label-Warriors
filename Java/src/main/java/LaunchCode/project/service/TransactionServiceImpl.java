@@ -22,6 +22,14 @@ public class TransactionServiceImpl implements TransactionService{
             transaction1.setCurrency(transaction.getCurrency());
             transactionRepository.save(transaction1);
     ;}
+
+    public void favoriteTransaction(int id) {
+        Transaction transaction1 = transactionRepository.findById(id).get();
+        boolean value = transaction1.getFavorite();
+        transaction1.setFavorite(!value);
+        transactionRepository.save(transaction1);
+
+    }
     @Override
     public Optional<Transaction> transactionById(int id) {return transactionRepository.findById(id);}
     @Override
