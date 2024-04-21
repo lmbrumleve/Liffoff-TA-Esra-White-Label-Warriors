@@ -20,11 +20,6 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return null;
-//    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -73,7 +68,7 @@ public class User implements UserDetails {
     @Column(name="username", length = 20, unique = true, nullable = false)
     @NotBlank
     private String username;
-    //commented out
+
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
@@ -145,7 +140,7 @@ public class User implements UserDetails {
     public void setUsername(String username) {
         this.username = username;
     }
-//
+
     public Role getRole() {
         return role;
     }
@@ -161,7 +156,7 @@ public class User implements UserDetails {
     public void setTokens(List<Token> tokens) {
         this.tokens = tokens;
     }
-//
+
     public List<Transaction> getTransactions() {
         return transactions;
     }
