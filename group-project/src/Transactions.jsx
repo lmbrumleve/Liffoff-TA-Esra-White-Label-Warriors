@@ -7,6 +7,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Checkbox from "@mui/material/Checkbox";
 import checked from "@mui/material/Checkbox";
+import { set } from "date-fns/fp/set";
 
 
 
@@ -21,6 +22,7 @@ export default function Transactions(props) {
     const[toDelete, setToDelete] = useState({})
     // const[favorite, setFavorite] = useState(false);
     const[isChecked, setIsChecked] = useState({});
+    const[checkedState, setCheckedState] = useState([]);
 
     const navigate = useNavigate();
 
@@ -37,7 +39,20 @@ export default function Transactions(props) {
     }
 
 
+// console.log(transactions)
 
+    useEffect(()=>{
+        const newArr = []
+        for(let i=0; i<transactions.length; i++) {
+            // console.log(transactions[i]["favorite"])
+            newArr.push(transactions[i]["favorite"] === false ? false : true)
+        // console.log(newArr);
+        }
+        setCheckedState(newArr);
+        // console.log(checkedState)
+    }, [transactions])
+
+    console.log(checkedState)
 
     const handleDelete = async (e,id) =>{
         e.preventDefault();
@@ -53,18 +68,35 @@ export default function Transactions(props) {
     //buttons used to find by id through @queryParam & to pass data to update page
 
     //Handle Click for Favorite Buttons
-const handleFavorite = (e,id,name,description,amount,currency,favorite) => {
-    e.preventDefault();
-    fetch("http://localhost:8080/transactions/favorite/" + id, {
+const handleFavorite = async (e,id,position) => {
+    await fetch("http://localhost:8080/transactions/favorite/" + id, {
         method: "PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(transaction)
-    }).then((response)=>{
-        navigate('/transactions', {state:{transactionId:id,favorite:favorite}});
+    })
+    .then((response)=>{
+    //     navigate('/transactions', {state:{transactionId:id,favorite:favorite}});
     }).catch((error)=>{
         console.log(error);
     })
-    setIsChecked(checked[id]= !isChecked);
+
+    fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
+
+    // setIsChecked(checked[id]= !isChecked);
+//     const updatedCheckedState = checkedState.map((item, index) =>
+//     index === position ? !item : item
+// );
+//     setCheckedState(updatedCheckedState);
+    // console.log(updatedCheckedState)
+    // setCheckedState(checkedState);
+    const arr = []
+    for(let i=0; i<transactions.length; i++) {
+        // console.log(transactions[i]["favorite"])
+        arr.push(transactions[i]["favorite"] === false ? false : true)
+    console.log(arr);
+    }
+    setCheckedState(arr);
+    console.log(checkedState)
     
   }
 
@@ -93,8 +125,8 @@ const handleFavorite = (e,id,name,description,amount,currency,favorite) => {
                     <th></th>
                     <th>Favorite</th>
                 </tr>
-
-                {transactions.map(ans=>(
+                {console.log(transactions)}
+                {transactions.map((ans, index)=>(
                 <tr>
                     <td>{ans.id}</td>
                     <td>{ans.name}</td>
@@ -110,8 +142,9 @@ const handleFavorite = (e,id,name,description,amount,currency,favorite) => {
                                 <Checkbox value={checked[ans.id]}
                                     icon = {<FavoriteBorderIcon />}
                                     checkedIcon = {<FavoriteIcon />}
-                                    checked = {ans.favorite === false ? false : true}
-                                    onClick = {(e)=>handleFavorite(e, ans.id, ans.favorite)}
+                                    // checked = {ans.favorite === false ? false : true}
+                                    checked = {ans.favorite}
+                                    onClick = {(e)=>handleFavorite(e, ans.id, ans.favorite, index)}
                                     // onValueChange={(newValue) => { setChecked({...checked, [ans.id]: newValue}) }}
 
                         />
