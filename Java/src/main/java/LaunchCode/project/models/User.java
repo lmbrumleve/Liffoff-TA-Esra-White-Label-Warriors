@@ -1,6 +1,9 @@
 package LaunchCode.project.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,20 +14,88 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
-    public void setId(Integer id) {
-        this.id = id;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-    public int getId() {
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return null;
+//    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
+
+    @Column(name = "email")
+    @Email()
+    private String email;
+
+    @Column(nullable = false, length = 64, name = "password")
+    @NotBlank
+    @Size(min = 3, max = 50)
+    private String password;
+
+    @Column(name = "first_name", nullable = false, length = 20)
+    @NotBlank
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 20)
+    @NotBlank
+    private String lastName;
+
+    @Column(name="default_currency", length = 3)
+    private String defaultCurrency;
+
+    @Column(name="username", length = 20, unique = true, nullable = false)
+    @NotBlank
+    private String username;
+    //commented out
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
+
+    //sample default currency, not incl get & set
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name="username", referencedColumnName = "username")
+//    private List<currency> currency;
+
+    //sample transaction for user
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username", referencedColumnName = "username")
+    private List<Transaction> transactions;
+
+    public Integer getId() {
         return id;
     }
 
-    public List<Token> getTokens() {
-        return tokens;
-    }
-
-    public void setTokens(List<Token> tokens) {
-        this.tokens = tokens;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -33,11 +104,6 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     public String getPassword() {
@@ -64,34 +130,6 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getDefaultCurrency() {
         return defaultCurrency;
     }
@@ -100,6 +138,14 @@ public class User implements UserDetails {
         this.defaultCurrency = defaultCurrency;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+//
     public Role getRole() {
         return role;
     }
@@ -108,32 +154,20 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    public List<Token> getTokens() {
+        return tokens;
+    }
 
-    @Column(nullable = false, unique = true, length = 45, name = "email")
-    private String email;
+    public void setTokens(List<Token> tokens) {
+        this.tokens = tokens;
+    }
+//
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
 
-    @Column(nullable = false, length = 64, name = "password")
-    private String password;
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 
-    @Column(name = "first_name", nullable = false, length = 20)
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false, length = 20)
-    private String lastName;
-
-    @Column(name="default_currency", length = 3)
-    private String defaultCurrency;
-
-    @Column(name="username", length = 20, unique = true, nullable = false)
-    private String username;
-
-    @Enumerated(value = EnumType.STRING)
-    private Role role;
-
-    @OneToMany(mappedBy = "user")
-    private List<Token> tokens;
 }

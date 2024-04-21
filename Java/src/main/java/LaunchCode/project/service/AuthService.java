@@ -30,7 +30,14 @@ public class AuthService {
     }
 
     public AuthResponse register(User request) {
+
+        if(repository.findByUsername(request.getUsername()).isPresent()) {
+            return new AuthResponse(null, "User already exists");
+        }
+
         User user = new User();
+        user.setEmail(request.getEmail());
+        user.setUsername(request.getUsername());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -40,6 +47,8 @@ public class AuthService {
         user = repository.save(user);
 
         String jwt = jwtService.generateToken(user);
+
+        saveUserToken(jwt, user);
 
         return new AuthResponse(jwt, "User registration was successful");
 
