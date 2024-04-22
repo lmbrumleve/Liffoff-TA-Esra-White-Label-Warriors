@@ -27,9 +27,10 @@ export default class NavBar extends Component {
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <NavDropdown title="Menu" id="navbarScrollingDropdown">
               <NavDropdown.Item as={Link} to="/profile">My Profile</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/myTrips">My Trips</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/trips">My Trips</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/transactions">Transactions</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/transactions/add">New Transaction</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/transactions/convert">Convert Currency</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action5">
                 Log Out

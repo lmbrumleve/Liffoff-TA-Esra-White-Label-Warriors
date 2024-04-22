@@ -1,6 +1,7 @@
 import { useNavigate,Link,Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./Header.jsx"
+import NavBar from "./NavBar.jsx"
 
     export default function convertTransactions(props){
         const [rate, setRate] = useState({});
@@ -43,6 +44,9 @@ import Header from "./Header.jsx"
 
         return(
             <>
+
+                <NavBar /><br/><br/>
+
                 <h2>Convert Currency Here!</h2>
 
                 <form method="POST">
