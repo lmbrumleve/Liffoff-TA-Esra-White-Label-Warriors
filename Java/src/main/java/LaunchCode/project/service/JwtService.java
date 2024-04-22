@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -16,7 +17,7 @@ public class JwtService {
 
     private final String SECRET_KEY = "24d6d6f23d9336b7817f604d7a88bb658c727c48b71d988fe39a4ff456934161";
 
-    public boolean isValid(String token, User user) {
+    public boolean isValid(String token, UserDetails user) {
         String username = extractUsername(token);
         return username.equals(user.getUsername()) && !isTokenExpired(token);
     }
