@@ -76,14 +76,23 @@ public class User implements UserDetails {
     private List<Token> tokens;
 
     //sample default currency, not incl get & set
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name="username", referencedColumnName = "username")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name="id")
 //    private List<currency> currency;
+
+    //sample favorites, not incl get & set
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name="id", referencedColumnName = "id")
+//    private List<Favorite> favorites;
 
     //sample transaction for user
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "username")
+    @JoinColumn(name = "id", referencedColumnName = "id")
     private List<Transaction> transactions;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    private List<Trip> trips;
 
     public Integer getId() {
         return id;
@@ -163,6 +172,14 @@ public class User implements UserDetails {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public List<Trip> getTrips() {
+        return trips;
+    }
+
+    public void setTrips(List<Trip> trips) {
+        this.trips = trips;
     }
 
 }
