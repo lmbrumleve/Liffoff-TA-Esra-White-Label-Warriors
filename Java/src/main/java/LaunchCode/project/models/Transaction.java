@@ -13,6 +13,7 @@ public class Transaction {
     private String description;
     private double amount;
     private String currency;
+    private boolean favorite;
 
     @ManyToOne
     @JoinColumn(name="trip_id")
@@ -69,6 +70,14 @@ public class Transaction {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public int getID() {

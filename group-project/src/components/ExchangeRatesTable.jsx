@@ -9,20 +9,21 @@ import Checkbox from "@mui/material/Checkbox";
 
 export default function ExchangeRatesTable () {
   const [ userDefaultCurrency, setUserDefaultCurrency ] = useState("USD");
+  const [date, setDate] = useState("");
+  const [exchangeRates, setExchangeRates] = useState("");
+
+
   // const [ targetCurrency, setUserTargetCurrency ] = useState("AUD");
     // var userDefaultCurrency = "USD";
     const today = new Date();
-    // console.log(today);
+    console.log(today);
     var yesterday = new Date();
-    yesterday.setDate(today.getDate() - 1);
+    yesterday.setDate(today.getDate() - 7);
     // console.log(yesterday);
 
   //FETCH DATE:
-
-  const [date, setDate] = useState("");
-
-  const fetchDate = () => {
-  Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
+  const fetchDate = async () => {
+  await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
         setDate(res.data.date);
         });
     };
@@ -32,7 +33,6 @@ export default function ExchangeRatesTable () {
     }, []);
 
   //FETCH RATES:
-  const [exchangeRates, setExchangeRates] = useState("");
 
   const fetchExchangeRates = async () => {
       await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
@@ -43,6 +43,7 @@ export default function ExchangeRatesTable () {
       useEffect(() => {
           fetchExchangeRates();
       }, []);
+
   
 console.log(exchangeRates);
 
@@ -50,7 +51,7 @@ console.log(exchangeRates);
 
   //  FETCH YESTERDAY'S RATE
   const year = yesterday.getFullYear();
-  // console.log(year);
+  console.log(year);
   var yesterdayDate = yesterday.getDate();
   if (yesterdayDate.toString().length === 1) {
     yesterdayDate = "0" + yesterdayDate;
@@ -74,7 +75,7 @@ console.log(exchangeRates);
       useEffect(() => {
           fetchYesterdayExchangeRates();
       }, []);
-
+      // console.log(year.toString() + "-" + yesterdayMonth.toString() + "-" + yesterdayDate.toString())
       // console.log(yesterdayExchangeRates);
 
   //TARGET CURRENCY + TARGET RATE:
@@ -88,17 +89,30 @@ console.log(exchangeRates);
   let yesterdayTargetRateObj;
   var yesterdayAllRates = [];
 
+  const yearToday = today.getFullYear();
+  console.log(yearToday);
+  var todayDate = today.getDate();
+  if (todayDate.toString().length === 1) {
+    todayDate = "0" + todayDate;
+  }
+  console.log(todayDate);
+  var todayMonth = today.getMonth() + 1;
+  if (todayMonth.toString().length === 1) {
+    todayMonth = "0" + todayMonth.toString();
+    console.log(todayMonth);
+  }
+
   for(let i=0; i<Object.keys(exchangeRates).length; i++) {
   targetCurrency = Object.keys(exchangeRates)[i];
   targetExchangeRate = exchangeRates[`${targetCurrency}`];
   // console.log(targetCurrency);
-  // console.log(targetExchangeRate)
+  console.log(targetExchangeRate)
 
   targetRateObj =
   {
     // amount: `${amount}`,
     base: `${userDefaultCurrency}`,
-    date: `${date}`,
+    date: `${yearToday.toString()}-${todayMonth.toString()}-${todayDate.toString()}`,
     target: `${targetCurrency}`,
     rate: `${targetExchangeRate}`,
 }
@@ -125,10 +139,12 @@ if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
   targetRateObj.rateIncrease = "🔺";
   // console.log(targetRateObj.rateIncrease);
   // console.log(`${userDefaultCurrency}/${targetCurrency} the rate went up`);
-} else {
+} else if ((targetExchangeRate - yesterdayTargetExchangeRate) < 0){
   targetRateObj.rateIncrease = "🔻";
   // console.log(targetRateObj.rateIncrease);
   // console.log(`${userDefaultCurrency}/${targetCurrency} the rate went down`);
+} else {
+  targetRateObj.rateIncrease = "no change"
 }
 // console.log(targetRateObj);
 

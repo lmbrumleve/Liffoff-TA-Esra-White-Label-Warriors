@@ -106,7 +106,7 @@ export default function TransactionAdd() {
         e.preventDefault()
 
         fetch(`http://localhost:8080/trips/searchByID?ID=${tripID}`).then(res=>res.json()).then(trip=>{
-            const transaction = {name, description, currency, amount, trip}
+            const transaction = {name, description, currency, amount, trip, favorite: false}
             console.log(JSON.stringify(transaction))
 
             fetch("http://localhost:8080/transactions/add", {
@@ -128,6 +128,25 @@ export default function TransactionAdd() {
         fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
         fetch("http://localhost:8080/trips/getAll").then(res=>res.json()).then((result)=>{setTrips(result);})
     },[])
+
+    
+//FETCH CURRENCIES:
+const fetchCurrency = async () => {
+    try{
+        const response = await fetch("https://api.frankfurter.app/currencies").then(res=>res.json()).then((result)=>{setCurrency(result);})
+     }
+     catch(error){
+         console.log(error);
+     }
+
+      };
+
+useEffect(() => {
+        fetchCurrency();
+}, []);
+
+console.log(Object.keys(currency));
+const currencyArr = Object.keys(currency);
 
     return(
     <div>
@@ -154,14 +173,19 @@ export default function TransactionAdd() {
 
             <label for="currency">Currency</label><br />
             <select id="currency" name="currency" onChange = {(e)=>setCurrency(e.target.value)}>
-              <option value="">-</option>
+            {currencyArr.map((ans) => {
+                    return (
+                    <option value={ans}>{ans}</option>
+                    )
+                    })}
+              {/* <option value="">-</option>
               <option value="USD">US Dollar</option>
               <option value="MXN">Mexican Peso</option>
               <option value="CAD">Canadian Dollar</option>
               <option value="EUR">Euro</option>
               <option value="GBP">British Pound</option>
               <option value="JPY">Japanese Yen</option>
-              <option value="RMB">Chinese Yuan</option>
+              <option value="RMB">Chinese Yuan</option> */}
             </select><br />
 
             <br /><input type = "submit" onClick={submitTransaction}/>
