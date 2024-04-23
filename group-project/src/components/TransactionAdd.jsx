@@ -101,6 +101,7 @@ export default function TransactionAdd() {
     const[transactions, setTransactions]=useState([])
     const[trips, setTrips]=useState([])
     const[tripID, setTripID]=useState([])
+    const[currencies, setCurrencies] = useState([])
         const navigate = useNavigate();
     const submitTransaction=(e)=>{
         e.preventDefault()
@@ -141,9 +142,9 @@ export default function TransactionAdd() {
 
     
 //FETCH CURRENCIES:
-const fetchCurrency = async () => {
+const fetchCurrencies = async () => {
     try{
-        const response = await fetch("https://api.frankfurter.app/currencies").then(res=>res.json()).then((result)=>{setCurrency(result);})
+        const response = await fetch("https://api.frankfurter.app/currencies").then(res=>res.json()).then((result)=>{setCurrencies(result);})
      }
      catch(error){
          console.log(error);
@@ -152,11 +153,11 @@ const fetchCurrency = async () => {
       };
 
 useEffect(() => {
-        fetchCurrency();
+        fetchCurrencies();
 }, []);
 
-console.log(Object.keys(currency));
-const currencyArr = Object.keys(currency);
+console.log(Object.keys(currencies));
+const currencyArr = Object.keys(currencies);
 
     return(
     <div>

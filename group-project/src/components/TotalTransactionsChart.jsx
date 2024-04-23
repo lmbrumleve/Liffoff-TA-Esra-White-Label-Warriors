@@ -18,7 +18,10 @@ export default function TotalTransactionsChart(){
     useEffect(()=>{
         const fetchTransactions = async ()=>{
             try{
-                await fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
+                await fetch("http://localhost:8080/transactions/getAll", {
+                                                                                   headers:{"Content-Type":"application/json",
+                                                                                   Authorization: 'Bearer ' + localStorage.getItem('token')},
+                                                                                   }).then(res=>res.json()).then((result)=>{setTransactions(result);})
             }
             catch(errors){
                 console.log(errors);

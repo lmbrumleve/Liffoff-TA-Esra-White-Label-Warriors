@@ -29,5 +29,6 @@ export default function transactionDelete (){
             }).then(()=>console.log(tripId)).then(()=>navigate("/trips/ID/" + tripId))
         }
         deleteTransaction(id,tempId);
+
       }, []);
 }

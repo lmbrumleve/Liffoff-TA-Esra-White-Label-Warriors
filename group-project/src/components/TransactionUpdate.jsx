@@ -25,7 +25,10 @@ export default function transactionUpdate() {
 
         const fetchTransaction = async ()=>{
             try{
-               const response = await fetch("http://localhost:8080/transactions/" + id).then(res=>res.json()).then((result)=>{setTransaction(result);})
+               const response = await fetch("http://localhost:8080/transactions/" + id, {
+                                                                                                  headers:{"Content-Type":"application/json",
+                                                                                                  Authorization: 'Bearer ' + localStorage.getItem('token')},
+                                                                                                  }).then(res=>res.json()).then((result)=>{setTransaction(result);})
             }
             catch(error){
                 console.log(error);
@@ -58,7 +61,8 @@ const currencyArr = Object.keys(currency);
         e.preventDefault();
         fetch("http://localhost:8080/transactions/update/" + id, {
             method: "PUT",
-            headers:{"Content-Type":"application/json"},
+            headers:{"Content-Type":"application/json",
+            Authorization: 'Bearer ' + localStorage.getItem('token')},
             body:JSON.stringify(transaction)
         }).then((response)=>{
             navigate('/transactions');
