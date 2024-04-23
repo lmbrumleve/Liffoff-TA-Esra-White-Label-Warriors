@@ -5,11 +5,10 @@ import axios from 'axios';
 
 export default function UserRegistration() {
     const [formData, setFormData] = useState({
-        email:'',
+        username:'',
         password: '',
         firstName: '',
         lastName: '',
-        defaultCurrency: '',
         role: ''
     });
     const handleChange = (e) => {
@@ -23,12 +22,30 @@ export default function UserRegistration() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/capstone/users', formData);
-            console.log(response.data);
+            fetch("http://localhost:8080/register", {
+
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json",
+                    },
+                    body:JSON.stringify(formData)
+
+            }).then(res=>res.json()).then((result)=>{
+
+                localStorage.setItem("token", result['token']);
+                console.log(localStorage.getItem('token'));
+                console.log(result['token']);
+            })
+
+//
+//             const response = await axios.post('http://localhost:8080/register', formData);
+//             console.log(response.data);
         } catch (error) {
             console.error('Registration failed:', error);
         }
     };
+
+
     return(
     <div>
         <NavBar />
@@ -47,14 +64,14 @@ export default function UserRegistration() {
             <br />
 
             <div className="form-group">
-                <label htmlFor="defaultCurrency">Default Currency</label>
-                <input type="text" className="form-control" id="defaultCurrency" name="defaultCurrency" value={formData.defaultCurrency} onChange={handleChange} />
+                <label htmlFor="role">Role</label>
+                <input type="text" className="form-control" id="role" name="role" value={formData.role} onChange={handleChange} />
             </div>
             <br />
 
             <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input type="email" className="form-control" id="email" name="email" value={formData.email} onChange={handleChange} required />
+                <label htmlFor="username">Email</label>
+                <input type="username" className="form-control" id="username" name="username" value={formData.username} onChange={handleChange} required />
             </div>
             <br />
 

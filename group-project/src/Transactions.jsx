@@ -28,7 +28,17 @@ export default function Transactions(props) {
 
     useEffect(()=>{
             setIsLoading(true)
-            fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
+//            fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
+
+            fetch("http://localhost:8080/transactions/getAll", {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(res=>res.json()).then((result)=>{setTransactions(result);})
+
+
+
             setIsLoading(false)
 
 
@@ -71,10 +81,10 @@ export default function Transactions(props) {
 const handleFavorite = async (e,id,position) => {
     await fetch("http://localhost:8080/transactions/favorite/" + id, {
         method: "PUT",
-        headers:{"Content-Type":"application/json"},
+        headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')},
         body:JSON.stringify(transaction)
-    })
-    .then((response)=>{
+    }).then((response)=>{
     //     navigate('/transactions', {state:{transactionId:id,favorite:favorite}});
     }).catch((error)=>{
         console.log(error);

@@ -7,7 +7,9 @@ export default function Trips() {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        fetch("http://localhost:8080/trips/getAll").then(res=>res.json()).then((result)=>{setTrips(result);})
+        fetch("http://localhost:8080/trips/getAll", {
+            headers: {Authorization: 'Bearer ' + localStorage.getItem('token')
+                                                         	}}).then(res=>res.json()).then((result)=>{setTrips(result);})
     },[trips])
 
     const handleUpdate = (e,id)=>{
