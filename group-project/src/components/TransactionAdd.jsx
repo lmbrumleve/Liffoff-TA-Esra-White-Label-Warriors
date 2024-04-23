@@ -105,13 +105,17 @@ export default function TransactionAdd() {
     const submitTransaction=(e)=>{
         e.preventDefault()
 
-        fetch(`http://localhost:8080/trips/searchByID?ID=${tripID}`).then(res=>res.json()).then(trip=>{
+        fetch(`http://localhost:8080/trips/searchByID?ID=${tripID}`, {
+            headers:{"Content-Type":"application/json",
+            Authorization: 'Bearer ' + localStorage.getItem('token')},
+            }).then(res=>res.json()).then(trip=>{
             const transaction = {name, description, currency, amount, trip, favorite: false}
             console.log(JSON.stringify(transaction))
 
             fetch("http://localhost:8080/transactions/add", {
                 method:"POST",
-                headers:{"Content-Type":"application/json"},
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')},
                 body:JSON.stringify(transaction)
                     }
             ).then(
@@ -125,8 +129,14 @@ export default function TransactionAdd() {
     }
 
     useEffect(()=>{
-        fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
-        fetch("http://localhost:8080/trips/getAll").then(res=>res.json()).then((result)=>{setTrips(result);})
+        fetch("http://localhost:8080/transactions/getAll", {
+         headers:{"Content-Type":"application/json",
+         Authorization: 'Bearer ' + localStorage.getItem('token')},
+         }).then(res=>res.json()).then((result)=>{setTransactions(result);})
+        fetch("http://localhost:8080/trips/getAll", {
+          headers:{"Content-Type":"application/json",
+          Authorization: 'Bearer ' + localStorage.getItem('token')},
+          }).then(res=>res.json()).then((result)=>{setTrips(result);})
     },[])
 
     

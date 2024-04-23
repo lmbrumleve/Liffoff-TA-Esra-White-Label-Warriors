@@ -24,7 +24,8 @@ export default function transactionDelete (){
         const deleteTransaction = async (id,tripId)=>{
             await fetch("http://localhost:8080/transactions/" + id,{
                 method:"DELETE",
-                headers:{"Content-Type":"application/json"}
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}
             }).then(()=>console.log(tripId)).then(()=>navigate("/trips/ID/" + tripId))
         }
         deleteTransaction(id,tempId);

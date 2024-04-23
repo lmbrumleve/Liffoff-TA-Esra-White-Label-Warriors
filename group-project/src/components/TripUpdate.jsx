@@ -18,7 +18,11 @@ import {useForm} from 'react-hook-form'
 
         const fetchTrip = async ()=>{
             try{
-               const response = await fetch("http://localhost:8080/trips/ID/" + id).then(res=>res.json()).then((result)=>{setTrip(result);})
+               const response = await fetch("http://localhost:8080/trips/ID/" + id,{
+
+                                                                                                  headers:{"Content-Type":"application/json",
+                                                                                                  Authorization: 'Bearer ' + localStorage.getItem('token')}
+                                                                                              }).then(res=>res.json()).then((result)=>{setTrip(result);})
             }
             catch(error){
                 console.log(error);
@@ -32,7 +36,8 @@ import {useForm} from 'react-hook-form'
         e.preventDefault();
         fetch("http://localhost:8080/trips/update/" + id, {
             method: "PUT",
-            headers:{"Content-Type":"application/json"},
+            headers:{"Content-Type":"application/json",
+            Authorization: 'Bearer ' + localStorage.getItem('token')},
             body:JSON.stringify(trip)
         }).then((response)=>{
             navigate('/trips');
