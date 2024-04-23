@@ -10,15 +10,27 @@ export default function TripSearch(){
 
     function searchTrip() {
         if (sel=="name") {
-            fetch(`http://localhost:8080/trips/searchByName?name=${q}`).then(res=>res.json()).then((result)=>{setAns(result);})
+            fetch(`http://localhost:8080/trips/searchByName?name=${q}`, {
+
+                                                                                    headers:{"Content-Type":"application/json",
+                                                                                    Authorization: 'Bearer ' + localStorage.getItem('token')},
+                                                                                        }).then(res=>res.json()).then((result)=>{setAns(result);})
         } else if (sel == "budget") {
             if (isNaN(q)) {
                 console.log('error')
             } else {
-                fetch(`http://localhost:8080/trips/searchByBudget?budget=${q}`).then(res=>res.json()).then((result)=>{setAns(result);})
+                fetch(`http://localhost:8080/trips/searchByBudget?budget=${q}`, {
+
+                                                                                                                                                                  headers:{"Content-Type":"application/json",
+                                                                                                                                                                  Authorization: 'Bearer ' + localStorage.getItem('token')},
+                                                                                                                                                                      }).then(res=>res.json()).then((result)=>{setAns(result);})
             }
         } else if (sel == "destination") {
-            fetch(`http://localhost:8080/trips/searchByDestination?destination=${q}`).then(res=>res.json()).then((result)=>{setAns(result);})
+            fetch(`http://localhost:8080/trips/searchByDestination?destination=${q}`, {
+
+                                                                                                                                                                        headers:{"Content-Type":"application/json",
+                                                                                                                                                                        Authorization: 'Bearer ' + localStorage.getItem('token')},
+                                                                                                                                                                            }).then(res=>res.json()).then((result)=>{setAns(result);})
         }
     }
 

@@ -15,7 +15,8 @@ export default function TripAdd() {
         const trip = {name, destination, budget}
         fetch("http://localhost:8080/trips/add", {
             method:"POST",
-            headers:{"Content-Type":"application/json"},
+            headers:{"Content-Type":"application/json",
+            Authorization: 'Bearer ' + localStorage.getItem('token')},
             body:JSON.stringify(trip)
                 }
         ).then(

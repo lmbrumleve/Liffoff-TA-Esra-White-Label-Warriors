@@ -70,7 +70,7 @@ export default function UserRegistration() {
             <br />
 
             <div className="form-group">
-                <label htmlFor="username">Email</label>
+                <label htmlFor="username">Username</label>
                 <input type="username" className="form-control" id="username" name="username" value={formData.username} onChange={handleChange} required />
             </div>
             <br />

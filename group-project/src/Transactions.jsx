@@ -90,7 +90,10 @@ const handleFavorite = async (e,id,position) => {
         console.log(error);
     })
 
-    fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
+    fetch("http://localhost:8080/transactions/getAll", {
+                                                             headers:{"Content-Type":"application/json",
+                                                                     Authorization: 'Bearer ' + localStorage.getItem('token')},
+                                                             }).then(res=>res.json()).then((result)=>{setTransactions(result);})
 
     // setIsChecked(checked[id]= !isChecked);
 //     const updatedCheckedState = checkedState.map((item, index) =>
