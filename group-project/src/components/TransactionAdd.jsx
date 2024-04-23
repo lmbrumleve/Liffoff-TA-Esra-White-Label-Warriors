@@ -175,7 +175,7 @@ const currencyArr = Object.keys(currencies);
             <input type = "text" name = "amount" id="amount" onChange = {(e)=>setAmount(e.target.value)} /><br />
 
             <label for="trip">Applies to Trip</label><br />
-            <select id="trip" name="trip" onChange = {e=>setTripID(e.target.value)}>
+            <select id="trip" name="trip" onChange = {(e)=>setTripID(e.target.value)}>
                 <option value="">-</option>
                 {trips.map(t=>(
                     <option value={t.id}>{t.name}</option>
