@@ -37,16 +37,6 @@ export default function Login() {
         console.error('Error initiating Google login:', error);
       }
     };
-// added
-    const handleFacebookLogin = async () => {
-      try {
-        // Make a request to the backend server to initiate the Facebook OAuth2 flow
-        const response = await axios.get('/auth/facebook');
-        window.location.href = response.data.redirectUrl;
-      } catch (error) {
-        console.error('Error initiating Facebook login:', error);
-      }
-    };
 
     return (
         <>
@@ -66,9 +56,6 @@ export default function Login() {
             </form>
             <br></br>
             <button className="btn btn-secondary btn-lg" onClick={handleGoogleLogin}>Login with Google</button>
-            <br></br>
-            <br></br>
-            <button className="btn btn-secondary btn-lg" onClick={handleFacebookLogin}>Login with Facebook</button>
             <br></br> 
             <br></br>
             <Link to="/register" className="btn btn-success btn-lg">Create an Account</Link>

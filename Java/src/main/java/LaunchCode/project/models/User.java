@@ -22,6 +22,7 @@ public class User implements UserDetails {
     private String username;
 
     private String password;
+    private String email;
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
@@ -107,5 +108,13 @@ public class User implements UserDetails {
 
     public void setTokens(List<Token> tokens) {
         this.tokens = tokens;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
