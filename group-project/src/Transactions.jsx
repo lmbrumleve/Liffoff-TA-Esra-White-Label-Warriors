@@ -66,10 +66,10 @@ export default function Transactions(props) {
 
     console.log(checkedState)
 
-    const handleDelete = async (e,id) =>{
+    const handleDelete = async (e,id, tripId) =>{
         e.preventDefault();
         console.log(id);
-        navigate('/transactions/delete/' + id);
+        navigate('/transactions/delete/' + id, {state:{tripId:tripId}});
     }
 
     const handleUpdate = (e,id,name,description,amount,currency) =>{
@@ -150,7 +150,7 @@ const handleFavorite = async (e,id,position) => {
                     <td>{ans.currency}</td>
                     <td>{ans.trip.name}</td>
                     <td><button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
-                    <td><button onClick={(e)=>handleDelete(e,ans.id)}>Delete</button></td>
+                    <td><button onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}>Delete</button></td>
                     <td>
                     <FormControlLabel
                             control = {

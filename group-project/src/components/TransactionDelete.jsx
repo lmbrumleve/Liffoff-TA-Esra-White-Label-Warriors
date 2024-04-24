@@ -26,7 +26,7 @@ export default function transactionDelete (){
                 method:"DELETE",
                 headers:{"Content-Type":"application/json",
                 Authorization: 'Bearer ' + localStorage.getItem('token')}
-            }).then(()=>console.log(tripId)).then(navigate("/trips/ID/" + tempId))
+            }).then(()=>console.log(tripId)).then(navigate("/trips/ID/" + location.state.tripId))
         }
         deleteTransaction(id,tempId);
 
