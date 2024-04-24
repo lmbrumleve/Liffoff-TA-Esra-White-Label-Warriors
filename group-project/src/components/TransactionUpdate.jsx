@@ -12,12 +12,14 @@ export default function transactionUpdate() {
     const data = location.state;
     const { id } = useParams();
     console.log(data);
+    const [tempId, setTempId] = useState(location.state.tripId);
     const [transaction, setTransaction] = useState({
-        id: "",
+        id: id,
         name: "",
         description: "",
         amount: 0,
         currency: "",
+        trip: location.state.tripId,
     });
     const [currency, setCurrency] = useState({});
 
@@ -26,9 +28,9 @@ export default function transactionUpdate() {
         const fetchTransaction = async ()=>{
             try{
                const response = await fetch("http://localhost:8080/transactions/" + id, {
-                                                                                                  headers:{"Content-Type":"application/json",
-                                                                                                  Authorization: 'Bearer ' + localStorage.getItem('token')},
-                                                                                                  }).then(res=>res.json()).then((result)=>{setTransaction(result);})
+                  headers:{"Content-Type":"application/json",
+                  Authorization: 'Bearer ' + localStorage.getItem('token')},
+                  }).then(res=>res.json()).then((result)=>{setTransaction(result);})
             }
             catch(error){
                 console.log(error);
@@ -59,13 +61,14 @@ const currencyArr = Object.keys(currency);
 
       const updateTransaction = (e) => {
         e.preventDefault();
+        setTempId(transaction.trip);
         fetch("http://localhost:8080/transactions/update/" + id, {
             method: "PUT",
             headers:{"Content-Type":"application/json",
             Authorization: 'Bearer ' + localStorage.getItem('token')},
             body:JSON.stringify(transaction)
         }).then((response)=>{
-            navigate('/transactions');
+            navigate('/trips/ID/' + tempId);
         }).catch((error)=>{
             console.log(error);
         })
@@ -115,7 +118,7 @@ const currencyArr = Object.keys(currency);
                   <option value="RMB">Chinese Yuan</option> */}
                 </select><br />
 
-                <br /><input type="submit" value="Update Transaction!" onClick={updateTransaction}/>
+                <br /><input type="submit" value="Update Transaction!" onClick= {updateTransaction}/>
 
             </form>
         </div>
