@@ -10,12 +10,18 @@ export default function TransactionSearch(){
 
     function searchTransaction() {
         if (sel=="name") {
-            fetch(`http://localhost:8080/transactions/searchByName?name=${q}`).then(res=>res.json()).then((result)=>{setAns(result);})
+            fetch(`http://localhost:8080/transactions/searchByName?name=${q}`, {
+                                                                                         headers:{"Content-Type":"application/json",
+                                                                                         Authorization: 'Bearer ' + localStorage.getItem('token')},
+                                                                                         }).then(res=>res.json()).then((result)=>{setAns(result);})
         } else if (sel == "amount") {
             if (isNaN(q)) {
                 console.log('error')
             } else {
-                fetch(`http://localhost:8080/transactions/searchByAmount?amount=${q}`).then(res=>res.json()).then((result)=>{setAns(result);})
+                fetch(`http://localhost:8080/transactions/searchByAmount?amount=${q}`, {
+                                                                                                 headers:{"Content-Type":"application/json",
+                                                                                                 Authorization: 'Bearer ' + localStorage.getItem('token')},
+                                                                                                 }).then(res=>res.json()).then((result)=>{setAns(result);})
             }
         }
     }

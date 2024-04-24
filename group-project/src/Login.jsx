@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export default function Login() {
     const [formData, setFormData] = useState({
-        email: '',
+        username: '',
         password: ''
     });
 
@@ -20,8 +20,9 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/capstone/users', formData);
-            console.log(response.data);
+            const response = await axios.post('http://localhost:8080/login', formData);
+            localStorage.setItem("token", response.data['token']);
+            console.log(localStorage.getItem('token'));
         } catch (error) {
             console.error('Login failed:', error);
         }
@@ -32,8 +33,8 @@ export default function Login() {
         <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" className="form-control" id="email" name="email" value={formData.email} onChange={handleChange} required />
+                    <label htmlFor="username">Username</label>
+                    <input type="username" className="form-control" id="username" name="username" value={formData.username} onChange={handleChange} required />
                 </div>
                 <br></br>
                 <div className="form-group">

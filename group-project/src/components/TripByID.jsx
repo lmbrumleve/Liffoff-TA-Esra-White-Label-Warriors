@@ -4,16 +4,16 @@ import { useNavigate, useParams, Link } from 'react-router-dom'
 
 export default function TripByID(props) {
 
-    const ID = useParams().ID
+    const { ID } = useParams()
     const [trip, setTrip] = useState([])
     const [transactions, setTransactions] = useState([])
     const navigate = useNavigate();
 
     useEffect(()=>{
         console.log(typeof ID)
-        fetch("http://localhost:8080/trips/ID/" + ID).then(res=>res.json()).then((result)=>{setTrip(result);})
-        fetch("http://localhost:8080/transactions/searchByTripID?ID=" + ID).then(res=>res.json()).then(result=>{setTransactions(result);})
-    },[])
+        fetch("http://localhost:8080/trips/ID/" + ID, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}).then(res=>res.json()).then((result)=>{setTrip(result);})
+        fetch("http://localhost:8080/transactions/searchByTripID?ID=" + ID,{headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}).then(res=>res.json()).then(result=>{setTransactions(result);})
+    },[transactions])
 
     const handleDelete = async (e,id,tripId) =>{
         e.preventDefault();
@@ -21,10 +21,14 @@ export default function TripByID(props) {
         navigate('/transactions/delete/' + id, {state:{tripId:tripId}});
     }
 
-    const handleUpdate = (e,id,name,description,amount,currency) =>{
+    const handleUpdate = (e,id,name,description,amount,currency,tripId) =>{
         e.preventDefault();
     //route dom useNavigate with state variable to be used with useLocation in other page
-        navigate('/transactions/update/' + id, {state:{transactionId:id,name:name,description:description,amount:amount,currency:currency}})
+        navigate('/transactions/update/' + id, {state:{transactionId:id,name:name,description:description,amount:amount,currency:currency,tripId:tripId}})
+    }
+
+    const convertCurrency = async (currency, amount) =>{
+        const response = await fetch("api.frankfurter.app/latest?amount=" + {amount} + "&from=" + {currency} + "&to=" + defaultCurrency);
     }
 
     return (
@@ -52,7 +56,8 @@ export default function TripByID(props) {
                 <td>{ans.description}</td>
                 <td>{ans.amount}</td>
                 <td>{ans.currency}</td>
-                <td><button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
+{/*                 <td>{convertCurrency(ans.currency, ans.amount)}</td> */}
+                <td><button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}>Update</button></td>
                 <td><button onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}>Delete</button></td>
             </tr>
             ))}
