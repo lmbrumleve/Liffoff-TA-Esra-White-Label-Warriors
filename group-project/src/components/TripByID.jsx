@@ -27,6 +27,10 @@ export default function TripByID(props) {
         navigate('/transactions/update/' + id, {state:{transactionId:id,name:name,description:description,amount:amount,currency:currency,tripId:tripId}})
     }
 
+    const convertCurrency = async (currency, amount) =>{
+        const response = await fetch("api.frankfurter.app/latest?amount=" + {amount} + "&from=" + {currency} + "&to=" + defaultCurrency);
+    }
+
     return (
     <div>
 
@@ -52,6 +56,7 @@ export default function TripByID(props) {
                 <td>{ans.description}</td>
                 <td>{ans.amount}</td>
                 <td>{ans.currency}</td>
+                <td>{convertCurrency(ans.currency, ans.amount)}</td>
                 <td><button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}>Update</button></td>
                 <td><button onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}>Delete</button></td>
             </tr>
