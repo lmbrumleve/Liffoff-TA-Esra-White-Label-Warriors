@@ -27,6 +27,26 @@ export default function Login() {
             console.error('Login failed:', error);
         }
     };
+//added
+//     const handleGoogleLogin = async () => {
+//       try {
+//         // Make a request to the backend server to initiate the Google OAuth2 flow
+//         const response = await axios.get('/auth/google');
+//         window.location.href = response.data.redirectUrl;
+//       } catch (error) {
+//         console.error('Error initiating Google login:', error);
+//       }
+//     };
+// // added
+//     const handleFacebookLogin = async () => {
+//       try {
+//         // Make a request to the backend server to initiate the Facebook OAuth2 flow
+//         const response = await axios.get('/auth/facebook');
+//         window.location.href = response.data.redirectUrl;
+//       } catch (error) {
+//         console.error('Error initiating Facebook login:', error);
+//       }
+//     };
 
     return (
         <>
@@ -45,7 +65,18 @@ export default function Login() {
                 <button type="submit" className="btn btn-primary btn-lg">Login</button>
             </form>
             <br></br>
+            {/* added */}
+            {/* <button onClick={handleGoogleLogin}>Login with Google</button> */}
+            {/* <br></br> */}
+            {/* added */}
+            {/* <button onClick={handleFacebookLogin}>Login with Facebook</button> */}
+            {/* <br></br> */}
             <Link to="/register" className="btn btn-success btn-lg">Create an Account</Link>
         </>
     );
 }
+
+/*logout:
+window.localStorage.removeItem('jwtToken');
+router.push('/login');
+*/

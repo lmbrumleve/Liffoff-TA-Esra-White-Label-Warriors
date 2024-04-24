@@ -45,16 +45,18 @@ public class SecurityConfig {
                 ).userDetailsService(userDetailsServiceImpl)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                //accessDeniedHandler (if access is denied, sets status code to 403: Forbidden and user is unauthorized
                 .exceptionHandling(
                         e->e.accessDeniedHandler(
                                         (request, response, accessDeniedException)->response.setStatus(403)
                                 )
                                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                //configures logout process
                 .logout(l->l
-                        .logoutUrl("/logout")
-                        .addLogoutHandler(logoutHandler)
+                        .logoutUrl("/logout") //sets path where logout will be performed
+                        .addLogoutHandler(logoutHandler) //(custom)logoutHandler defines actions taken during logout
                         .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()
-                        ))
+                        )) //if logout is successful, it clears security context (token destroyed), user no longer authenticated
                 .build();
     }
 

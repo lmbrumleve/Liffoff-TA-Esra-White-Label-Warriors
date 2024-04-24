@@ -18,7 +18,7 @@ const handleLogout = () => {
   // Remove JWT token from localStorage
 window.localStorage.removeItem("token");
   // Navigates to the login page
-navigate("logout");
+navigate("/logout");
 }
 
 export default class NavBar extends Component {
