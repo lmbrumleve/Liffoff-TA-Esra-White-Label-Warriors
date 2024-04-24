@@ -8,15 +8,17 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Checkbox from "@mui/material/Checkbox";
 
 export default function ExchangeRatesTable () {
+
   const [ userDefaultCurrency, setUserDefaultCurrency ] = useState("USD");
   const [date, setDate] = useState("");
   const [exchangeRates, setExchangeRates] = useState("");
+  const [currencyExchangeRates, setCurrencyExchangeRates] = useState([])
 
 
   // const [ targetCurrency, setUserTargetCurrency ] = useState("AUD");
     // var userDefaultCurrency = "USD";
     const today = new Date();
-    console.log(today);
+    // console.log(today);
     var yesterday = new Date();
     yesterday.setDate(today.getDate() - 7);
     // console.log(yesterday);
@@ -44,14 +46,22 @@ export default function ExchangeRatesTable () {
           fetchExchangeRates();
       }, []);
 
+      useEffect(() => {
+        setCurrencyExchangeRates(Object.keys(exchangeRates));
+
+      }, [exchangeRates])
   
-console.log(exchangeRates);
+// console.log(Object.keys(exchangeRates));
+
+console.log(currencyExchangeRates)
+
+
 
 //DETERMINE CHANGE OF RATE
 
   //  FETCH YESTERDAY'S RATE
   const year = yesterday.getFullYear();
-  console.log(year);
+  // console.log(year);
   var yesterdayDate = yesterday.getDate();
   if (yesterdayDate.toString().length === 1) {
     yesterdayDate = "0" + yesterdayDate;
@@ -90,23 +100,23 @@ console.log(exchangeRates);
   var yesterdayAllRates = [];
 
   const yearToday = today.getFullYear();
-  console.log(yearToday);
+  // console.log(yearToday);
   var todayDate = today.getDate();
   if (todayDate.toString().length === 1) {
     todayDate = "0" + todayDate;
   }
-  console.log(todayDate);
+  // console.log(todayDate);
   var todayMonth = today.getMonth() + 1;
   if (todayMonth.toString().length === 1) {
     todayMonth = "0" + todayMonth.toString();
-    console.log(todayMonth);
+    // console.log(todayMonth);
   }
 
   for(let i=0; i<Object.keys(exchangeRates).length; i++) {
   targetCurrency = Object.keys(exchangeRates)[i];
   targetExchangeRate = exchangeRates[`${targetCurrency}`];
   // console.log(targetCurrency);
-  console.log(targetExchangeRate)
+  // console.log(targetExchangeRate)
 
   targetRateObj =
   {

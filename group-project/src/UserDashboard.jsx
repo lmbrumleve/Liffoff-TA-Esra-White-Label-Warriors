@@ -5,6 +5,7 @@ import {Chart as ChartJS} from 'chart.js/auto'
 import {Doughnut} from 'react-chartjs-2'
 import LiveExchangeRates from "./components/LiveExchangeRates.jsx";
 import NavBar from "./components/NavBar.jsx";
+import { useEffect, useState } from "react";
 
 export default function UserDashboard(props) {return (
     <>
