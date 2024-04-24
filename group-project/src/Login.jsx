@@ -27,7 +27,7 @@ export default function Login() {
             console.error('Login failed:', error);
         }
     };
-added
+// added
     const handleGoogleLogin = async () => {
       try {
         // Make a request to the backend server to initiate the Google OAuth2 flow
@@ -65,16 +65,13 @@ added
                 <button type="submit" className="btn btn-primary btn-lg">Login</button>
             </form>
             <br></br>
-            <button onClick={handleGoogleLogin}>Login with Google</button> */
+            <button className="btn btn-secondary btn-lg" onClick={handleGoogleLogin}>Login with Google</button>
             <br></br>
-            <button onClick={handleFacebookLogin}>Login with Facebook</button>
+            <br></br>
+            <button className="btn btn-secondary btn-lg" onClick={handleFacebookLogin}>Login with Facebook</button>
             <br></br> 
+            <br></br>
             <Link to="/register" className="btn btn-success btn-lg">Create an Account</Link>
         </>
     );
 }
-
-/*logout:
-window.localStorage.removeItem('jwtToken');
-router.push('/login');
-*/
