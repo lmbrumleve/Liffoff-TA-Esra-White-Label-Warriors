@@ -9,6 +9,18 @@ import {
 } from "react-router-dom";
 import UserDashboard from '../UserDashboard';
 
+/*logout:
+window.localStorage.removeItem('jwtToken');
+router.push('/login');
+*/
+const handleLogout = () => {
+  const navigate = useNavigate();
+  // Remove JWT token from localStorage
+window.localStorage.removeItem("token");
+  // Navigates to the login page
+navigate("logout");
+}
+
 export default class NavBar extends Component {
     render() {
         return (
@@ -31,7 +43,7 @@ export default class NavBar extends Component {
               <NavDropdown.Item as={Link} to="/transactions">Transactions</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/transactions/add">New Transaction</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
+              <NavDropdown.Item onClick={handleLogout}>
                 Log Out
               </NavDropdown.Item>
             </NavDropdown>
@@ -40,10 +52,9 @@ export default class NavBar extends Component {
             </Nav.Link> */}
           </Nav>
           <Nav.Link  as={Link} to={"/login"}>
-          <Button className="loginbutton" variant="info">Login</Button>
+          <Button className="loginbutton" variant="submit">Login</Button>
           <Nav
             className="loginbutton"
-            style={{border: "1px solid blue"}}
           />
           </Nav.Link>
         </Navbar.Collapse>
