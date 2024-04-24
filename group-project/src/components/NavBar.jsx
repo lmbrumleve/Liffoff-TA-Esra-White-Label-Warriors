@@ -9,20 +9,11 @@ import {
 } from "react-router-dom";
 import UserDashboard from '../UserDashboard';
 
-/*logout:
-window.localStorage.removeItem('jwtToken');
-router.push('/login');
-*/
-const handleLogout = () => {
-  const navigate = useNavigate();
-  // Remove JWT token from localStorage
-window.localStorage.removeItem("token");
-  // Navigates to the login page
-navigate("logout");
-}
-
 export default class NavBar extends Component {
     render() {
+      const handleLogout = () => {
+        window.localStorage.removeItem("token");
+        }
         return (
             // <Router>
             <div>
