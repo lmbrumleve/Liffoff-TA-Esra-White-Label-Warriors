@@ -5,24 +5,32 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Link
+    Link,
+    useNavigate
 } from "react-router-dom";
 import UserDashboard from '../UserDashboard';
+
+
+
+export default class NavBar extends Component {
+
+    render() {
 
 /*logout:
 window.localStorage.removeItem('jwtToken');
 router.push('/login');
 */
 const handleLogout = () => {
-  const navigate = useNavigate();
+    console.log('a1');
+//  const navigate = useNavigate();
   // Remove JWT token from localStorage
 window.localStorage.removeItem("token");
   // Navigates to the login page
-navigate("logout");
+//navigate("/logout");
 }
 
-export default class NavBar extends Component {
-    render() {
+
+
         return (
             // <Router>
             <div>

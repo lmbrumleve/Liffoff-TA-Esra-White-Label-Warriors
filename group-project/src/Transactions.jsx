@@ -29,7 +29,8 @@ export default function Transactions(props) {
     useEffect(()=>{
             setIsLoading(true)
 //            fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
-
+            console.log("first useeffect");
+            console.log(localStorage.getItem('token'));
             fetch("http://localhost:8080/transactions/getAll", {
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,6 +53,7 @@ export default function Transactions(props) {
 // console.log(transactions)
 
     useEffect(()=>{
+        console.log("second useeffect")
         const newArr = []
         for(let i=0; i<transactions.length; i++) {
             // console.log(transactions[i]["favorite"])
