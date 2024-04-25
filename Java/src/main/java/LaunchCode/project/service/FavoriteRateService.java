@@ -6,6 +6,7 @@ import LaunchCode.project.models.Trip;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface FavoriteRateService {
@@ -18,5 +19,7 @@ public interface FavoriteRateService {
 
     List<FavoriteRate> getAllFavoriteRates();
     List<FavoriteRate> findByUsername(String username);
+
+    Optional<FavoriteRate> favoriteRateById(int id);
 
 }

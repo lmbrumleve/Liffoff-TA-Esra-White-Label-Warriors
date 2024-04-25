@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FavoriteRateServiceImpl implements FavoriteRateService{
@@ -44,4 +45,7 @@ public class FavoriteRateServiceImpl implements FavoriteRateService{
     public List<FavoriteRate> findByUsername(String username) {
         return favoriteRateRepository.queryByUsername(username);
     }
+
+    @Override
+    public Optional<FavoriteRate> favoriteRateById(int id) {return favoriteRateRepository.findById(id);}
 }

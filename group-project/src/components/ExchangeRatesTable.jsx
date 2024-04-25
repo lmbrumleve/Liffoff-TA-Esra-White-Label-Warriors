@@ -6,6 +6,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Checkbox from "@mui/material/Checkbox";
+import checked from "@mui/material/Checkbox";
 import { jwtDecode } from 'jwt-decode';
 import { Token } from '@mui/icons-material';
 import { id } from 'date-fns/locale';
@@ -20,23 +21,22 @@ export default function ExchangeRatesTable () {
   const [favoriteByUsername, setFavoriteByUsername] = useState({})
   const[checkedState, setCheckedState] = useState([]);
   const[isLoading, setIsLoading] = useState(false);
-  const[jwtToken, setJwtToken] = useState("");
-  const[transactions, setTransactions] = useState({})
 
 
      
-//   useEffect(()=>{
-//     const newArr = []
-//     for(let i=0; i<favorite.length; i++) {
-//         // console.log(favorite[i]["favorite"])
-//         newArr.push(favorite[i]["favorite"] === false ? false : true)
-//     // console.log(newArr);
-//     }
-//     setCheckedState(newArr);
-//     // console.log(checkedState)
-// }, [favorite])
+  useEffect(()=>{
+    const newArr = []
+    for(let i=0; i<favoriteByUsername.length; i++) {
+        // console.log(favorite[i]["favorite"])
+        newArr.push(favoriteByUsername[i]["favorite"] === false ? false : true)
+    // console.log(newArr);
+    }
+    setCheckedState(newArr);
+    // console.log(checkedState)
+}, [favoriteByUsername])
 
 // console.log(checkedState)
+
   
     useEffect(() => {
         if (localStorage.getItem('token') != undefined) {
@@ -47,6 +47,17 @@ export default function ExchangeRatesTable () {
       console.log(username)
       // console.log(localStorage.getItem("token"))
 
+      useEffect(()=>{
+  
+    fetch("http://localhost:8080/favorite/entries", {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+    }).then(res=>res.json()).then((result)=>{setFavoriteByUsername(result);})
+        console.log(favoriteByUsername)
+  
+  },[favoriteByUsername])
 
   // const [ targetCurrency, setUserTargetCurrency ] = useState("AUD");
     // var userDefaultCurrency = "USD";
@@ -150,7 +161,7 @@ console.log(currencyExchangeRates)
   targetExchangeRate = exchangeRates[`${targetCurrency}`];
   // console.log(targetCurrency);
   // console.log(targetExchangeRate)
-
+console.log(favoriteByUsername)
   targetRateObj =
   {
     // amount: `${amount}`,
@@ -159,7 +170,8 @@ console.log(currencyExchangeRates)
     currencyCode: `${targetCurrency}`,
     rate: `${targetExchangeRate}`,
     favorite: false,
-    username: `${username}`
+    username: `${username}`,
+    id: `${favoriteByUsername.id}`
 }
 
 // console.log(targetRateObj);
@@ -198,7 +210,7 @@ if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
     // console.log(allRates);
 
 }
-console.log(allRates)
+// console.log(allRates)
 
 useEffect(() => {
   // const FavoriteRate = {username: allRates.username, currencyCode: allRates.currencyCode, favorite:allRates.favorite}
@@ -225,40 +237,30 @@ try {
 }
 }, [allRates])
 
-useEffect(()=>{
-      
-  fetch("http://localhost:8080/favorite/entries", {
+
+console.log(allRates)
+
+  //Handle Click for Favorite Buttons
+  const handleFavorite = async (e, id, favorite) => {
+    await fetch("http://localhost:8080/favorite/" + id, {
       headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + localStorage.getItem('token')
       }
   }).then(res=>res.json()).then((result)=>{setFavoriteByUsername(result);})
-      console.log(favoriteByUsername)
+console.log(favoriteByUsername);
+    const arr = []
+    for(let i=0; i<favoriteByUsername.length; i++) {
+        // console.log(allRates[i]["favorite"])
+        arr.push(favoriteByUsername[i]["favorite"] === false ? false : true)
+    console.log(favoriteByUsername[i]["favorite"]);
+    }
+    setCheckedState(arr);
+    // console.log(checkedState);
 
-},[favoriteByUsername])
-
-
-// console.log(favorite)
-
-  //Handle Click for Favorite Buttons
-  const handleFavorite = async (e) => {
-    e.preventDefault();
-
-// };
-
-    // fetch("http://localhost:8080/favorite/getAll", {
-    //                                                          headers:{"Content-Type":"application/json",
-    //                                                                  Authorization: 'Bearer ' + localStorage.getItem('token')},
-    //                                                          }).then(res=>res.json()).then((result)=>{setFavorite(result)}).then(console.log(result));
-
-  //   const arr = []
-  //   for(let i=0; i<allRates.length; i++) {
-  //       // console.log(allRates[i]["favorite"])
-  //       arr.push(allRates[i]["favorite"] === false ? false : true)
-  //   console.log(arr);
-  //   }
-  //   setCheckedState(arr);
-  //   console.log(checkedState)
+    for(let i=0; i<allRates.length; i++) {
+      allRates[i].favorite = favoriteByUsername[i].favorite;
+    }
     
   }
 
@@ -281,11 +283,11 @@ useEffect(()=>{
                                          
                   <FormControlLabel
                           control = {
-                              <Checkbox 
+                              <Checkbox value={checked[data.id]}
                                   icon = {<FavoriteBorderIcon />}
                                   checkedIcon = {<FavoriteIcon />}
                                   checked = {data.favorite}
-                                  onClick = {(e)=>handleFavorite(e)}
+                                  onClick = {(e)=>handleFavorite(e, data.id, data.favorite)}
 
                       />
                       }
