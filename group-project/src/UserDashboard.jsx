@@ -10,22 +10,10 @@ import { useEffect, useState } from "react";
 export default function UserDashboard(props) {return (
     <>
         <NavBar/>
-        <Header />
-        <p>Enter Test Information</p>
-        <p>Previous Test Entry: {props.test1}</p>
-        <form method = "POST">
-            <input type = "text" name = "test1"/>
-            <input type = "submit" />
-        </form>
-        <Doughnut
-            data={{
-                labels:["A","B","C"],
-                datasets:[{
-                    label:"Revenue",
-                    data:[200,300,400],
-                },],
-            }}
-        />
+        <br></br>
+        <br></br>
+        <br></br>
+
         <h1>Live Exchange Rates</h1>
         <ExchangeRatesTable/>
 

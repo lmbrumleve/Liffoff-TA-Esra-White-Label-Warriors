@@ -13,9 +13,6 @@ import { set } from "date-fns/fp/set";
 
 export default function Transactions(props) {
 
-
-
-
     const[transactions, setTransactions] = useState([])
     const[transaction, setTransaction] = useState({})
     const[isLoading, setIsLoading] = useState(false)
@@ -97,13 +94,7 @@ const handleFavorite = async (e,id,position) => {
                                                                      Authorization: 'Bearer ' + localStorage.getItem('token')},
                                                              }).then(res=>res.json()).then((result)=>{setTransactions(result);})
 
-    // setIsChecked(checked[id]= !isChecked);
-//     const updatedCheckedState = checkedState.map((item, index) =>
-//     index === position ? !item : item
-// );
-//     setCheckedState(updatedCheckedState);
-    // console.log(updatedCheckedState)
-    // setCheckedState(checkedState);
+
     const arr = []
     for(let i=0; i<transactions.length; i++) {
         // console.log(transactions[i]["favorite"])
@@ -140,8 +131,7 @@ const handleFavorite = async (e,id,position) => {
                     <th></th>
                     <th>Favorite</th>
                 </tr>
-                {console.log(transactions)}
-                {transactions.map((ans, index)=>(
+                {transactions.map((ans)=>(
                 <tr>
                     <td>{ans.id}</td>
                     <td>{ans.name}</td>
@@ -159,7 +149,7 @@ const handleFavorite = async (e,id,position) => {
                                     checkedIcon = {<FavoriteIcon />}
                                     // checked = {ans.favorite === false ? false : true}
                                     checked = {ans.favorite}
-                                    onClick = {(e)=>handleFavorite(e, ans.id, ans.favorite, index)}
+                                    onClick = {(e)=>handleFavorite(e, ans.id, ans.favorite)}
                                     // onValueChange={(newValue) => { setChecked({...checked, [ans.id]: newValue}) }}
 
                         />

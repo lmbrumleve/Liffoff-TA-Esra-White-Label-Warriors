@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import NavBar from "./NavBar.jsx";
 import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios';
-
 
 export default function UserRegistration() {
     const [formData, setFormData] = useState({
@@ -13,34 +12,7 @@ export default function UserRegistration() {
         role: ''
     });
 
-    const [exchangeRates, setExchangeRates] = useState("");
-  const [currencyExchangeRates, setCurrencyExchangeRates] = useState([])
-  const userDefaultCurrency = "USD"
-
-
-      //FETCH RATES for exchange rates repository:
-
-  const fetchExchangeRates = async () => {
-    await axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
-        setExchangeRates(res.data.rates);
-    });
-};
-
-    useEffect(() => {
-        fetchExchangeRates();
-    }, []);
-
-    useEffect(() => {
-      setCurrencyExchangeRates(Object.keys(exchangeRates));
-
-    }, [exchangeRates])
-
-// console.log(Object.keys(exchangeRates));
-
-console.log(currencyExchangeRates);
-
-//
-
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevstate => ({
