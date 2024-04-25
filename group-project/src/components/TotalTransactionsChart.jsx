@@ -343,7 +343,7 @@ export default function TotalTransactionsChart(){
 
     return(
     <>
-    <h2>hello</h2>
+    <h2>Total Transactions</h2>
         <Doughnut
             data={{
               labels: totalTransactions.map((data)=> data.currency),
