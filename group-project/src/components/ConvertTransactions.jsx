@@ -40,6 +40,10 @@ import Header from "./Header.jsx"
 
         return(
             <>
+                <Link to="/transactions">| Back to Transactions |</Link>
+                <Link to="/transactions/chart">| Chart Breakdown |</Link>
+
+
                 <h2>Convert Currency Here!</h2>
 
                 <form method="POST">

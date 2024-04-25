@@ -343,6 +343,9 @@ export default function TotalTransactionsChart(){
 
     return(
     <>
+                <Link to="/transactions">| Back to Transactions |</Link>
+                <Link to="/transactions/convert">| Convert! |</Link>
+
     <h2>Total Transactions</h2>
         <Doughnut
             data={{
