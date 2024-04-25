@@ -5,6 +5,7 @@ import Header from "./Header.jsx"
     export default function convertTransactions(props){
         const [rate, setRate] = useState(0);
         const [number, setNumber] = useState(0);
+        const [currency, setCurrency] = useState([]);
         const [convertTransaction, setConvertTransaction] = useState({
             amount: 0,
             start: "",
@@ -17,6 +18,21 @@ import Header from "./Header.jsx"
         useEffect(()=>{
             setNumber(rate);
         },[rate])
+
+        useEffect(() => {
+        const fetchCurrency = async () => {
+            try{
+                const response = await fetch("https://api.frankfurter.app/currencies").then(res=>res.json()).then((result)=>{setCurrency(result);})
+             }
+             catch(error){
+                 console.log(error);
+             }
+
+              };
+                fetchCurrency();
+        }, []);
+
+        const currencyArr = Object.keys(currency);
 
         const convertT = async (e) =>{
             e.preventDefault();
@@ -38,6 +54,7 @@ import Header from "./Header.jsx"
             console.log(convertTransaction);
         }
 
+
         return(
             <>
                 <Link to="/transactions">| Back to Transactions |</Link>
@@ -53,26 +70,36 @@ import Header from "./Header.jsx"
 
                 <label for="start">Starting Currency</label><br />
                 <select id="start" name="start" onChange = {(e)=>handleChange(e)}>
-                  <option value="">-</option>
-                  <option value="USD">US Dollar</option>
-                  <option value="MXN">Mexican Peso</option>
-                  <option value="CAD">Canadian Dollar</option>
-                  <option value="EUR">Euro</option>
-                  <option value="GBP">British Pound</option>
-                  <option value="JPY">Japanese Yen</option>
-                  <option value="RMB">Chinese Yuan</option>
+                      {currencyArr.map((ans) => {
+                          return (
+                          <option value={ans}>{ans}</option>
+                          )
+                          })}
+{/*                   <option value="">-</option> */}
+{/*                   <option value="USD">US Dollar</option> */}
+{/*                   <option value="MXN">Mexican Peso</option> */}
+{/*                   <option value="CAD">Canadian Dollar</option> */}
+{/*                   <option value="EUR">Euro</option> */}
+{/*                   <option value="GBP">British Pound</option> */}
+{/*                   <option value="JPY">Japanese Yen</option> */}
+{/*                   <option value="RMB">Chinese Yuan</option> */}
                 </select><br />
 
                 <label for="end">Convert To</label><br />
                 <select id="end" name="end" onChange = {(e)=>handleChange(e)}>
-                  <option value="">-</option>
-                  <option value="USD">US Dollar</option>
-                  <option value="MXN">Mexican Peso</option>
-                  <option value="CAD">Canadian Dollar</option>
-                  <option value="EUR">Euro</option>
-                  <option value="GBP">British Pound</option>
-                  <option value="JPY">Japanese Yen</option>
-                  <option value="RMB">Chinese Yuan</option>
+                      {currencyArr.map((ans) => {
+                          return (
+                          <option value={ans}>{ans}</option>
+                          )
+                          })}
+{/*                   <option value="">-</option> */}
+{/*                   <option value="USD">US Dollar</option> */}
+{/*                   <option value="MXN">Mexican Peso</option> */}
+{/*                   <option value="CAD">Canadian Dollar</option> */}
+{/*                   <option value="EUR">Euro</option> */}
+{/*                   <option value="GBP">British Pound</option> */}
+{/*                   <option value="JPY">Japanese Yen</option> */}
+{/*                   <option value="RMB">Chinese Yuan</option> */}
                 </select><br />
 
                 <br /><input type="submit" value="Convert!" onClick={convertT}/>
