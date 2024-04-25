@@ -81,7 +81,7 @@ export default function Transactions(props) {
     const handleUpdate = (e,id,name,description,amount,currency) =>{
         e.preventDefault();
     //route dom useNavigate with state variable to be used with useLocation in other page
-        navigate('/transactions/update/' + id, {state:{transactionId:id,name:name,description:description,amount:amount,currency:currency}})
+        navigate('/transactions/update2/' + id, {state:{transactionId:id,name:name,description:description,amount:amount,currency:currency}})
     }
     //buttons used to find by id through @queryParam & to pass data to update page
 
