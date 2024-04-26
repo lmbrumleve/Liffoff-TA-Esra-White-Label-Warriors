@@ -32,6 +32,7 @@ import TripUpdate from "./components/TripUpdate.jsx"
 import TripDelete from "./components/TripDelete.jsx"
 import HandleUpdate2 from "./components/HandleUpdate2.jsx"
 
+
 const router = createBrowserRouter([
     {
             path: "/",
