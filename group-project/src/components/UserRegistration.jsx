@@ -81,7 +81,7 @@ export default function UserRegistration() {
             </div>
             <br />
 
-            <input type="submit" onClick={handleSubmit}/>
+            <button className="btn btn-success btn-lg" onClick={handleSubmit}>Register</button>
         </form>
     </div>
     );
