@@ -90,9 +90,9 @@ const handleFavorite = async (e,id,position) => {
     })
 
     fetch("http://localhost:8080/transactions/getAll", {
-                                                             headers:{"Content-Type":"application/json",
-                                                                     Authorization: 'Bearer ' + localStorage.getItem('token')},
-                                                             }).then(res=>res.json()).then((result)=>{setTransactions(result);})
+        headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')},
+        }).then(res=>res.json()).then((result)=>{setTransactions(result);})
 
 
     const arr = []

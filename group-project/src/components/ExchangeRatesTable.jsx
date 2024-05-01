@@ -55,6 +55,28 @@ useEffect(() => {
 const currencyArr = Object.keys(currencies);
 console.log(currencyArr)
 
+//Get current data from favorite rates table in database (first time will be empty)
+const fetchFavoriteByUsername = async () => {
+try{
+const response = await fetch("http://localhost:8080/favorite/entries", {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+    }).then(res=>res.json()).then((result)=>{setFavoriteByUsername(result);})
+            
+    } catch (error) {
+      console.error("Failed to fetch: ", error);
+    }
+  
+  }
+
+  useEffect(() => {
+    fetchFavoriteByUsername();
+  }, [])
+
+  console.log(favoriteByUsername)
+
 //Create favorite rates object for favorite rates table in the database
 
 let favoriteRate;
@@ -68,29 +90,7 @@ for (let i=0; i<currencyArr.length; i++){
       };
       favoriteRateArr.push(favoriteRate);
     }
-
-//Get data from favorite rates table in database
-const fetchFavoriteByUsername = async () => {
-try{
-const response = await fetch("http://localhost:8080/favorite/entries", {
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.getItem('token')
-        }
-    }).then(res=>res.json()).then((result)=>{setFavoriteByUsername(result);})
-        console.log(favoriteByUsername)
-            
-    } catch (error) {
-      console.error('Registration failed:', error);
-    }
-  
-  }
-
-  useEffect(() => {
-    fetchFavoriteByUsername();
-
-  }, [])
-  console.log(favoriteByUsername)
+console.log(favoriteRateArr)
 
 //Put favorite rates object in the favorite rates table in database initial time (if needed)
 
@@ -100,7 +100,7 @@ for(let i=0; i<currencyArr.length; i++){
 //   // console.log(favoriteRateArr[i])
 //   // console.log(favoriteByUsername.length)
 
-//   //if there is no data in the table, add the favoriteRateArr data to the favorite rates table in database
+//if there is no data in the table, add the favoriteRateArr data to the favorite rates table in database
   if(favoriteByUsername.length === 0){
 
     fetch("http://localhost:8080/favorite/add", {
@@ -112,36 +112,17 @@ for(let i=0; i<currencyArr.length; i++){
       },
         body:JSON.stringify(favoriteRateArr[i])
     })
-
-  //  } else if (databaseUsername === browserUsername) {
-  //   console.log(databaseUsername)
-  //   console.log(browserUsername)
-  // }
-//if there is data in the favorite rates table in the database, add the favoriteRateArr to the table only if it is not already there
-//   } else if (favoriteByUsername[i]["username"] != favoriteRateArr[i]["username"]) {
-//       fetch("http://localhost:8080/favorite/add", {
-
-//       method:"POST",
-//       headers:{
-//           "Content-Type":"application/json",
-//           Authorization: 'Bearer ' + localStorage.getItem('token')
-//         },
-//           body:JSON.stringify(favoriteRateArr[i])
-      
-// })
-// }
   
 }
 
 }
 }
 useEffect (() => { 
-postFavoriteRateArr()
+postFavoriteRateArr();
+fetchFavoriteByUsername();
 }, []);
+console.log(favoriteByUsername)
 //       console.log(favoriteRateArr)
-
-
-
 
 
     const today = new Date();
@@ -235,6 +216,8 @@ postFavoriteRateArr()
     // console.log(todayMonth);
   }
 
+  console.log(Object.keys(exchangeRates).length)
+
   for(let i=0; i<Object.keys(exchangeRates).length; i++) {
   targetCurrency = Object.keys(exchangeRates)[i];
   targetExchangeRate = exchangeRates[`${targetCurrency}`];
@@ -250,7 +233,6 @@ postFavoriteRateArr()
     rate: `${targetExchangeRate}`,
     favorite: false,
     username: `${username}`,
-    id: `${favoriteByUsername.id}`
 }
 
 // console.log(targetRateObj);
@@ -283,54 +265,26 @@ if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
   targetRateObj.rateIncrease = "no change"
 }
 // console.log(targetRateObj);
-
+// console.log(favoriteByUsername[i].currencyCode)
+// console.log(targetRateObj.currencyCode)
+    for(let j=0; j<favoriteByUsername.length; j++){
+      if (targetRateObj.username === favoriteByUsername[j].username){
+        for(let k=0; k<favoriteByUsername.length; k++) {
+          if (targetRateObj.currencyCode === favoriteByUsername[k].currencyCode) {
+            targetRateObj.id = favoriteByUsername[k].id;
+          }
+        }
+      }
+    }
+// if (targetRateObj.currencyCode === favoriteByUsername[i].currencyCode && targetRateObj.username === favoriteByUsername[i].username) {
+//   targetRateObj.id = favoriteByUsername[i].id;
+// }
     allRates.push(targetRateObj);
     JSON.stringify(allRates);
     // console.log(allRates);
 
 }
-// console.log(allRates)
-
-//If it is a new user, add username + currency codes + favorites to the database. 
-//Note: In backend service layer, saveFavoriteRate will only save 30 objects per username.
-// useEffect(() => {
-// let favoriteRate;
-// console.log(favoriteByUsername)
-
-// for(let i=0; i<allRates.length; i++) {
-
-// if ((favoriteByUsername["username"] === username) && 
-//   (favoriteByUsername[`currencyCode`] != allRates[i]["currencyCode"])) {
-
-//     const favoriteRate = {
-//       username: allRates[i].username, 
-//       currencyCode: allRates[i].currencyCode, 
-//       favorite: allRates[i].favorite
-//     };
-//     console.log(favoriteRate)
-
-//     try {
-//       fetch("http://localhost:8080/favorite/add", {
-    
-//               method:"POST",
-//               headers:{
-//                   "Content-Type":"application/json",
-//                   Authorization: 'Bearer ' + localStorage.getItem('token')
-//                 },
-//                   body:JSON.stringify(favoriteRate)
-              
-//       })
-    
-    
-//     } catch (error) {
-//       console.error('Registration failed:', error);
-//     }
-    
-//     }
-
-// } 
-// // }, [])
-// // console.log(allRates)
+console.log(allRates)
 
   //Handle Click for Favorite Buttons
   const handleFavorite = async (e, id, favorite) => {
@@ -342,18 +296,18 @@ if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
   }).then(res=>res.json()).then((result)=>{setFavoriteByUsername(result);})
 console.log(favoriteByUsername);
 
-    const arr = []
-    for(let i=0; i<favoriteByUsername.length; i++) {
-        // console.log(allRates[i]["favorite"])
-        arr.push(favoriteByUsername[i]["favorite"] === false ? false : true)
-    console.log(favoriteByUsername[i]["favorite"]);
-    }
-    setCheckedState(arr);
-    // console.log(checkedState);
+    // const arr = []
+    // for(let i=0; i<favoriteByUsername.length; i++) {
+    //     // console.log(allRates[i]["favorite"])
+    //     arr.push(favoriteByUsername[i]["favorite"] === false ? false : true)
+    // console.log(favoriteByUsername[i]["favorite"]);
+    // }
+    // setCheckedState(arr);
+    // // console.log(checkedState);
 
-    for(let i=0; i<allRates.length; i++) {
-      allRates[i].favorite = favoriteByUsername[i].favorite;
-    }
+    // for(let i=0; i<allRates.length; i++) {
+    //   allRates[i].favorite = favoriteByUsername[i].favorite;
+    // }
     
   }
 
