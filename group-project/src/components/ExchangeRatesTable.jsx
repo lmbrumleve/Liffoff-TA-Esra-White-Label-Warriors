@@ -271,6 +271,7 @@ if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
         for(let k=0; k<favoriteByUsername.length; k++) {
           if (targetRateObj.currencyCode === favoriteByUsername[k].currencyCode) {
             targetRateObj.id = favoriteByUsername[k].id;
+            targetRateObj.favorite = favoriteByUsername[k].favorite;
           }
         }
       }
@@ -284,19 +285,6 @@ if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
 }
 console.log(allRates)
 
-useEffect(()=>{
-  const newArr = []
-  for(let i=0; i<favoriteByUsername.length; i++) {
-      // console.log(transactions[i]["favorite"])
-      newArr.push(favoriteByUsername[i]["favorite"] === false ? false : true)
-  // console.log(newArr);
-  }
-  setCheckedState(newArr);
-  // console.log(checkedState)
-}, [favoriteByUsername])
-
-console.log(checkedState)
-
   //Handle Click for Favorite Buttons
   const handleFavorite = async (e, id, favorite) => {
 
@@ -304,7 +292,7 @@ await fetch("http://localhost:8080/favorite/" + id, {
   method: "PUT",
   headers:{"Content-Type":"application/json",
           Authorization: 'Bearer ' + localStorage.getItem('token')},
-  body:JSON.stringify(favoriteByUsernameId)
+  body:JSON.stringify(favoriteRate)
 }).then((response)=>{
 
 }).catch((error)=>{
@@ -319,33 +307,21 @@ await fetch("http://localhost:8080/favorite/entries", {
 
 console.log(favoriteByUsername)
 
-    const arr = []
-    for(let i=0; i<favoriteByUsername.length; i++) {
-    //     // console.log(allRates[i]["favorite"])
-        arr.push(favoriteByUsername[i]["favorite"] === false ? false : true)
-    console.log(favoriteByUsername[i]["favorite"]);
-    }
-    setCheckedState(arr);
-    console.log(checkedState);
-
     console.log(allRates)
     console.log(favoriteByUsername)
 
-    for(let j=0; allRates.length; j++){
-      const allRatesUsername = allRates[j].username
-      const favoriteByUsernameUsername = favoriteByUsername[j].username
-      console.log(allRatesUsername + " and " + favoriteByUsernameUsername)
-      if(allRatesUsername === favoriteByUsernameUsername) { 
-        for(let i=0; i<allRates.length; i++) {
-          if(allRates[i].id === favoriteByUsername[i].id) {
-          allRates[i].favorite = favoriteByUsername[i].favorite;
-          }
+    for(let j=0; allRates.length-1; j++){
+      console.log(allRates[j]["id"])
+      const allRatesId = allRates[j].id
+      const favoriteByUsernameId = favoriteByUsername[j].id
+      if(allRatesId === favoriteByUsernameId) { 
+          allRates[j].favorite = favoriteByUsername[j].favorite;
         }
       }
-    }
+    
   console.log(allRates)
     
-  }
+}
 
     return(
         <>
@@ -358,6 +334,7 @@ console.log(favoriteByUsername)
           <th>Change</th>
         </tr> 
       </thead>
+      {console.log(allRates)}
         {allRates?.map((data) =>{
             return (
                 <tbody>
