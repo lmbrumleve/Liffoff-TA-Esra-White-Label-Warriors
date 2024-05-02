@@ -30,8 +30,10 @@ public class FavoriteRateServiceImpl implements FavoriteRateService{
     }
     @Override
     public void updateFavoriteRate(FavoriteRate favoriteRate, int id){
+        System.out.println(favoriteRate.getFavorite());
+        System.out.println(id);
         FavoriteRate favoriteRate1 = favoriteRateRepository.findById(id).get();
-        favoriteRate1.setFavorite(favoriteRate.getFavorite());
+        favoriteRate1.setFavorite(!favoriteRate1.getFavorite());
         favoriteRateRepository.save(favoriteRate1);
         }
 

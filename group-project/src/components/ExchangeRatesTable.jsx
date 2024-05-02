@@ -21,7 +21,8 @@ export default function ExchangeRatesTable () {
   const [favoriteByUsername, setFavoriteByUsername] = useState({})
   const[checkedState, setCheckedState] = useState([]);
   const[isLoading, setIsLoading] = useState(false);
-  const[currencies, setCurrencies] = useState([])
+  const[currencies, setCurrencies] = useState([]);
+  const[favoriteByUsernameId, setFavoriteByUsernameId] = useState({});
 
 
 //Use jwtDecode to get username from token in local storage
@@ -98,10 +99,10 @@ console.log(favoriteRateArr)
 const postFavoriteRateArr = () => {
 for(let i=0; i<currencyArr.length; i++){
 //   // console.log(favoriteRateArr[i])
-//   // console.log(favoriteByUsername.length)
+  // console.log(favoriteByUsername.length)
 
 //if there is no data in the table, add the favoriteRateArr data to the favorite rates table in database
-  if(favoriteByUsername.length === 0){
+  if(favoriteByUsername.length === 0){ 
 
     fetch("http://localhost:8080/favorite/add", {
 
@@ -115,13 +116,13 @@ for(let i=0; i<currencyArr.length; i++){
   
 }
 
-}
+} 
 }
 useEffect (() => { 
 postFavoriteRateArr();
 fetchFavoriteByUsername();
 }, []);
-console.log(favoriteByUsername)
+console.log(favoriteByUsername);
 //       console.log(favoriteRateArr)
 
 
@@ -264,9 +265,7 @@ if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
 } else {
   targetRateObj.rateIncrease = "no change"
 }
-// console.log(targetRateObj);
-// console.log(favoriteByUsername[i].currencyCode)
-// console.log(targetRateObj.currencyCode)
+
     for(let j=0; j<favoriteByUsername.length; j++){
       if (targetRateObj.username === favoriteByUsername[j].username){
         for(let k=0; k<favoriteByUsername.length; k++) {
@@ -276,9 +275,8 @@ if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
         }
       }
     }
-// if (targetRateObj.currencyCode === favoriteByUsername[i].currencyCode && targetRateObj.username === favoriteByUsername[i].username) {
-//   targetRateObj.id = favoriteByUsername[i].id;
-// }
+
+// console.log(targetRateObj)
     allRates.push(targetRateObj);
     JSON.stringify(allRates);
     // console.log(allRates);
@@ -286,28 +284,66 @@ if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
 }
 console.log(allRates)
 
+useEffect(()=>{
+  const newArr = []
+  for(let i=0; i<favoriteByUsername.length; i++) {
+      // console.log(transactions[i]["favorite"])
+      newArr.push(favoriteByUsername[i]["favorite"] === false ? false : true)
+  // console.log(newArr);
+  }
+  setCheckedState(newArr);
+  // console.log(checkedState)
+}, [favoriteByUsername])
+
+console.log(checkedState)
+
   //Handle Click for Favorite Buttons
   const handleFavorite = async (e, id, favorite) => {
-    await fetch("http://localhost:8080/favorite/" + id, {
-      headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.getItem('token')
-      }
+
+await fetch("http://localhost:8080/favorite/" + id, {
+  method: "PUT",
+  headers:{"Content-Type":"application/json",
+          Authorization: 'Bearer ' + localStorage.getItem('token')},
+  body:JSON.stringify(favoriteByUsernameId)
+}).then((response)=>{
+
+}).catch((error)=>{
+  console.log(error);
+})
+
+
+await fetch("http://localhost:8080/favorite/entries", {
+  headers:{"Content-Type":"application/json",
+          Authorization: 'Bearer ' + localStorage.getItem('token')},
   }).then(res=>res.json()).then((result)=>{setFavoriteByUsername(result);})
-console.log(favoriteByUsername);
 
-    // const arr = []
-    // for(let i=0; i<favoriteByUsername.length; i++) {
+console.log(favoriteByUsername)
+
+    const arr = []
+    for(let i=0; i<favoriteByUsername.length; i++) {
     //     // console.log(allRates[i]["favorite"])
-    //     arr.push(favoriteByUsername[i]["favorite"] === false ? false : true)
-    // console.log(favoriteByUsername[i]["favorite"]);
-    // }
-    // setCheckedState(arr);
-    // // console.log(checkedState);
+        arr.push(favoriteByUsername[i]["favorite"] === false ? false : true)
+    console.log(favoriteByUsername[i]["favorite"]);
+    }
+    setCheckedState(arr);
+    console.log(checkedState);
 
-    // for(let i=0; i<allRates.length; i++) {
-    //   allRates[i].favorite = favoriteByUsername[i].favorite;
-    // }
+    console.log(allRates)
+    console.log(favoriteByUsername)
+
+    for(let j=0; allRates.length; j++){
+      const allRatesUsername = allRates[j].username
+      const favoriteByUsernameUsername = favoriteByUsername[j].username
+      console.log(allRatesUsername + " and " + favoriteByUsernameUsername)
+      if(allRatesUsername === favoriteByUsernameUsername) { 
+        for(let i=0; i<allRates.length; i++) {
+          if(allRates[i].id === favoriteByUsername[i].id) {
+          allRates[i].favorite = favoriteByUsername[i].favorite;
+          }
+        }
+      }
+    }
+  console.log(allRates)
     
   }
 
