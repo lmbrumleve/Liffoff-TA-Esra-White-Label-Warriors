@@ -5,15 +5,29 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Link
+    Link,
+    useNavigate,
 } from "react-router-dom";
 import UserDashboard from '../UserDashboard';
+import { useAuth } from '../context/AuthContext.jsx';
+import { doSignOut } from '../firebase/auth.js';
 
-export default class NavBar extends Component {
-    render() {
-      const handleLogout = () => {
-        window.localStorage.removeItem("token");
-        }
+export default function NavBar() {
+
+      // const {user, logOut} = UserAuth();
+      const navigate = useNavigate();
+
+      // const handleSignOut = async () => {
+      //   try {
+      //     await logOut();
+      //     navigate("/");
+      //   } catch (error) {
+      //     console.log(error)
+      //   }
+      // }
+
+      const {userLoggedIn} = useAuth();
+      
         return (
             // <Router>
             <div>
@@ -33,21 +47,19 @@ export default class NavBar extends Component {
               <NavDropdown.Item as={Link} to="/myTrips">My Trips</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/transactions">Transactions</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/transactions/add">New Transaction</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={handleLogout}>
-                Log Out
-              </NavDropdown.Item>
             </NavDropdown>
             {/* <Nav.Link  as={Link} to={"/transactions/add"}>
               Create New Transaction
             </Nav.Link> */}
           </Nav>
-          <Nav.Link  as={Link} to={"/login"}>
-          <Button className="loginbutton" variant="submit">Login</Button>
+          {userLoggedIn ? (
+            <Button onClick={() => { doSignOut().then(() => {navigate('/') }) }} variant="submit">Log Out</Button>
+          ) : (
+            <Button onClick={() => {navigate("/login")}} variant="submit">Log In/Register</Button>
+          )}
           <Nav
             className="loginbutton"
           />
-          </Nav.Link>
         </Navbar.Collapse>
       </Container>
     </Navbar>
@@ -55,4 +67,3 @@ export default class NavBar extends Component {
 
         )
     }
-}

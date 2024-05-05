@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from './components/NavBar';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+// import { signInWithPopup } from "firebase/auth"
+// import UserDashboard from './UserDashboard';
+import { GoogleButton } from 'react-google-button';
+// import { UserAuth } from './context/AuthContext.jsx';
+//import { doSignInWithEmailAndPassword,
+import { doSignInWithGoogle } from './firebase/auth';
+import { useAuth } from './context/AuthContext';
+
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -27,29 +35,52 @@ export default function Login() {
             console.error('Login failed:', error);
         }
     };
-// added
-    const handleGoogleLogin = async () => {
-      try {
-        // Make a request to the backend server to initiate the Google OAuth2 flow
-        const response = await axios.get('/auth/google');
-        window.location.href = response.data.redirectUrl;
-      } catch (error) {
-        console.error('Error initiating Google login:', error);
-      }
-    };
-// added
-    const handleFacebookLogin = async () => {
-      try {
-        // Make a request to the backend server to initiate the Facebook OAuth2 flow
-        const response = await axios.get('/auth/facebook');
-        window.location.href = response.data.redirectUrl;
-      } catch (error) {
-        console.error('Error initiating Facebook login:', error);
-      }
-    };
+
+    // const { googleSignIn, user } = UserAuth();
+
+    // const handleGoogleSignIn = async () => {
+    //     try {
+    //         await googleSignIn()
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
+
+    // useEffect (() => {
+    //     if(user != null) {
+    //     navigate("/");
+    //     }
+    // }, [user]);
+
+    const { userLoggedIn } = useAuth();
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
+    const [isSigningIn, setIsSigningIn] = useState(false);
+    // const [errorMessage, setErrorMessage] = useState('');
+
+    // const onSubmit = async (e) => {
+    //     e.preventDefault();
+    //     if(!isSigningIn) {
+    //         setIsSigningIn(true);
+    //         await doSignInWithEmailAndPassword(email, password);
+    //         doSendEmailVerification();
+    //     }
+    // }
+
+    const onGoogleSignIn = (e) => {
+        e.preventDefault()
+        // doSignInWithGoogle()
+        if(!isSigningIn) {
+            setIsSigningIn(true);
+            doSignInWithGoogle().catch(err => {
+                setIsSigningIn(false);
+            })
+        }
+    }
 
     return (
         <>
+        {userLoggedIn && (<Navigate to={'/'} replace={true} />)}
         <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -62,15 +93,21 @@ export default function Login() {
                     <input type="password" className="form-control" id="password" name="password" value={formData.password} onChange={handleChange} required />
                 </div>
                 <br></br>
-                <button type="submit" className="btn btn-primary btn-lg">Login</button>
+                <button 
+                type="submit" 
+                className="btn btn-primary btn-lg"
+                // disabled={isSigningIn}
+                >Log In{/*{isSigningIn ? 'Logging in...' : 'Log In'}*/}
+                </button>
             </form>
             <br></br>
-            <button className="btn btn-secondary btn-lg" onClick={handleGoogleLogin}>Login with Google</button>
+            <div>
+            <GoogleButton className="btn btn-secondary btn-lg" onClick={(e) => { onGoogleSignIn(e) }}/>
+            </div>
             <br></br>
-            <br></br>
-            <button className="btn btn-secondary btn-lg" onClick={handleFacebookLogin}>Login with Facebook</button>
+            {/* <button className="btn btn-secondary btn-lg" onClick={handleFacebookLogin}>Login with Facebook</button>
             <br></br> 
-            <br></br>
+            <br></br> */}
             <Link to="/register" className="btn btn-success btn-lg">Create an Account</Link>
         </>
     );
