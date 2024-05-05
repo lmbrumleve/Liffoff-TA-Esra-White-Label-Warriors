@@ -52,19 +52,19 @@ export default function Transactions(props) {
 
 // console.log(transactions)
 
-    useEffect(()=>{
-        console.log("second useeffect")
-        const newArr = []
-        for(let i=0; i<transactions.length; i++) {
-            // console.log(transactions[i]["favorite"])
-            newArr.push(transactions[i]["favorite"] === false ? false : true)
-        // console.log(newArr);
-        }
-        setCheckedState(newArr);
-        // console.log(checkedState)
-    }, [transactions])
+    // useEffect(()=>{
+    //     console.log("second useeffect")
+    //     const newArr = []
+    //     for(let i=0; i<transactions.length; i++) {
+    //         // console.log(transactions[i]["favorite"])
+    //         newArr.push(transactions[i]["favorite"] === false ? false : true)
+    //     // console.log(newArr);
+    //     }
+    //     setCheckedState(newArr);
+    //     // console.log(checkedState)
+    // }, [transactions])
 
-    console.log(checkedState)
+    // console.log(checkedState)
 
     const handleDelete = async (e,id, tripId) =>{
         e.preventDefault();
@@ -99,17 +99,10 @@ const handleFavorite = async (e,id,position) => {
     })
 
     fetch("http://localhost:8080/transactions/getAll", {
-                                                             headers:{"Content-Type":"application/json",
-                                                                     Authorization: 'Bearer ' + localStorage.getItem('token')},
-                                                             }).then(res=>res.json()).then((result)=>{setTransactions(result);})
+        headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')},
+        }).then(res=>res.json()).then((result)=>{setTransactions(result);})
 
-    // setIsChecked(checked[id]= !isChecked);
-//     const updatedCheckedState = checkedState.map((item, index) =>
-//     index === position ? !item : item
-// );
-//     setCheckedState(updatedCheckedState);
-    // console.log(updatedCheckedState)
-    // setCheckedState(checkedState);
     const arr = []
     for(let i=0; i<transactions.length; i++) {
         // console.log(transactions[i]["favorite"])
@@ -118,22 +111,18 @@ const handleFavorite = async (e,id,position) => {
     }
     setCheckedState(arr);
     console.log(checkedState)
-    
   }
-
 
     return(
         <>
             <NavBar />
             <Header />
-
             <br/>
             <Link to="/transactions/add">Add New Transaction</Link>
             <br/>
             <Link to="/transactions/search">Search Transactions</Link>
             <br/>
             <h1>All Transactions</h1>
-
             <table>
                 <tr>
                     <th>ID</th>
