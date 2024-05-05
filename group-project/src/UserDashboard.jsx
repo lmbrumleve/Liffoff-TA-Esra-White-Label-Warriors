@@ -12,6 +12,7 @@ import NavBar from "./components/NavBar.jsx";
 export default function UserDashboard(props) {return (
     <>
         <NavBar/>
+        <br /><br /><br />
         <Header />
         <h1>Live Exchange Rates</h1>
         <ExchangeRatesTable/>

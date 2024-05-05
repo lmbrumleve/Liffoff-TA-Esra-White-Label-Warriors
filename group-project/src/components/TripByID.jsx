@@ -1,6 +1,7 @@
 import Header from "./Header.jsx"
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
+import BudgetChart from './BudgetChart'
 
 export default function TripByID(props) {
 
@@ -49,6 +50,8 @@ export default function TripByID(props) {
 
         <button><Link to="/transactions/add">Add Transaction</Link></button>
 
+
+
         <table>
             <tr>
                 <th>Transactions</th>
@@ -70,6 +73,8 @@ export default function TripByID(props) {
         </table>
 
         <Link to="/trips">Back to all trips</Link>
+
+        <BudgetChart />
 
     </div>
     );

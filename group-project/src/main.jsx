@@ -31,6 +31,8 @@ import TimeSeriesGraph from "./components/TimeSeriesGraph.jsx"
 import TripUpdate from "./components/TripUpdate.jsx"
 import TripDelete from "./components/TripDelete.jsx"
 import { AuthProvider } from './context/AuthContext.jsx';
+import HandleUpdate2 from "./components/HandleUpdate2.jsx"
+
 
 const router = createBrowserRouter([
     {
@@ -86,6 +88,10 @@ const router = createBrowserRouter([
     {
         path: "/transactions/update/:id",
         element: <TransactionUpdate />,
+    },
+    {
+        path: "/transactions/update2/:id",
+        element:<HandleUpdate2 />
     },
     {
         path: "/transactions/delete/:id",
