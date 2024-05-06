@@ -4,7 +4,7 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 // import { useParams } from "react-router-dom";
 // import { UserAuth } from './context/AuthContext.jsx';
 import { useAuth } from "./context/AuthContext.jsx";
@@ -31,65 +31,65 @@ import {
 export default function Profile() {
   // const {user} = UserAuth();
 
-  // const [user, setUser] = useState({
-  //   firstName: '',
-  //   lastName: '',
-  //   username: '',
-  //   defaultCurrency: ''
-  // });
+  const [authUser, setAuthUser] = useState({
+    firstName: '',
+    lastName: '',
+    username: '',
+    defaultCurrency: ''
+  });
 
     const [favoriteRates, setFavoriteRates] = useState([]);
 
     // const { username } = useParams();
 
-    // useEffect(() => {
-    //     const fetchUserProfile = async () => {
-    //         try {
-    //             const token = localStorage.getItem('token');
-    //             if (token) {
-    //               // const response = await axios.get('http://localhost:8080/profile', {
-    //               //       headers: {
-    //               //           Authorization: `Bearer ${token}`
-    //               //       }
-    //               //   });
-    //               //   setUser(response.data);
-    //                 const decodedToken = jwtDecode(token);
-    //                 setUser(decodedToken);
-    //             } else {
-    //               setUser(null);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching user profile:', error);
-    //         }
-    //     };
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (token) {
+                  // const response = await axios.get('http://localhost:8080/profile', {
+                  //       headers: {
+                  //           Authorization: `Bearer ${token}`
+                  //       }
+                  //   });
+                  //   setUser(response.data);
+                    const decodedToken = jwtDecode(token);
+                    setAuthUser(decodedToken);
+                } else {
+                  setAuthUser(null);
+                }
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+            }
+        };
     
-    //     fetchUserProfile();
+        fetchUserProfile();
 
-    // }, []);
+    }, []);
 
-  //   useEffect(() => {
-  //     const displayUserInfo = async () => {
-  //       try {
-  //         const token = localStorage.getItem('token');
-  //         let response;
-  //         if (username) {
-  //           response = await axios.get(`http://localhost:8080/profile/${username}`, {
-  //             headers: {
-  //               Authorization: `Bearer ${token}`
-  //             }
-  //           });
-  //         } else {
-  //           response = await axios.get("http://localhost:8080/profile", {
-  //             headers: {
-  //               Authorization: `Bearer ${token}`
-  //             }
-  //           });
-  //         }
-  //         setUser(response.data)
-  //       } catch(error) {
-  //         console.error('No user information', error);
-  //       }
-  //     };
+    // useEffect(() => {
+    //   const displayUserInfo = async () => {
+    //     try {
+    //       const token = localStorage.getItem('token');
+    //       let response;
+    //       if (username) {
+    //         response = await axios.get(`http://localhost:8080/profile/${username}`, {
+    //           headers: {
+    //             Authorization: `Bearer ${token}`
+    //           }
+    //         });
+    //       } else {
+    //         response = await axios.get("http://localhost:8080/profile", {
+    //           headers: {
+    //             Authorization: `Bearer ${token}`
+    //           }
+    //         });
+    //       }
+    //       setUser(response.data)
+    //     } catch(error) {
+    //       console.error('No user information', error);
+    //     }
+    //   };
   // displayUserInfo();
   // }, []);
 
@@ -133,9 +133,9 @@ export default function Profile() {
             </MDBBreadcrumb>
           </MDBCol>
         </MDBRow>
-        {/* {user?.displayName ? ( */}
-        {/* change diaplayName to email? */}
-        {currentUser.displayName ? (
+
+        {currentUser && currentUser.displayName ? (
+
         <MDBRow>
           <MDBCol lg="4">
             <MDBCard className="mb-4">
@@ -219,6 +219,92 @@ export default function Profile() {
             </MDBRow>
           </MDBCol>
         </MDBRow>
+
+        ) : authUser ? (
+
+        <MDBRow>
+          <MDBCol lg="4">
+            <MDBCard className="mb-4">
+              <MDBCardBody className="text-center">
+                <MDBCardImage
+                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                  alt="avatar"
+                  className="rounded-circle"
+                  style={{ width: '150px' }}
+                  fluid />
+                <p className="text-muted mb-4">Trip Wallet Member</p>
+                <p className="text-muted mb-4">{authUser.username}</p>
+              </MDBCardBody>
+            </MDBCard>
+
+            <MDBCard className="mb-4 mb-lg-0">
+              <MDBCardBody className="p-0">
+                <MDBListGroup flush className="rounded-3">
+                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
+                    <MDBIcon fab icon="google fa-lg" style={{ color: '#55acee' }} />
+                    <MDBCardText>GoogleLogin</MDBCardText>
+                  </MDBListGroupItem>
+                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
+                    <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
+                    <MDBCardText>Facebook Login</MDBCardText>
+                  </MDBListGroupItem>
+                </MDBListGroup>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+          <MDBCol lg="8">
+            <MDBCard className="mb-4">
+              <MDBCardBody>
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>Name</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBCardText className="text-muted">{authUser.firstName}</MDBCardText> 
+                  </MDBCol>
+                </MDBRow>
+                <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>Username</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBCardText className="text-muted">{authUser.username}</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+                <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>Home Currency</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    {/* <MDBCardText className="text-muted">{user.defaultCurrency}</MDBCardText> */}
+                  </MDBCol>
+                </MDBRow>
+                <hr />
+              </MDBCardBody>
+            </MDBCard>
+
+            <MDBRow>
+              <MDBCol md="6">
+                {favoriteRates.length > 0 && (
+                    <MDBCard className="mb-4 mb-md-0">
+                        <MDBCardBody>
+                            <MDBCardText className="mb-4">Favorite Currency Exchange Rates</MDBCardText>
+                                <MDBListGroup flush>
+                                    {favoriteRates.map(rate => (
+                                        <MDBListGroupItem key={rate.id}>
+                                            {rate.currencyPair} - {rate.rate}
+                                        </MDBListGroupItem>
+                                    ))}
+                                </MDBListGroup>
+                        </MDBCardBody>
+                    </MDBCard>
+                )}
+              </MDBCol>
+            </MDBRow>
+          </MDBCol>
+        </MDBRow>
         ) : (
             <MDBRow>
             <MDBCol>
@@ -231,8 +317,10 @@ export default function Profile() {
               </MDBCard>
             </MDBCol>
           </MDBRow>
-        )}
+        )
+      }
       </MDBContainer>
     </section>
   );
+  
 }

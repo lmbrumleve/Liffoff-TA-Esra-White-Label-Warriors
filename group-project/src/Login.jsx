@@ -9,7 +9,7 @@ import { GoogleButton } from 'react-google-button';
 //import { doSignInWithEmailAndPassword,
 import { doSignInWithGoogle } from './firebase/auth';
 import { useAuth } from './context/AuthContext';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -24,7 +24,6 @@ export default function Login() {
             [name]: value
         }));
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -34,6 +33,7 @@ export default function Login() {
         } catch (error) {
             console.error('Login failed:', error);
         }
+
     };
 
     // const { googleSignIn, user } = UserAuth();
@@ -77,6 +77,8 @@ export default function Login() {
             })
         }
     }
+
+    const navigate = useNavigate();
 
     return (
         <>

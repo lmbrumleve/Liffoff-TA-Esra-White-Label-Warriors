@@ -7,10 +7,13 @@ import {
     Route,
     Link,
     useNavigate,
-} from "react-router-dom";
+  } from "react-router-dom";
 import UserDashboard from '../UserDashboard';
 import { useAuth } from '../context/AuthContext.jsx';
 import { doSignOut } from '../firebase/auth.js';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 export default function NavBar() {
 
@@ -26,7 +29,31 @@ export default function NavBar() {
       //   }
       // }
 
+      const handleLogout = () => {
+        window.localStorage.removeItem("token");
+        navigate("/");
+      }
+
+      const [authUser, setAuthUser] = useState('');
+
       const {userLoggedIn} = useAuth();
+
+      useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    const decodedToken = jwtDecode(token);
+                    setAuthUser(decodedToken);
+                }
+            } catch (error) {
+                console.error('Error fetching user:', error);
+            }
+        };
+    
+        fetchUser();
+
+    }, []);
       
         return (
             // <Router>
@@ -54,6 +81,8 @@ export default function NavBar() {
           </Nav>
           {userLoggedIn ? (
             <Button onClick={() => { doSignOut().then(() => {navigate('/') }) }} variant="submit">Log Out</Button>
+          ) : authUser ? (
+            <Button onClick={() => { handleLogout() }} variant="submit">Log Out</Button>
           ) : (
             <Button onClick={() => {navigate("/login")}} variant="submit">Log In/Register</Button>
           )}
