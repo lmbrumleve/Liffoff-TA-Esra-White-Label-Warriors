@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from './components/NavBar';
 import { Link, Navigate } from 'react-router-dom';
-// import { signInWithPopup } from "firebase/auth"
-// import UserDashboard from './UserDashboard';
 import { GoogleButton } from 'react-google-button';
-// import { UserAuth } from './context/AuthContext.jsx';
 //import { doSignInWithEmailAndPassword,
 import { doSignInWithGoogle } from './firebase/auth';
 import { useAuth } from './context/AuthContext';
@@ -36,23 +33,7 @@ export default function Login() {
 
     };
 
-    // const { googleSignIn, user } = UserAuth();
-
-    // const handleGoogleSignIn = async () => {
-    //     try {
-    //         await googleSignIn()
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
-
-    // useEffect (() => {
-    //     if(user != null) {
-    //     navigate("/");
-    //     }
-    // }, [user]);
-
-    const { userLoggedIn } = useAuth();
+    const { userLoggedIn } = useAuth(); //checks if user is already logged in
     // const [email, setEmail] = useState('');
     // const [password, setPassword] = useState('');
     const [isSigningIn, setIsSigningIn] = useState(false);

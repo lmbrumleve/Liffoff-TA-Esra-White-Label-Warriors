@@ -67,36 +67,10 @@ export default function Profile() {
 
     }, []);
 
-    // useEffect(() => {
-    //   const displayUserInfo = async () => {
-    //     try {
-    //       const token = localStorage.getItem('token');
-    //       let response;
-    //       if (username) {
-    //         response = await axios.get(`http://localhost:8080/profile/${username}`, {
-    //           headers: {
-    //             Authorization: `Bearer ${token}`
-    //           }
-    //         });
-    //       } else {
-    //         response = await axios.get("http://localhost:8080/profile", {
-    //           headers: {
-    //             Authorization: `Bearer ${token}`
-    //           }
-    //         });
-    //       }
-    //       setUser(response.data)
-    //     } catch(error) {
-    //       console.error('No user information', error);
-    //     }
-    //   };
-  // displayUserInfo();
-  // }, []);
-
-  const { currentUser } = useAuth();
+  const { currentUser } = useAuth(); //checks authentication for current user
     
 
-    useEffect(() => {
+    useEffect(() => { //pseudo code for favorite rates
         const fetchFavoriteRates = async () => {
             try {
                 const token = localStorage.getItem('token');
@@ -134,7 +108,7 @@ export default function Profile() {
           </MDBCol>
         </MDBRow>
 
-        {currentUser && currentUser.displayName ? (
+        {currentUser && currentUser.displayName ? ( //if currentUser (Google) then render...
 
         <MDBRow>
           <MDBCol lg="4">
@@ -220,7 +194,7 @@ export default function Profile() {
           </MDBCol>
         </MDBRow>
 
-        ) : authUser ? (
+        ) : authUser ? ( //if regular sign-on, then render...
 
         <MDBRow>
           <MDBCol lg="4">
@@ -242,7 +216,7 @@ export default function Profile() {
                 <MDBListGroup flush className="rounded-3">
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="google fa-lg" style={{ color: '#55acee' }} />
-                    <MDBCardText>GoogleLogin</MDBCardText>
+                    <MDBCardText>Google Login</MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
@@ -305,7 +279,7 @@ export default function Profile() {
             </MDBRow>
           </MDBCol>
         </MDBRow>
-        ) : (
+        ) : ( //if neither, then render...
             <MDBRow>
             <MDBCol>
               <MDBCard className="mb-4">

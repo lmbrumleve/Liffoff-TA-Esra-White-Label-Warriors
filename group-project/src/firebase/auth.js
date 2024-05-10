@@ -11,14 +11,14 @@ import { signInWithPopup } from 'firebase/auth';
 //     return signInWithEmailAndPassword(auth, email, password);
 // };
 
-export const doSignInWithGoogle = async () => {
+export const doSignInWithGoogle = async () => { //initiates Google sign-in using a pop-up window - creates a Google authentication provider, prompts the user to sign in, and returns the authentication result, including user information
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
     const user = result.user; //add user to firestore
     return result;
 };
 
-export const doSignOut = () => {
+export const doSignOut = () => { //signs out the current user by calling the signOut method of the auth object
     return auth.signOut();
 };
 

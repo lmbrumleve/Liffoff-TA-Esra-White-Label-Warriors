@@ -138,7 +138,7 @@ const router = createBrowserRouter([
 
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById('root')).render( //added auth provider component to check google authorization for children
   <React.StrictMode>
     <AuthProvider>
         <RouterProvider router={router} />

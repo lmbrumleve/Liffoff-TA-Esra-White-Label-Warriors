@@ -1,12 +1,13 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";                          //imports from the Firebase SDKs for initializing the Firebase app and getting the authentication service
 import { getAuth } from 'firebase/auth';
+
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+const firebaseConfig = {                                                      //configuration settings required for connecting web app to Firebase services
   apiKey: "AIzaSyCFhZjp7_2ckScFL8RCZcV3TbnYQMixnI0",
   authDomain: "trip-wallet-6e3a1.firebaseapp.com",
   projectId: "trip-wallet-6e3a1",
@@ -18,5 +19,5 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const auth = getAuth(app); //initializes the authentication service - enables authentication features like user sign-up, sign-in, etc.
 export { app, auth };

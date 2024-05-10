@@ -4,24 +4,24 @@ import {
 } from 'firebase/auth';
 import { auth } from '../firebase/Firebase';
 
-const AuthContext = React.createContext();
+const AuthContext = React.createContext(); //this context holds the authentication state
 export function useAuth() {
   return useContext(AuthContext);
 }
 
-export function AuthProvider ({ children }) {
-  const [currentUser, setCurrentUser] = useState(null);
+export function AuthProvider ({ children }) { //react component that wraps its children with the authentication context
+  const [currentUser, setCurrentUser] = useState(null); //sets up state variables for currentUser, userLoggedIn, isGoogleUser, and loading using useState
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   // const [isEmailUser, setIsEmailUser] = useState(false);
   const [isGoogleUser, setIsGoogleUser] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  useEffect(() => { //subscribes to authentication state changes using onAuthStateChanged - initializes the user when the authentication state changes
     const unsubscribe = onAuthStateChanged(auth, initializeUser);
     return unsubscribe;
   }, [])
 
-  async function initializeUser(user) {
+  async function initializeUser(user) { //updates the state based on the user's authentication
     if (user) {
       setCurrentUser({ ...user });
       // check if provider is email and password login
@@ -44,7 +44,7 @@ export function AuthProvider ({ children }) {
   }
 
 
-    const value = {
+    const value = { //what context includes
       userLoggedIn,
       // isEmailUser,
       isGoogleUser,
@@ -52,7 +52,7 @@ export function AuthProvider ({ children }) {
       setCurrentUser
     };
 
-    return (
+    return ( //AuthProvider component renders the child components wrapped in <AuthContext.Provider> when not loading (AKA authentication state initialization is done)
       <AuthContext.Provider value={value}>
         {!loading && children}
       </AuthContext.Provider>
