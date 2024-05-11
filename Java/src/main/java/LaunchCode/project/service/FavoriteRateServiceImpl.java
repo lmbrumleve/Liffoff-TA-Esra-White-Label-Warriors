@@ -16,13 +16,13 @@ public class FavoriteRateServiceImpl implements FavoriteRateService{
     private FavoriteRateRepository favoriteRateRepository;
     @Override
     public void saveFavoriteRate(FavoriteRate favoriteRate) {
-        System.out.println("reached");
-        Integer count = favoriteRateRepository.queryByUsernameCount(favoriteRate.getUsername());
-        System.out.println(count);
-        //TODO: for some reason the count is 32 in the table when I want it to be only 30 so this needs fixing
-        if (count < 31) {
+//        System.out.println("reached");
+//        Integer count = favoriteRateRepository.queryByUsernameCount(favoriteRate.getUsername());
+//        System.out.println(count);
+////        //TODO: for some reason the count is 32 in the table when I want it to be only 30 so this needs fixing
+//        if (count < 32) {
             favoriteRateRepository.save(favoriteRate);
-        }
+//        }
     }
     @Override
     public FavoriteRate getFavoriteRateByID(int ID) {
@@ -30,8 +30,10 @@ public class FavoriteRateServiceImpl implements FavoriteRateService{
     }
     @Override
     public void updateFavoriteRate(FavoriteRate favoriteRate, int id){
+        System.out.println(favoriteRate.getFavorite());
+        System.out.println(id);
         FavoriteRate favoriteRate1 = favoriteRateRepository.findById(id).get();
-        favoriteRate1.setFavorite(favoriteRate1.getFavorite());
+        favoriteRate1.setFavorite(!favoriteRate1.getFavorite());
         favoriteRateRepository.save(favoriteRate1);
         }
 

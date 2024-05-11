@@ -42,6 +42,8 @@ public class FavoriteRateController {
 
     @PutMapping("/{id}")
     public String updateFavoriteRate (@RequestBody FavoriteRate favoriteRate, @PathVariable int id){
+        System.out.println(favoriteRate);
+        System.out.println(id);
         favoriteRateService.updateFavoriteRate(favoriteRate, id);
         return "Favorite Rate Updated";
     }
