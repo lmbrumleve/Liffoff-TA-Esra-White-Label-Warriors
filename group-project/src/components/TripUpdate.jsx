@@ -2,6 +2,7 @@ import Header from "./Header.jsx"
 import React, { useEffect, useState } from 'react'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import {useForm} from 'react-hook-form'
+import NavBar from "./NavBar.jsx"
 
     export default function tripUpdate(){
 
@@ -20,9 +21,9 @@ import {useForm} from 'react-hook-form'
             try{
                const response = await fetch("http://localhost:8080/trips/ID/" + id,{
 
-                                                                                                  headers:{"Content-Type":"application/json",
-                                                                                                  Authorization: 'Bearer ' + localStorage.getItem('token')}
-                                                                                              }).then(res=>res.json()).then((result)=>{setTrip(result);})
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}
+            }).then(res=>res.json()).then((result)=>{setTrip(result);})
             }
             catch(error){
                 console.log(error);
@@ -53,7 +54,7 @@ import {useForm} from 'react-hook-form'
 
     return(
     <>
-
+        <NavBar/>
         <h2>Update Trip {id}</h2>
 
         <form method="PUT">
@@ -67,7 +68,7 @@ import {useForm} from 'react-hook-form'
             <label for="budget">Budget</label><br />
             <input type="text" name="budget" value={trip.budget} id="budget" onChange = {(e)=>handleChange(e)}/><br />
 
-            <br /><input type="submit" value="Update Trip!" onClick={updateTrip}/>
+            <br /><input type="submit" value="Update Trip!" className="btn btn-primary" onClick={updateTrip}/>
 
         </form>
     </>)

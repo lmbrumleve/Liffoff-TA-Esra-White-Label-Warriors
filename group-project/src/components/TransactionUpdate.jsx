@@ -118,7 +118,7 @@ const currencyArr = Object.keys(currency);
                   <option value="RMB">Chinese Yuan</option> */}
                 </select><br />
 
-                <br /><input type="submit" value="Update Transaction!" onClick= {updateTransaction}/>
+                <br /><input className="btn btn-primary trip-button" type="submit" value="Update Transaction" onClick= {updateTransaction}/>
 
             </form>
         </div>

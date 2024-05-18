@@ -36,7 +36,7 @@ window.localStorage.removeItem("token");
             <div>
 <Navbar expand="lg" className="bg-body-secondary" fixed="top">
       <Container fluid>
-        <Navbar.Brand href="#">Trip Wallet</Navbar.Brand>
+        <Navbar.Brand href="/">Trip Wallet</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -46,21 +46,25 @@ window.localStorage.removeItem("token");
           >
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <NavDropdown title="Menu" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={Link} to="/profile">My Profile</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/myTrips">My Trips</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/transactions">Transactions</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/transactions/add">New Transaction</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/transactions">Transaction History</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/transactions/search">Search Transactions</NavDropdown.Item>
               <NavDropdown.Divider />
+              <NavDropdown.Item as={Link} to="/profile">My Profile</NavDropdown.Item>
               <NavDropdown.Item onClick={handleLogout}>
                 Log Out
               </NavDropdown.Item>
             </NavDropdown>
+            <Nav.Link as={Link} to="/exchangeRates">Exchange Rates</Nav.Link>
+            <Nav.Link as={Link} to="/currency/convert">Currency Converter</Nav.Link>
+
             {/* <Nav.Link  as={Link} to={"/transactions/add"}>
               Create New Transaction
             </Nav.Link> */}
           </Nav>
           <Nav.Link  as={Link} to={"/login"}>
-          <Button className="loginbutton" variant="submit">Login</Button>
+          <Button className="loginbutton btn-outline-primary" variant="submit">Login</Button>
           <Nav
             className="loginbutton"
           />
