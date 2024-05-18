@@ -73,8 +73,7 @@ const currencyArr = Object.keys(currencies);
     return(
     <div>
         <NavBar/>
-        <Header/>
-
+<h1>Create New Transaction</h1>
         <form method="POST">
             <label for="name">Transaction Name</label><br />
             <input type = "text" name = "name" id="name" onChange = {(e)=>setName(e.target.value)} /><br />
@@ -110,7 +109,7 @@ const currencyArr = Object.keys(currencies);
               <option value="RMB">Chinese Yuan</option> */}
             </select><br />
 
-            <br /><input type = "submit" onClick={submitTransaction}/>
+            <br /><input type = "submit" className="btn btn-primary" onClick={submitTransaction}/>
         </form>
     </div>
 );}

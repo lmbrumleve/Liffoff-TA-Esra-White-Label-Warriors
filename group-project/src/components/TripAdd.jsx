@@ -1,6 +1,7 @@
 import Header from "./Header.jsx"
 import React, { useState } from 'react'
 import {useNavigate} from 'react-router-dom'
+import NavBar from "./NavBar.jsx"
 
 export default function TripAdd() {
 
@@ -25,7 +26,10 @@ export default function TripAdd() {
     }
     return(
     <div>
-        <Header/>
+        <NavBar/>
+        <h1>Create New Trip</h1>
+
+<hr/>
         <form method = "POST">
             <label for="name">Trip Name</label><br/>
                 <input type = "text" name = "name" id = "name" onChange={(e)=>setName(e.target.value)} />
@@ -37,7 +41,7 @@ export default function TripAdd() {
                 <input type = "text" name = "budget" id = "budget" onChange={(e)=>setBudget(e.target.value)} />
             <br/><br/>
 
-            <input type="submit" onClick = {addTrip}/>
+            <input className="btn btn-primary" type="submit" onClick = {addTrip}/>
         </form>
     </div>
 )}

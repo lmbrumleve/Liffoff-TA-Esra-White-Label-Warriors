@@ -1,6 +1,7 @@
 import { useNavigate,Link,Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./Header.jsx"
+import NavBar from "./NavBar.jsx";
 
     export default function convertTransactions(props){
         const [rate, setRate] = useState({});
@@ -43,14 +44,16 @@ import Header from "./Header.jsx"
 
         return(
             <>
-                <h2>Convert Currency Here!</h2>
+            <NavBar/>
+                <h1>Currency Conversion Caclculator</h1>
+                <hr/>
 
                 <form method="POST">
 
-                <label for="amount">Amount</label><br />
+                <label for="amount" className="input-format">Amount to be Converted: </label>
                 <input type="text" id="amount" name="amount" value = {convertTransaction.amount} onChange = {(e)=>handleChange(e)}/> <br/>
 
-                <label for="start">Starting Currency</label><br />
+                <label for="start" className="input-format">From: </label>
                 <select id="start" name="start" onChange = {(e)=>handleChange(e)}>
                   <option value="">-</option>
                   <option value="USD">US Dollar</option>
@@ -62,7 +65,7 @@ import Header from "./Header.jsx"
                   <option value="RMB">Chinese Yuan</option>
                 </select><br />
 
-                <label for="end">Convert To</label><br />
+                <label for="end" className="input-format">Convert To: </label>
                 <select id="end" name="end" onChange = {(e)=>handleChange(e)}>
                   <option value="">-</option>
                   <option value="USD">US Dollar</option>
@@ -74,9 +77,10 @@ import Header from "./Header.jsx"
                   <option value="RMB">Chinese Yuan</option>
                 </select><br />
 
-                <br /><input type="submit" value="Convert!" onClick={convertT}/>
+                <br /><input type="submit" className="btn btn-primary trip-button" value="Convert!" onClick={convertT}/>
 
                 </form>
+                <br/>
                 <h2> {convertTransaction.amount} {convertTransaction.start} turns into {JSON.stringify(number)}</h2>
             </>
         )

@@ -44,3 +44,15 @@
 .chart {
   width: 1000px;
 }
+
+.trip-button {
+  margin: 10px;
+}
+.transaction-button {
+  float: right;
+  margin: 15px;
+}
+
+.input-format {
+  margin: 10px;
+}

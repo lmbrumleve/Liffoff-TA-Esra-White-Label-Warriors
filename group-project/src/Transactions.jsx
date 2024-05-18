@@ -110,14 +110,11 @@ const handleFavorite = async (e,id,position) => {
     return(
         <>
             <NavBar />
-            <Header />
 
+
+            <h1>Transaction History</h1>
+            <hr/>
             <br/>
-            <Link to="/transactions/add">Add New Transaction</Link>
-            <br/>
-            <Link to="/transactions/search">Search Transactions</Link>
-            <br/>
-            <h1>All Transactions</h1>
 
             <table>
                 <tr>
@@ -139,8 +136,8 @@ const handleFavorite = async (e,id,position) => {
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
                     <td>{ans.trip.name}</td>
-                    <td><button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
-                    <td><button onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}>Delete</button></td>
+                    <td><button className="btn btn-primary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
+                    <td><button className="btn btn-outline-primary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}>Delete</button></td>
                     <td>
                     <FormControlLabel
                             control = {
@@ -159,6 +156,10 @@ const handleFavorite = async (e,id,position) => {
                 </tr>
                 ))}
             </table>
+            <br/>
+            <Link to="/transactions/add" className="btn btn-primary trip-button">Add New Transaction</Link>
+            <Link to="/transactions/search" className="btn btn-primary trip-button">Search Transactions</Link>
+            <br/>
 
             <Outlet />
         </>
