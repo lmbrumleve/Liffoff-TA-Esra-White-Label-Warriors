@@ -66,7 +66,13 @@ export default function Transactions(props) {
     const handleDelete = async (e,id, tripId) =>{
         e.preventDefault();
         console.log(id);
-        navigate('/transactions/delete/' + id, {state:{tripId:tripId}});
+         const deleteTransaction = async (id)=>{
+            await fetch("http://localhost:8080/transactions/" + id,{
+                method:"DELETE",
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}
+            }).then(()=>console.log("transaction deleted"))}
+            deleteTransaction(id);
     }
 
     const handleUpdate = (e,id,name,description,amount,currency) =>{
