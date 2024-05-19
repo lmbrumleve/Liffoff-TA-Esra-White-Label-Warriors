@@ -6,6 +6,8 @@ import NavBar from "./NavBar.jsx";
     export default function convertTransactions(props){
         const [rate, setRate] = useState({});
         const [number, setNumber] = useState(0);
+        const[currencies, setCurrencies] = useState([])
+
         const [convertTransaction, setConvertTransaction] = useState({
             amount: 0,
             start: "",
@@ -41,7 +43,23 @@ import NavBar from "./NavBar.jsx";
             setConvertTransaction({...convertTransaction,[e.target.name]: value });
             console.log(convertTransaction);
         }
+//FETCH CURRENCIES:
+const fetchCurrencies = async () => {
+    try{
+        const response = await fetch("https://api.frankfurter.app/currencies").then(res=>res.json()).then((result)=>{setCurrencies(result);})
+     }
+     catch(error){
+         console.log(error);
+     }
 
+      };
+
+useEffect(() => {
+        fetchCurrencies();
+}, []);
+
+console.log(Object.keys(currencies));
+const currencyArr = Object.keys(currencies);
         return(
             <>
             <NavBar/>
@@ -65,16 +83,14 @@ import NavBar from "./NavBar.jsx";
                   <option value="RMB">Chinese Yuan</option>
                 </select><br />
 
-                <label for="end" className="input-format">Convert To: </label>
-                <select id="end" name="end" onChange = {(e)=>handleChange(e)}>
-                  <option value="">-</option>
-                  <option value="USD">US Dollar</option>
-                  <option value="MXN">Mexican Peso</option>
-                  <option value="CAD">Canadian Dollar</option>
-                  <option value="EUR">Euro</option>
-                  <option value="GBP">British Pound</option>
-                  <option value="JPY">Japanese Yen</option>
-                  <option value="RMB">Chinese Yuan</option>
+                <label for="currency">Currency</label><br />
+            <select id="currency" name="currency" onChange = {(e)=>setCurrency(e.target.value)}>
+            <option value="">-</option>
+            {currencyArr.map((ans) => {
+                    return (
+                    <option value={ans}>{ans}</option>
+                    )
+                    })}
                 </select><br />
 
                 <br /><input type="submit" className="btn btn-primary trip-button" value="Convert!" onClick={convertT}/>

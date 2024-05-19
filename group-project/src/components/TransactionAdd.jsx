@@ -74,6 +74,7 @@ const currencyArr = Object.keys(currencies);
     <div>
         <NavBar/>
 <h1>Create New Transaction</h1>
+<hr/>
         <form method="POST">
             <label for="name">Transaction Name</label><br />
             <input type = "text" name = "name" id="name" onChange = {(e)=>setName(e.target.value)} /><br />
@@ -94,19 +95,12 @@ const currencyArr = Object.keys(currencies);
 
             <label for="currency">Currency</label><br />
             <select id="currency" name="currency" onChange = {(e)=>setCurrency(e.target.value)}>
+            <option value="">-</option>
             {currencyArr.map((ans) => {
                     return (
                     <option value={ans}>{ans}</option>
                     )
                     })}
-              {/* <option value="">-</option>
-              <option value="USD">US Dollar</option>
-              <option value="MXN">Mexican Peso</option>
-              <option value="CAD">Canadian Dollar</option>
-              <option value="EUR">Euro</option>
-              <option value="GBP">British Pound</option>
-              <option value="JPY">Japanese Yen</option>
-              <option value="RMB">Chinese Yuan</option> */}
             </select><br />
 
             <br /><input type = "submit" className="btn btn-primary" onClick={submitTransaction}/>
