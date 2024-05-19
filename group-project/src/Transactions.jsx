@@ -127,9 +127,10 @@ const handleFavorite = async (e,id,position) => {
                     <th>ID</th>
                     <th>Name</th>
                     <th>Note</th>
+                    <th>Trip</th>
                     <th>Amount</th>
                     <th>Currency</th>
-                    <th>Trip</th>
+                    <th>Amount (USD)</th>
                     <th></th>
                     <th></th>
                     <th>Favorite</th>
@@ -139,9 +140,10 @@ const handleFavorite = async (e,id,position) => {
                     <td>{ans.id}</td>
                     <td>{ans.name}</td>
                     <td>{ans.description}</td>
+                    <td>{ans.trip.destination}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
-                    <td>{ans.trip.name}</td>
+                    <td>Amount USD</td>
                     <td><button className="btn btn-primary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
                     <td><button className="btn btn-outline-primary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}>Delete</button></td>
                     <td>

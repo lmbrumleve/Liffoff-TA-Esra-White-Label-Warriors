@@ -94,12 +94,12 @@ for (let i=0; i<currencyArr.length; i++){
 console.log(favoriteRateArr)
 
 //Put favorite rates object in the favorite rates table in database initial time (if needed)
+console.log(favoriteByUsername.length)
 
 // console.log(favoriteRateArr)
 const postFavoriteRateArr = () => {
 for(let i=0; i<currencyArr.length; i++){
-//   // console.log(favoriteRateArr[i])
-  // console.log(favoriteByUsername.length)
+  console.log(favoriteRateArr[i])
 
 //if there is no data in the table, add the favoriteRateArr data to the favorite rates table in database
   if(favoriteByUsername.length === 0){ 
@@ -195,7 +195,7 @@ console.log(favoriteByUsername);
 
   //TARGET CURRENCY + TARGET RATE:
   let targetCurrency;
-  let targetExchangeRate;
+  let targetExchangeRate; 
   let targetRateObj;
   var allRates = [];
 
