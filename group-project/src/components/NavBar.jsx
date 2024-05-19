@@ -9,7 +9,11 @@ import {
     useNavigate
 } from "react-router-dom";
 import UserDashboard from '../UserDashboard';
-
+import CalculateIcon from '@mui/icons-material/Calculate';
+import { CalculateRounded } from '@mui/icons-material';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import WalletIcon from '@mui/icons-material/Wallet';
+import PublicIcon from '@mui/icons-material/Public';
 
 
 export default class NavBar extends Component {
@@ -36,7 +40,7 @@ window.localStorage.removeItem("token");
             <div>
 <Navbar expand="lg" className="bg-body-secondary" fixed="top">
       <Container fluid>
-        <Navbar.Brand href="/">Trip Wallet</Navbar.Brand>
+        <Navbar.Brand href="/"><PublicIcon fontSize="large" color="primary"/>Trip Wallet</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -56,15 +60,11 @@ window.localStorage.removeItem("token");
                 Log Out
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link as={Link} to="/exchangeRates">Exchange Rates</Nav.Link>
-            <Nav.Link as={Link} to="/currency/convert">Currency Converter</Nav.Link>
-
-            {/* <Nav.Link  as={Link} to={"/transactions/add"}>
-              Create New Transaction
-            </Nav.Link> */}
           </Nav>
+          <Nav.Link as={Link} to="/exchangeRates"><TrendingUpIcon fontSize="large" color="action"/></Nav.Link>
+          <Nav.Link as={Link} to="/currency/convert" className="input-format"><CalculateRounded fontSize="large" color="action"/></Nav.Link>
           <Nav.Link  as={Link} to={"/login"}>
-          <Button className="loginbutton btn-outline-primary" variant="submit">Login</Button>
+          <Button className="loginbutton btn-outline-primary trip-button" variant="submit">Login</Button>
           <Nav
             className="loginbutton"
           />
