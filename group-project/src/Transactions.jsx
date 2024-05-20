@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar.jsx"
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Star, StarBorder } from "@mui/icons-material";
 import Checkbox from "@mui/material/Checkbox";
 import checked from "@mui/material/Checkbox";
 import { set } from "date-fns/fp/set";
@@ -133,7 +134,7 @@ const handleFavorite = async (e,id,position) => {
                     <th>Amount (USD)</th>
                     <th></th>
                     <th></th>
-                    <th>Favorite</th>
+                    <th></th>
                 </tr>
                 {transactions.map((ans)=>(
                 <tr>
@@ -150,8 +151,8 @@ const handleFavorite = async (e,id,position) => {
                     <FormControlLabel
                             control = {
                                 <Checkbox value={checked[ans.id]}
-                                    icon = {<FavoriteBorderIcon />}
-                                    checkedIcon = {<FavoriteIcon />}
+                                    icon = {<StarBorder />}
+                                    checkedIcon = {<Star />}
                                     // checked = {ans.favorite === false ? false : true}
                                     checked = {ans.favorite}
                                     onClick = {(e)=>handleFavorite(e, ans.id, ans.favorite)}
