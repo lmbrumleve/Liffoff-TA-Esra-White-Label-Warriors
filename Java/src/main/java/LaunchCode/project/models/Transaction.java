@@ -15,6 +15,12 @@ public class Transaction {
     private String currency;
     private boolean favorite;
 
+    private String username;
+
+    private String userDefaultCurrency;
+
+    private double convertedAmount;
+
     @ManyToOne
     @JoinColumn(name="trip_id")
     private Trip trip;
@@ -78,6 +84,26 @@ public class Transaction {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getUserDefaultCurrency() {
+        return userDefaultCurrency;
+    }
+
+    public void setUserDefaultCurrency(String userDefaultCurrency) {
+        this.userDefaultCurrency = userDefaultCurrency;
+    }
+
+    public double getConvertedAmount() {
+        return convertedAmount;
+    }
+
+    public void setConvertedAmount(double convertedAmount) {
+        this.convertedAmount = convertedAmount;
     }
 
     public int getID() {
