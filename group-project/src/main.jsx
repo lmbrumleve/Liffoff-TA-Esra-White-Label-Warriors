@@ -34,9 +34,14 @@ import TripDelete from "./components/TripDelete.jsx"
 const router = createBrowserRouter([
     {
             path: "/",
-            element: <UserDashboard />,
+            element: <MyTrips />,
             errorElement: <Error404 />
     },
+    {
+        path: "/exchangeRates",
+        element: <UserDashboard />,
+        errorElement: <Error404 />
+},
 
     {
         path: "/test",
@@ -95,7 +100,7 @@ const router = createBrowserRouter([
         element: <TotalTransactionsChart />,
     },
     {
-        path: "transactions/convert",
+        path: "currency/convert",
         element: <ConvertTransactions/>,
     },
  

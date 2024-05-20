@@ -52,6 +52,9 @@ export default function UserRegistration() {
     <div>
         <NavBar />
 
+        <h1>Create New Account</h1>
+        <hr/>
+        <br/>
         <form method="POST">
             <div className="form-group">
                 <label htmlFor="firstName">First Name</label>
@@ -83,7 +86,7 @@ export default function UserRegistration() {
             </div>
             <br />
 
-            <input type="submit" onClick={handleSubmit}/>
+            <input type="submit" className="btn btn-primary trip-button" onClick={handleSubmit}/>
         </form>
     </div>
     );

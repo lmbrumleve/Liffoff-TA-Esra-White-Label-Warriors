@@ -103,22 +103,15 @@ const currencyArr = Object.keys(currency);
 
                 <label for="currency">Currency</label><br />
                 <select id="currency" name="currency" value={transaction.currency} onChange = {(e)=>handleChange(e)}>
+                <option value="">-</option>
                   {currencyArr.map((ans) => {
                     return (
                     <option value={ans}>{ans}</option>
                     )
                     })}
-                  {/* <option value="">-</option>
-                  <option value="USD">US Dollar</option>
-                  <option value="MXN">Mexican Peso</option>
-                  <option value="CAD">Canadian Dollar</option>
-                  <option value="EUR">Euro</option>
-                  <option value="GBP">British Pound</option>
-                  <option value="JPY">Japanese Yen</option>
-                  <option value="RMB">Chinese Yuan</option> */}
                 </select><br />
 
-                <br /><input type="submit" value="Update Transaction!" onClick= {updateTransaction}/>
+                <br /><input className="btn btn-primary trip-button" type="submit" value="Update Transaction" onClick= {updateTransaction}/>
 
             </form>
         </div>

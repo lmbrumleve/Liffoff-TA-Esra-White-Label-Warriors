@@ -1,5 +1,6 @@
 import Header from "./Header.jsx"
 import React, { useState } from 'react'
+import NavBar from "./NavBar"
 
 
 export default function TripSearch(){
@@ -12,41 +13,44 @@ export default function TripSearch(){
         if (sel=="name") {
             fetch(`http://localhost:8080/trips/searchByName?name=${q}`, {
 
-                                                                                    headers:{"Content-Type":"application/json",
-                                                                                    Authorization: 'Bearer ' + localStorage.getItem('token')},
-                                                                                        }).then(res=>res.json()).then((result)=>{setAns(result);})
+            headers:{"Content-Type":"application/json",
+            Authorization: 'Bearer ' + localStorage.getItem('token')},
+                }).then(res=>res.json()).then((result)=>{setAns(result);})
         } else if (sel == "budget") {
             if (isNaN(q)) {
                 console.log('error')
             } else {
                 fetch(`http://localhost:8080/trips/searchByBudget?budget=${q}`, {
 
-                                                                                                                                                                  headers:{"Content-Type":"application/json",
-                                                                                                                                                                  Authorization: 'Bearer ' + localStorage.getItem('token')},
-                                                                                                                                                                      }).then(res=>res.json()).then((result)=>{setAns(result);})
+            headers:{"Content-Type":"application/json",
+            Authorization: 'Bearer ' + localStorage.getItem('token')},
+                }).then(res=>res.json()).then((result)=>{setAns(result);})
             }
         } else if (sel == "destination") {
             fetch(`http://localhost:8080/trips/searchByDestination?destination=${q}`, {
 
-                                                                                                                                                                        headers:{"Content-Type":"application/json",
-                                                                                                                                                                        Authorization: 'Bearer ' + localStorage.getItem('token')},
-                                                                                                                                                                            }).then(res=>res.json()).then((result)=>{setAns(result);})
+            headers:{"Content-Type":"application/json",
+            Authorization: 'Bearer ' + localStorage.getItem('token')},
+                }).then(res=>res.json()).then((result)=>{setAns(result);})
         }
     }
 
     return (
     <div>
-        <Header/>
+        <NavBar/>
+                <h1>Search Trips</h1>
 
-        <input type="text" name = {q} onChange = {(e)=>setQ(e.target.value)} />
-        <select name = {sel} value={sel} onChange = {(e)=>setSel(e.target.value)}>
+<hr/>
+<br/>
+        <input className="input-format" type="text" name = {q} onChange = {(e)=>setQ(e.target.value)} />
+        <select className="input-format" name = {sel} value={sel} onChange = {(e)=>setSel(e.target.value)}>
             <option value="name">Name of Trip</option>
             <option value="destination">Destination of Trip</option>
             <option value="budget">Trip Budget</option>
         </select>
 
         <br />
-        <button onClick = {searchTrip}>Search</button>
+        <button className="btn btn-primary trip-button" onClick = {searchTrip}>Search</button>
         <br />
         <br />
 

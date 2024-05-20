@@ -1,10 +1,13 @@
 import { useNavigate,Link,Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./Header.jsx"
+import NavBar from "./NavBar.jsx";
 
     export default function convertTransactions(props){
         const [rate, setRate] = useState({});
         const [number, setNumber] = useState(0);
+        const[currencies, setCurrencies] = useState([])
+
         const [convertTransaction, setConvertTransaction] = useState({
             amount: 0,
             start: "",
@@ -40,17 +43,35 @@ import Header from "./Header.jsx"
             setConvertTransaction({...convertTransaction,[e.target.name]: value });
             console.log(convertTransaction);
         }
+//FETCH CURRENCIES:
+const fetchCurrencies = async () => {
+    try{
+        const response = await fetch("https://api.frankfurter.app/currencies").then(res=>res.json()).then((result)=>{setCurrencies(result);})
+     }
+     catch(error){
+         console.log(error);
+     }
 
+      };
+
+useEffect(() => {
+        fetchCurrencies();
+}, []);
+
+console.log(Object.keys(currencies));
+const currencyArr = Object.keys(currencies);
         return(
             <>
-                <h2>Convert Currency Here!</h2>
+            <NavBar/>
+                <h1>Currency Conversion Caclculator</h1>
+                <hr/>
 
                 <form method="POST">
 
-                <label for="amount">Amount</label><br />
+                <label for="amount" className="input-format">Amount to be Converted: </label>
                 <input type="text" id="amount" name="amount" value = {convertTransaction.amount} onChange = {(e)=>handleChange(e)}/> <br/>
 
-                <label for="start">Starting Currency</label><br />
+                <label for="start" className="input-format">From: </label>
                 <select id="start" name="start" onChange = {(e)=>handleChange(e)}>
                   <option value="">-</option>
                   <option value="USD">US Dollar</option>
@@ -62,21 +83,20 @@ import Header from "./Header.jsx"
                   <option value="RMB">Chinese Yuan</option>
                 </select><br />
 
-                <label for="end">Convert To</label><br />
-                <select id="end" name="end" onChange = {(e)=>handleChange(e)}>
-                  <option value="">-</option>
-                  <option value="USD">US Dollar</option>
-                  <option value="MXN">Mexican Peso</option>
-                  <option value="CAD">Canadian Dollar</option>
-                  <option value="EUR">Euro</option>
-                  <option value="GBP">British Pound</option>
-                  <option value="JPY">Japanese Yen</option>
-                  <option value="RMB">Chinese Yuan</option>
+                <label for="currency">Currency</label><br />
+            <select id="currency" name="currency" onChange = {(e)=>setCurrency(e.target.value)}>
+            <option value="">-</option>
+            {currencyArr.map((ans) => {
+                    return (
+                    <option value={ans}>{ans}</option>
+                    )
+                    })}
                 </select><br />
 
-                <br /><input type="submit" value="Convert!" onClick={convertT}/>
+                <br /><input type="submit" className="btn btn-primary trip-button" value="Convert!" onClick={convertT}/>
 
                 </form>
+                <br/>
                 <h2> {convertTransaction.amount} {convertTransaction.start} turns into {JSON.stringify(number)}</h2>
             </>
         )

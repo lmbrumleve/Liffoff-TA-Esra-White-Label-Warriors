@@ -2,27 +2,59 @@ import Header from "./Header.jsx"
 import React, { useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 import NavBar from "./NavBar.jsx"
+import { jwtDecode } from "jwt-decode"
 
 export default function TransactionAdd() {
 
-    const[name,setName]=useState('')
-    const[description,setDescription]=useState('')
-    const[amount,setAmount]=useState('')
-    const[currency,setCurrency]=useState('')
-    const[transactions, setTransactions]=useState([])
-    const[trips, setTrips]=useState([])
-    const[tripID, setTripID]=useState([])
-    const[currencies, setCurrencies] = useState([])
-        const navigate = useNavigate();
+    const[name,setName]=useState('');
+    const[description,setDescription]=useState('');
+    const[amount,setAmount]=useState('');
+    const[currency,setCurrency]=useState('');
+    const[transactions, setTransactions]=useState([]);
+    const[trips, setTrips]=useState([]);
+    const[tripID, setTripID]=useState([]);
+    const[currencies, setCurrencies] = useState([]);
+    const[username, setUsername] = useState("");
+    const[transactionExchangeRate, setTransactionExchangeRate] = useState([])
+    const[convertedAmount, setConvertedAmount] =useState([]);
+    
+    const userDefaultCurrency = "USD"
+    const navigate = useNavigate();
+    
+
+    //Use jwtDecode to get username from token in local storage
+  
+    useEffect(() => {
+        if (localStorage.getItem('token') != undefined) {
+        const tokenObj = jwtDecode(localStorage.getItem('token'));
+        setUsername(tokenObj.sub)
+        console.log(username)
+        }
+      }, [])
+      console.log(username)
+
+    useEffect(() => {
+        fetchTransactionExchangeRate();
+        setConvertedAmount(amount*transactionExchangeRate);
+    })
+        
     const submitTransaction=(e)=>{
         e.preventDefault()
+
+        // console.log(amount)
+        // console.log(transactionExchangeRate)
+        // console.log(convertedAmount)
+        console.log(currency)
+        fetchTransactionExchangeRate();
 
         fetch(`http://localhost:8080/trips/searchByID?ID=${tripID}`, {
             headers:{"Content-Type":"application/json",
             Authorization: 'Bearer ' + localStorage.getItem('token')},
             }).then(res=>res.json()).then(trip=>{
-            const transaction = {name, description, currency, amount, trip, favorite: false}
+            const transaction = {name, description, currency, amount, trip, favorite: false, username, userDefaultCurrency, convertedAmount}
             console.log(JSON.stringify(transaction))
+
+
 
             fetch("http://localhost:8080/transactions/add", {
                 method:"POST",
@@ -70,11 +102,29 @@ useEffect(() => {
 console.log(Object.keys(currencies));
 const currencyArr = Object.keys(currencies);
 
+//CONVERT TRANSACTION AMOUNT TO USER'S DEFAULT CURRENCY
+
+    //FETCH SPECIFIC EXCHANGE RATE
+    const fetchTransactionExchangeRate = async () => {
+        try {
+            const result = await fetch(`http://api.frankfurter.app/latest?from=${currency}&to=${userDefaultCurrency}`).then(res=>res.json()).then((result)=>{setTransactionExchangeRate(result.rates[userDefaultCurrency]);})
+        }
+        catch(error){
+            console.log(error);
+        }
+   
+         };
+
+
+//    useEffect(() => {
+//     fetchTransactionExchangeRate();
+//    }, [])
+
     return(
     <div>
         <NavBar/>
-        <Header/>
-
+<h1>Create New Transaction</h1>
+<hr/>
         <form method="POST">
             <label for="name">Transaction Name</label><br />
             <input type = "text" name = "name" id="name" onChange = {(e)=>setName(e.target.value)} /><br />
@@ -95,22 +145,15 @@ const currencyArr = Object.keys(currencies);
 
             <label for="currency">Currency</label><br />
             <select id="currency" name="currency" onChange = {(e)=>setCurrency(e.target.value)}>
+            <option value="">-</option>
             {currencyArr.map((ans) => {
                     return (
                     <option value={ans}>{ans}</option>
                     )
                     })}
-              {/* <option value="">-</option>
-              <option value="USD">US Dollar</option>
-              <option value="MXN">Mexican Peso</option>
-              <option value="CAD">Canadian Dollar</option>
-              <option value="EUR">Euro</option>
-              <option value="GBP">British Pound</option>
-              <option value="JPY">Japanese Yen</option>
-              <option value="RMB">Chinese Yuan</option> */}
             </select><br />
 
-            <br /><input type = "submit" onClick={submitTransaction}/>
+            <br /><input type = "submit" className="btn btn-primary" onClick={submitTransaction}/>
         </form>
     </div>
 );}

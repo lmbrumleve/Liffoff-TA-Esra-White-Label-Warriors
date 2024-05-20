@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar.jsx"
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Star, StarBorder } from "@mui/icons-material";
 import Checkbox from "@mui/material/Checkbox";
 import checked from "@mui/material/Checkbox";
 import { set } from "date-fns/fp/set";
@@ -66,7 +67,13 @@ export default function Transactions(props) {
     const handleDelete = async (e,id, tripId) =>{
         e.preventDefault();
         console.log(id);
-        navigate('/transactions/delete/' + id, {state:{tripId:tripId}});
+         const deleteTransaction = async (id)=>{
+            await fetch("http://localhost:8080/transactions/" + id,{
+                method:"DELETE",
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}
+            }).then(()=>console.log("transaction deleted"))}
+            deleteTransaction(id);
     }
 
     const handleUpdate = (e,id,name,description,amount,currency) =>{
@@ -110,43 +117,42 @@ const handleFavorite = async (e,id,position) => {
     return(
         <>
             <NavBar />
-            <Header />
 
+
+            <h1>Transaction History</h1>
+            <hr/>
             <br/>
-            <Link to="/transactions/add">Add New Transaction</Link>
-            <br/>
-            <Link to="/transactions/search">Search Transactions</Link>
-            <br/>
-            <h1>All Transactions</h1>
 
             <table>
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Note</th>
+                    <th>Trip</th>
                     <th>Amount</th>
                     <th>Currency</th>
-                    <th>Trip</th>
+                    <th>Amount (USD)</th>
                     <th></th>
                     <th></th>
-                    <th>Favorite</th>
+                    <th></th>
                 </tr>
                 {transactions.map((ans)=>(
                 <tr>
                     <td>{ans.id}</td>
                     <td>{ans.name}</td>
                     <td>{ans.description}</td>
+                    <td>{ans.trip.destination}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
-                    <td>{ans.trip.name}</td>
-                    <td><button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
-                    <td><button onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}>Delete</button></td>
+                    <td>Amount USD</td>
+                    <td><button className="btn btn-primary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
+                    <td><button className="btn btn-outline-primary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}>Delete</button></td>
                     <td>
                     <FormControlLabel
                             control = {
                                 <Checkbox value={checked[ans.id]}
-                                    icon = {<FavoriteBorderIcon />}
-                                    checkedIcon = {<FavoriteIcon />}
+                                    icon = {<StarBorder />}
+                                    checkedIcon = {<Star />}
                                     // checked = {ans.favorite === false ? false : true}
                                     checked = {ans.favorite}
                                     onClick = {(e)=>handleFavorite(e, ans.id, ans.favorite)}
@@ -159,6 +165,10 @@ const handleFavorite = async (e,id,position) => {
                 </tr>
                 ))}
             </table>
+            <br/>
+            <Link to="/transactions/add" className="btn btn-primary trip-button">Add New Transaction</Link>
+            <Link to="/transactions/search" className="btn btn-primary trip-button">Search Transactions</Link>
+            <br/>
 
             <Outlet />
         </>
