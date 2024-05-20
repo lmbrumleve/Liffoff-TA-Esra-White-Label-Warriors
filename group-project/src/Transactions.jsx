@@ -22,6 +22,7 @@ export default function Transactions(props) {
     const[isChecked, setIsChecked] = useState({});
     const[checkedState, setCheckedState] = useState([]);
 
+    const userDefaultCurrency = "USD";
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -130,8 +131,7 @@ const handleFavorite = async (e,id,position) => {
                     <th>Note</th>
                     <th>Trip</th>
                     <th>Amount</th>
-                    <th>Currency</th>
-                    <th>Amount (USD)</th>
+                    <th>Amount ({userDefaultCurrency})</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -142,9 +142,8 @@ const handleFavorite = async (e,id,position) => {
                     <td>{ans.name}</td>
                     <td>{ans.description}</td>
                     <td>{ans.trip.destination}</td>
-                    <td>{ans.amount}</td>
-                    <td>{ans.currency}</td>
-                    <td>Amount USD</td>
+                    <td>{ans.amount} {ans.currency}</td>
+                    <td>{ans.convertedAmount} {userDefaultCurrency}</td>
                     <td><button className="btn btn-primary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
                     <td><button className="btn btn-outline-primary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}>Delete</button></td>
                     <td>
