@@ -142,13 +142,14 @@ export default function Profile() {
                 <p className="text-muted mb-4">Trip Wallet Member</p>
                 <p className="text-muted mb-4">{user.username}</p>
                 <hr />
-                <Link to="/myTrips" className="text-muted btn btn-light btn-outline-primary">My Trips</Link>
               </MDBCardBody>
             </MDBCard>
 
             <MDBCard className="mb-4 mb-lg-0">
               <MDBCardBody className="p-0">
-                <MDBListGroup flush className="rounded-3">
+              <Link to="/myTrips" className="text-muted btn btn-light btn-outline-primary">My Trips</Link>
+                  
+                {/* <MDBListGroup flush className="rounded-3">
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="google fa-lg" style={{ color: '#55acee' }} />
                     <MDBCardText>Google Login</MDBCardText>
@@ -157,7 +158,7 @@ export default function Profile() {
                     <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
                     <MDBCardText>Facebook Login</MDBCardText>
                   </MDBListGroupItem>
-                </MDBListGroup>
+                </MDBListGroup> */}
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
