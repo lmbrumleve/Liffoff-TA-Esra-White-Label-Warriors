@@ -9,6 +9,8 @@ export default function TransactionSearch(){
     const [q, setQ] = useState("")
     const [ans, setAns] = useState([])
 
+    const userDefaultCurrency = "USD"
+
     function searchTransaction() {
         if (sel=="name") {
             fetch(`http://localhost:8080/transactions/searchByName?name=${q}`, {
@@ -47,20 +49,20 @@ export default function TransactionSearch(){
         <hr />
         <table>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
+                <th>Date</th>
+                <th>Transaction</th>
                 <th>Note</th>
                 <th>Amount</th>
-                <th>Currency</th>
+                <th>Converted Amount</th>
             </tr>
 
             {ans.map(a=>(
             <tr>
-                <td>{a.id}</td>
+                <td>{a.date}</td>
                 <td>{a.name}</td>
                 <td>{a.description}</td>
-                <td>{a.amount}</td>
-                <td>{a.currency}</td>
+                <td>{a.amount} {a.currency}</td>
+                <td>{a.convertedAmount} {a.userDefaultCurrency}</td>
             </tr>
             ))}
         </table>

@@ -22,7 +22,7 @@ public class Transaction {
 
     private double convertedAmount;
 
-    private Date date;
+    private String date;
 
     @ManyToOne
     @JoinColumn(name="trip_id")
@@ -109,11 +109,11 @@ public class Transaction {
         this.convertedAmount = convertedAmount;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

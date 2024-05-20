@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 import NavBar from "./NavBar.jsx"
 import { jwtDecode } from "jwt-decode"
+import { format } from "date-fns"
 
 export default function TransactionAdd() {
 
@@ -46,7 +47,7 @@ export default function TransactionAdd() {
         // console.log(convertedAmount)
         console.log(currency)
         fetchTransactionExchangeRate();
-        const date = new Date();
+        const date = format(new Date(), 'P');
 
         fetch(`http://localhost:8080/trips/searchByID?ID=${tripID}`, {
             headers:{"Content-Type":"application/json",
@@ -117,10 +118,6 @@ const currencyArr = Object.keys(currencies);
          };
 
 
-//    useEffect(() => {
-//     fetchTransactionExchangeRate();
-//    }, [])
-
     return(
     <div>
         <NavBar/>
@@ -130,7 +127,7 @@ const currencyArr = Object.keys(currencies);
             <label for="name">Transaction Name</label><br />
             <input type = "text" name = "name" id="name" onChange = {(e)=>setName(e.target.value)} /><br />
 
-            <label for="description">Description</label><br />
+            <label for="description">Notes</label><br />
             <input type = "text" name = "description" id="description" onChange = {(e)=>setDescription(e.target.value)} /><br />
 
             <label for="amount">Transaction Amount</label><br />
