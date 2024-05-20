@@ -12,6 +12,7 @@ import NavBar from "./NavBar.jsx";
             amount: 0,
             start: "",
             end: "",
+            // finalAmount: rate.rates
         });
         const [amount,setAmount] = useState();
 
@@ -19,8 +20,8 @@ import NavBar from "./NavBar.jsx";
         //when rate changes meaning its holding the object returned from the api then setNumber & re render with now updated value making the DOM have the current value
         useEffect(()=>{
             console.log(rate)
-            //const c = '"' + convertTransaction.end + '"';
-            //console.log(c);
+            // const c = convertTransaction.end;
+            // console.log(c);
             setNumber(rate.rates);
         },[rate])
 
@@ -71,33 +72,31 @@ const currencyArr = Object.keys(currencies);
                 <label for="amount" className="input-format">Amount to be Converted: </label>
                 <input type="text" id="amount" name="amount" value = {convertTransaction.amount} onChange = {(e)=>handleChange(e)}/> <br/>
 
-                <label for="start" className="input-format">From: </label>
+                <label for="start" className="input-format">Convert From: </label>
                 <select id="start" name="start" onChange = {(e)=>handleChange(e)}>
                   <option value="">-</option>
-                  <option value="USD">US Dollar</option>
-                  <option value="MXN">Mexican Peso</option>
-                  <option value="CAD">Canadian Dollar</option>
-                  <option value="EUR">Euro</option>
-                  <option value="GBP">British Pound</option>
-                  <option value="JPY">Japanese Yen</option>
-                  <option value="RMB">Chinese Yuan</option>
-                </select><br />
-
-                <label for="currency">Currency</label><br />
-            <select id="currency" name="currency" onChange = {(e)=>setCurrency(e.target.value)}>
-            <option value="">-</option>
-            {currencyArr.map((ans) => {
+                  {currencyArr.map((ans) => {
                     return (
                     <option value={ans}>{ans}</option>
                     )
                     })}
                 </select><br />
 
+                <label for="end" className="input-format">Convert To: </label>
+                <select id="end" name="end" onChange = {(e)=>handleChange(e)}>
+                <option value="">-</option>
+                {currencyArr.map((ans) => {
+                    return (
+                    <option value={ans}>{ans}</option>
+                    )
+                    })}
+                  </select><br/>
+
                 <br /><input type="submit" className="btn btn-primary trip-button" value="Convert!" onClick={convertT}/>
 
                 </form>
                 <br/>
-                <h2> {convertTransaction.amount} {convertTransaction.start} turns into {JSON.stringify(number)}</h2>
+                <h2> {convertTransaction.amount} {convertTransaction.start} turns into {rate*convertTransaction.amount} {convertTransaction.end} {JSON.stringify(number)}</h2>
             </>
         )
     }

@@ -2,12 +2,17 @@ import Header from "./Header.jsx"
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import NavBar from "./NavBar.jsx"
+import { format } from "date-fns"
 
 export default function TripByID(props) {
 
     const { ID } = useParams()
     const [trip, setTrip] = useState([])
     const [transactions, setTransactions] = useState([])
+    const [totalSpent, setTotalSpent] = useState([])
+
+    const userDefaultCurrency = "USD"
+
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -32,6 +37,18 @@ export default function TripByID(props) {
         const response = await fetch("api.frankfurter.app/latest?amount=" + {amount} + "&from=" + {currency} + "&to=" + defaultCurrency);
     }
 
+    console.log(transactions)
+    useEffect (() => {
+    let numAmount;
+    let total = 0;
+        for (let i=0; i<transactions.length; i++) {
+            numAmount = Number(transactions[i].convertedAmount);
+            total+=numAmount;
+        }
+    setTotalSpent(total);
+    console.log(totalSpent)
+    })
+
     return (
     <div>
 
@@ -40,32 +57,39 @@ export default function TripByID(props) {
         <br/>
         <br/>
         <br/>
-        <h1>{trip.name}</h1>
-        <h2>Destination: {trip.destination}</h2>
+        <h1>Transaction Log: {trip.destination} {trip.name}</h1>
         <hr/>
 
         <table>
             <br/>
             <tr>
+                <th>Date</th>
                 <th>Transaction</th>
                 <th>Description</th>
                 <th>Amount</th>
-                <th>Local Currency</th>
-                <th>Amount in Preferred Currency</th>
+                <th>Amount ({userDefaultCurrency})</th>
             </tr>
 
             {transactions.map(ans=>(
             <tr>
+                <td>{ans.date}</td>
                 <td>{ans.name}</td>
                 <td>{ans.description}</td>
-                <td>{ans.amount}</td>
-                <td>{ans.currency}</td>
-                <td>Converted Amount Here</td>
+                <td>{ans.amount} {ans.currency}</td>
+                <td>{ans.convertedAmount} {userDefaultCurrency}</td>
 {/*                 <td>{convertCurrency(ans.currency, ans.amount)}</td> */}
-                <td><button className="btn btn-primary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}>Update</button></td>
-                <td><button className="btn btn-outline-primary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}>Delete</button></td>
+                <button className="btn btn-primary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}>Update</button>
+                <button className="btn btn-outline-primary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}>Delete</button>
             </tr>
             ))}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                    <td className="bold-font">Total Spent: {totalSpent} {userDefaultCurrency}</td>
+                </tr>
         </table>
             <br/>
         <Link to="/trips" className="btn btn-primary trip-button">Back to all trips</Link>

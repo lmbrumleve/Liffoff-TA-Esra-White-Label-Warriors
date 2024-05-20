@@ -21,6 +21,7 @@ export default function Transactions(props) {
     // const[favorite, setFavorite] = useState(false);
     const[isChecked, setIsChecked] = useState({});
     const[checkedState, setCheckedState] = useState([]);
+    const[totalSpent, setTotalSpent] = useState([]);
 
     const userDefaultCurrency = "USD";
     const navigate = useNavigate();
@@ -114,11 +115,24 @@ const handleFavorite = async (e,id,position) => {
     
   }
 
+  console.log(transactions)
+useEffect (() => {
+let numAmount;
+let total = 0;
+    for (let i=0; i<transactions.length; i++) {
+        numAmount = Number(transactions[i].convertedAmount);
+        total+=numAmount;
+    }
+setTotalSpent(total);
+console.log(totalSpent)
+})
 
     return(
         <>
             <NavBar />
-
+            <Link to="/transactions/add" className="btn btn-outline-primary transaction-button"><span>➕</span></Link>
+            <br/>
+            <br/>
 
             <h1>Transaction History</h1>
             <hr/>
@@ -126,8 +140,8 @@ const handleFavorite = async (e,id,position) => {
 
             <table>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Transaction</th>
                     <th>Note</th>
                     <th>Trip</th>
                     <th>Amount</th>
@@ -138,10 +152,10 @@ const handleFavorite = async (e,id,position) => {
                 </tr>
                 {transactions.map((ans)=>(
                 <tr>
-                    <td>{ans.id}</td>
+                    <td>{ans.date}</td>
                     <td>{ans.name}</td>
                     <td>{ans.description}</td>
-                    <td>{ans.trip.destination}</td>
+                    <td>{ans.trip.destination} ({ans.trip.name})</td>
                     <td>{ans.amount} {ans.currency}</td>
                     <td>{ans.convertedAmount} {userDefaultCurrency}</td>
                     <td><button className="btn btn-primary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
@@ -163,9 +177,17 @@ const handleFavorite = async (e,id,position) => {
                     </td>
                 </tr>
                 ))}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                    <td className="bold-font">Total Spent: {totalSpent} {userDefaultCurrency}</td>
+                </tr>
+
             </table>
             <br/>
-            <Link to="/transactions/add" className="btn btn-primary trip-button">Add New Transaction</Link>
             <Link to="/transactions/search" className="btn btn-primary trip-button">Search Transactions</Link>
             <br/>
 
