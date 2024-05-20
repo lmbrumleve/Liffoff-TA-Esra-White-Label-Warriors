@@ -2,9 +2,23 @@ import { useNavigate, Link, Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./components/Header.jsx"
 import NavBar from "./components/NavBar.jsx";
+import { OverlayTrigger } from "react-bootstrap";
+import Tooltip from 'react-bootstrap/Tooltip';
+import Button from 'react-bootstrap/Button';
+import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
+
 
 export default function Trips() {
     const [trips, setTrips] = useState([])
+
+    const userDefaultCurrency = "USD";
+
+    const renderTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+          View Transactions
+        </Tooltip>
+      );
+
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -63,27 +77,34 @@ export default function Trips() {
             <br/>
             <br/>
 
-        <h1>All Trips</h1>
+        <h1>My Trips</h1>
 
         <hr/>
         <table>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
+                {/* <th>ID</th> */}
                 <th>Destination</th>
+                <th>Purpose</th>
                 <th>Budget</th>
             </tr>
 
             {trips.map(ans=>(
             <tr>
-                <td><Link to={`/trips/ID/${ans.id}`}>{ans.id}</Link></td>
-                <td>{ans.name}</td>
+                {/* <td><Link to={`/trips/ID/${ans.id}`}>{ans.id}</Link></td> */}
                 <td>{ans.destination}</td>
-                <td>{ans.budget}</td>
-                <td><Link to={`/trips/ID/${ans.id}`}>See Trip Transactions</Link></td>
+                <td>{ans.name}</td>
+                <td> {ans.budget} {userDefaultCurrency}</td>
+
                 <button className="btn btn-primary trip-button" onClick={(e)=>handleUpdate(e,ans.id)}>Update</button>
                 <button className="btn btn-outline-primary trip-button" onClick={(e)=>handleDelete(e,ans.id)}>Delete</button>
-            </tr>
+                <OverlayTrigger
+                placement="right"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip}
+                >
+                <Link to={`/trips/ID/${ans.id}`} className="btn btn-secondary trip-button" ><ViewHeadlineIcon/></Link>
+                </OverlayTrigger>
+                </tr>
             ))}
 
         </table>

@@ -2,6 +2,7 @@ package LaunchCode.project.models;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -20,6 +21,8 @@ public class Transaction {
     private String userDefaultCurrency;
 
     private double convertedAmount;
+
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name="trip_id")
@@ -104,6 +107,14 @@ public class Transaction {
 
     public void setConvertedAmount(double convertedAmount) {
         this.convertedAmount = convertedAmount;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getID() {

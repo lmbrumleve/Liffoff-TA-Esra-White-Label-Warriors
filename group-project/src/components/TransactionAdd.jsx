@@ -46,12 +46,13 @@ export default function TransactionAdd() {
         // console.log(convertedAmount)
         console.log(currency)
         fetchTransactionExchangeRate();
+        const date = new Date();
 
         fetch(`http://localhost:8080/trips/searchByID?ID=${tripID}`, {
             headers:{"Content-Type":"application/json",
             Authorization: 'Bearer ' + localStorage.getItem('token')},
             }).then(res=>res.json()).then(trip=>{
-            const transaction = {name, description, currency, amount, trip, favorite: false, username, userDefaultCurrency, convertedAmount}
+            const transaction = {name, description, currency, amount, trip, favorite: false, username, userDefaultCurrency, convertedAmount, date}
             console.log(JSON.stringify(transaction))
 
 
