@@ -2,49 +2,59 @@ import { useNavigate,Link,Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import Header from "./Header.jsx"
 import NavBar from "./NavBar.jsx";
+import axios, { Axios } from "axios";
+
 
     export default function convertTransactions(props){
-        const [rate, setRate] = useState({});
-        const [number, setNumber] = useState(0);
+        const [rate, setRate] = useState(0);
+        const [number, setNumber] = useState();
         const[currencies, setCurrencies] = useState([])
+        const [exchangeRates, setExchangeRates] = useState([])
+        const [convertedAmount, setConvertedAmount] = useState(0)
 
-        const [convertTransaction, setConvertTransaction] = useState({
+        const [conversionInputs, setConversionInputs] = useState({
             amount: 0,
             start: "",
             end: "",
-            // finalAmount: rate.rates
         });
-        const [amount,setAmount] = useState();
 
-        //React DOM is one render behind and sallow monitors arrays and objects so you have to let it know when to re-render
-        //when rate changes meaning its holding the object returned from the api then setNumber & re render with now updated value making the DOM have the current value
-        useEffect(()=>{
-            console.log(rate)
-            // const c = convertTransaction.end;
-            // console.log(c);
-            setNumber(rate.rates);
-        },[rate])
+        const fetchExchangeRates = async () => {
+            await axios.get(`https://api.frankfurter.app/latest?from=${conversionInputs.start}`).then((res) => {
+                setExchangeRates(res.data.rates);
+            });
+        };
+        
+            useEffect(() => {
+                fetchExchangeRates();
+
+            }, [conversionInputs]);
+
+
+
 
         const convertT = async (e) =>{
             e.preventDefault();
-            console.log(convertTransaction);
 
-            //Make correct url to pull from api
-            const URL = "https://api.frankfurter.app/latest?amount=" + convertTransaction.amount + "&from=" + convertTransaction.start + "&to=" + convertTransaction.end;
-            //pull & convert using api
-            const result = await fetch(URL, {
-                method: "GET",
-                headers:{"Content-Type":"application/json"},
-            }).then(res=>res.json()).then((result)=>{setRate(result);});
+            console.log(conversionInputs.end)
+            let ratesKey = conversionInputs.end
+            console.log(exchangeRates)
+            console.log(exchangeRates[`${ratesKey}`])
+            setRate(exchangeRates[`${ratesKey}`])
+            console.log(conversionInputs)
+
         }
+
+useEffect (()=>{
+        setConvertedAmount(conversionInputs.amount * rate);
+    }, [conversionInputs, rate])
 
         //update convertTransaction object with new updated values that also allow for values on screen to change using value = {convertTransaction.variableName}
         const handleChange = (e)=>{
             const value= e.target.value;
-            setConvertTransaction({...convertTransaction,[e.target.name]: value });
-            console.log(convertTransaction);
+            setConversionInputs({...conversionInputs,[e.target.name]: value});
+            console.log(conversionInputs);
         }
-//FETCH CURRENCIES:
+//Fetch currencies: 
 const fetchCurrencies = async () => {
     try{
         const response = await fetch("https://api.frankfurter.app/currencies").then(res=>res.json()).then((result)=>{setCurrencies(result);})
@@ -70,7 +80,7 @@ const currencyArr = Object.keys(currencies);
                 <form method="POST">
 
                 <label for="amount" className="input-format">Amount to be Converted: </label>
-                <input type="text" id="amount" name="amount" value = {convertTransaction.amount} onChange = {(e)=>handleChange(e)}/> <br/>
+                <input type="text" id="amount" name="amount" value = {conversionInputs.amount} onChange = {(e)=>handleChange(e)}/> <br/>
 
                 <label for="start" className="input-format">Convert From: </label>
                 <select id="start" name="start" onChange = {(e)=>handleChange(e)}>
@@ -96,7 +106,7 @@ const currencyArr = Object.keys(currencies);
 
                 </form>
                 <br/>
-                <h2> {convertTransaction.amount} {convertTransaction.start} turns into {rate*convertTransaction.amount} {convertTransaction.end} {JSON.stringify(number)}</h2>
+                <h2> {conversionInputs.amount} {conversionInputs.start} turns into {convertedAmount} {conversionInputs.end} </h2>
             </>
         )
     }
