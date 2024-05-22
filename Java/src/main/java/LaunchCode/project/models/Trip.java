@@ -16,6 +16,12 @@ public class Trip {
     private String destination;
     private double budget;
 
+    private String username;
+
+    private String startDate;
+
+    private String endDate;
+
     @JsonIgnore
     @OneToMany(mappedBy = "trip")
     private List<Transaction> transactions = new ArrayList<>();
@@ -63,5 +69,25 @@ public class Trip {
 
     public void setBudget(double budget) {
         this.budget = budget;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }
