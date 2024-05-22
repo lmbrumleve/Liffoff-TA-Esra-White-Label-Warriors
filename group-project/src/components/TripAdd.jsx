@@ -1,22 +1,35 @@
 import Header from "./Header.jsx"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {useNavigate} from 'react-router-dom'
 import NavBar from "./NavBar.jsx"
+import { jwtDecode } from "jwt-decode"
 
 export default function TripAdd() {
 
     const [name, setName] = useState("")
     const [destination, setDestination] = useState("")
     const [budget, setBudget] = useState(0)
+    const [username, setUsername] = useState("")
 
     const userDefaultCurrency = "USD";
 
     const navigate = useNavigate();
 
+    //Use jwtDecode to get username from token in local storage
+
+    useEffect(() => {
+        if (localStorage.getItem('token') != undefined) {
+        const tokenObj = jwtDecode(localStorage.getItem('token'));
+        setUsername(tokenObj.sub)
+        console.log(username)
+        }
+        }, [])
+        console.log(username)
+
 
     function addTrip(e) {
         e.preventDefault()
-        const trip = {name, destination, budget}
+        const trip = {name, destination, budget, username}
         fetch("http://localhost:8080/trips/add", {
             method:"POST",
             headers:{"Content-Type":"application/json",
