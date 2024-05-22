@@ -30,6 +30,7 @@ import TripByID from "./components/TripByID.jsx"
 import TimeSeriesGraph from "./components/TimeSeriesGraph.jsx"
 import TripUpdate from "./components/TripUpdate.jsx"
 import TripDelete from "./components/TripDelete.jsx"
+import ConvertTransactionsCard from './components/ConvertTransactionsCard.jsx';
 
 const router = createBrowserRouter([
     {
@@ -101,7 +102,7 @@ const router = createBrowserRouter([
     },
     {
         path: "currency/convert",
-        element: <ConvertTransactions/>,
+        element: <ConvertTransactionsCard/>,
     },
  
     {
