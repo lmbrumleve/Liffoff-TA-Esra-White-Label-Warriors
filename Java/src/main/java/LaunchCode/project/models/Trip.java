@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,9 +19,9 @@ public class Trip {
 
     private String username;
 
-    private String startDate;
+    private Date startDate;
 
-    private String endDate;
+    private Date endDate;
 
     @JsonIgnore
     @OneToMany(mappedBy = "trip")
@@ -75,19 +76,19 @@ public class Trip {
         return username;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 }
