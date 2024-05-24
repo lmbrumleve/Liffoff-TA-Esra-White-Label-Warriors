@@ -105,7 +105,7 @@ console.log(transactions)
 
   return (
     <>
-    <h2>Budget Categories</h2>
+    <h2>Spending by Category</h2>
         <Doughnut
             data={{
               labels: totalTransactions.map((data)=> data.budgetCategory),

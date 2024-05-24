@@ -12,6 +12,7 @@ import { set } from "date-fns/fp/set";
 import { format } from "date-fns";
 import { DeleteForever } from "@mui/icons-material";
 import { Button, Card } from "react-bootstrap";
+import { pink, yellow } from "@mui/material/colors";
 
 
 
@@ -169,14 +170,14 @@ console.log(totalSpent)
                     <td>{ans.budgetCategory}</td>
                     <td>{ans.amount} {ans.currency}</td>
                     <td>{ans.convertedAmount} {userDefaultCurrency}</td>
-                    <td><button className="btn btn-primary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></button></td>
-                    <td><button className="btn btn-outline-primary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}><DeleteForever/></button></td>
+                    <td><button className="btn btn-secondary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></button></td>
+                    <td><button className="btn btn-outline-secondary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}><DeleteForever/></button></td>
                     <td>
                     <FormControlLabel
                             control = {
                                 <Checkbox value={checked[ans.id]}
-                                    icon = {<StarBorder />}
-                                    checkedIcon = {<Star />}
+                                    icon = {<StarBorder color="disabled" />}
+                                    checkedIcon = {<Star sx={{ color: yellow[800] }} />}
                                     // checked = {ans.favorite === false ? false : true}
                                     checked = {ans.favorite}
                                     onClick = {(e)=>handleFavorite(e, ans.id, ans.favorite)}

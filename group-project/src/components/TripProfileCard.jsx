@@ -57,7 +57,7 @@ const handleUpdate = (e,id)=>{
     {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
     <Card.Body>
       <div className="position-top-right button-spacing">
-    <Button className="btn btn-primary trip-button" size="sm" onClick={(e)=>handleUpdate(e,trip.id)}><UpdateIcon/></Button>
+    <Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,trip.id)}><UpdateIcon/></Button>
     </div>
       <br/>
       <br/>

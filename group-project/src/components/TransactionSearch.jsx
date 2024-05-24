@@ -1,6 +1,7 @@
 import Header from "./Header.jsx"
 import React, { useState } from 'react'
 import NavBar from "./NavBar.jsx"
+import { Link } from "react-router-dom"
 
 
 export default function TransactionSearch(){
@@ -39,6 +40,7 @@ export default function TransactionSearch(){
         <select className="input-format" name = {sel} value={sel} onChange = {(e)=>setSel(e.target.value)}>
             <option value="name">Name of Transaction</option>
             <option value="amount">Amount of Transaction</option>
+
         </select>
 
         <br />
@@ -52,6 +54,8 @@ export default function TransactionSearch(){
                 <th>Date</th>
                 <th>Transaction</th>
                 <th>Note</th>
+                <th>Trip</th>
+                <th>Category</th>
                 <th>Amount</th>
                 <th>Converted Amount</th>
             </tr>
@@ -61,6 +65,8 @@ export default function TransactionSearch(){
                 <td>{a.date}</td>
                 <td>{a.name}</td>
                 <td>{a.description}</td>
+                <td><Link to={`/trips/ID/${a.trip.id}`}>{a.trip.destination} ({a.trip.name})</Link></td>
+                <td>{a.budgetCategory}</td>
                 <td>{a.amount} {a.currency}</td>
                 <td>{a.convertedAmount} {a.userDefaultCurrency}</td>
             </tr>
