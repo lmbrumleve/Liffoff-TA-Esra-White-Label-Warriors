@@ -9,6 +9,7 @@ import { Star, StarBorder } from "@mui/icons-material";
 import Checkbox from "@mui/material/Checkbox";
 import checked from "@mui/material/Checkbox";
 import { set } from "date-fns/fp/set";
+import { format } from "date-fns";
 
 
 
@@ -152,7 +153,7 @@ console.log(totalSpent)
                 </tr>
                 {transactions.map((ans)=>(
                 <tr>
-                    <td>{ans.date}</td>
+                    <td>{format(ans.date, "P")}</td>
                     <td>{ans.name}</td>
                     <td>{ans.description}</td>
                     <td>{ans.trip.destination} ({ans.trip.name})</td>

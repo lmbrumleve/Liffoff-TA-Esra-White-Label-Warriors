@@ -60,3 +60,16 @@
 .bold-font {
   font-weight: bold;
 }
+
+.position-top-right {
+  position: absolute;
+  top: 1%;
+  right: 1%;
+}
+
+.button-spacing {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 0px;
+}
