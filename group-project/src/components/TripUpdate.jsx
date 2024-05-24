@@ -78,7 +78,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever.js"
       deleteTrip(id);
       deleteTrip(id);
 
-      //navigate("/trips/delete/" + id);
+      navigate("/myTrips");
   }
 
     return(

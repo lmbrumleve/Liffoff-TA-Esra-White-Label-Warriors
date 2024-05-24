@@ -67,7 +67,7 @@ const handleUpdate = (e,id)=>{
       <Card.Text>
       {trip.name}
       </Card.Text>
-      <Card.Text>{format(trip.startDate, 'MMM d, YYY')} ({trip.duration} days)</Card.Text>
+      <Card.Text>{format(trip.startDate, 'MMM d, yyy')} ({trip.duration} days)</Card.Text>
 
       {/* <Card.Text>      Trip duration: {trip.duration} days */}
 {/* </Card.Text> */}

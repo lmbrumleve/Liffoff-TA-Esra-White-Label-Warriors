@@ -6,6 +6,9 @@ import { format } from "date-fns"
 import TotalTransactionsChart from "./TotalTransactionsChart.jsx"
 import { Card } from "react-bootstrap"
 import { Box } from "@mui/material"
+import TransactionsByCategoryDoughnut from "./TransactionsByCategoryDoughnut.jsx"
+import TransactionsPercentSpentDoughnut from "./TransactionsPercentSpentDoughnut.jsx"
+import { Doughnut } from "react-chartjs-2"
 
 export default function TripByID(props) {
 
@@ -13,6 +16,7 @@ export default function TripByID(props) {
     const [trip, setTrip] = useState([])
     const [transactions, setTransactions] = useState([])
     const [totalSpent, setTotalSpent] = useState([])
+    const [totalBudgeted, setTotalBudgeted] = useState([])
 
     const userDefaultCurrency = "USD"
 
@@ -23,6 +27,8 @@ export default function TripByID(props) {
         fetch("http://localhost:8080/trips/ID/" + ID, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}).then(res=>res.json()).then((result)=>{setTrip(result);})
         fetch("http://localhost:8080/transactions/searchByTripID?ID=" + ID,{headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}).then(res=>res.json()).then(result=>{setTransactions(result);})
     },[transactions])
+
+    console.log(trip)
 
     const handleDelete = async (e,id,tripId) =>{
         e.preventDefault();
@@ -48,8 +54,15 @@ export default function TripByID(props) {
             numAmount = Number(transactions[i].convertedAmount);
             total+=numAmount;
         }
-    setTotalSpent(total);
-    console.log(totalSpent)
+
+    // setTotalSpent(total);
+    // console.log(totalSpent)
+    // })
+
+    // console.log(trip.budget)
+    // useEffect(()=> {
+    //     setTotalBudgeted(trip.budget);
+    //     console.log(totalBudgeted)
     })
 
     return (
@@ -60,7 +73,7 @@ export default function TripByID(props) {
         <br/>
         <br/>
         <br/>
-        <h1>{trip.destination} {trip.name}</h1>
+        <h1>{trip.destination} {trip.name} Trip</h1>
         <hr/>
         <Box
     sx={{
@@ -71,19 +84,41 @@ export default function TripByID(props) {
       gap: "16px",
     }}
     >
-        <Card><TotalTransactionsChart/>
+
+        <Card>
+        <h2>Overall</h2>
+        <Doughnut
+            data={{
+              labels: ["Amount Spent", "Amount Remaining"],
+              datasets:[
+                {
+                    label: "Total",
+                    data: [{totalSpent}, {totalBudgeted}]
+                    // backgroundColor:[
+                    //     "rgba(43, 63, 229, 0.8)",
+                    //     "rgba(250, 192, 19, 0.8)",
+                    //     "rgba(253, 135, 135, 0.8)",
+                    // ]
+
+                }
+              ]
+            }}
+        />        
         </Card>
+        
+        <Card><TransactionsByCategoryDoughnut/></Card>
+        
         </Box>
         <Card>
             <Card.Title className="bold-font">Transactions</Card.Title>
             <hr/>
         <table>
             <tr>
-                <th>Date of Transaction</th>
-                <th>Transaction</th>
+                <th>Date</th>
+                <th>Item</th>
                 <th>Description</th>
-                <th>Budget Category</th>
-                <th>Amount</th>
+                <th>Category</th>
+                <th>Amount (Local)</th>
                 <th>Amount ({userDefaultCurrency})</th>
             </tr>
 
@@ -111,7 +146,7 @@ export default function TripByID(props) {
         </table>
         </Card>
             <br/>
-        <Link to="/trips" className="btn btn-primary trip-button">Back to all trips</Link>
+        <Link to="/myTrips" className="btn btn-primary trip-button">Back to all trips</Link>
 
     </div>
     );
