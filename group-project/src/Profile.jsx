@@ -36,6 +36,7 @@ export default function Profile() {
   });
 
     const [favoriteRates, setFavoriteRates] = useState([]);
+    
 
     // const { username } = useParams();
 
