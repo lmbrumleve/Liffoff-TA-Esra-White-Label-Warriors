@@ -16,8 +16,9 @@ export default function TransactionAdd() {
     const[tripID, setTripID]=useState([]);
     const[currencies, setCurrencies] = useState([]);
     const[username, setUsername] = useState("");
-    const[transactionExchangeRate, setTransactionExchangeRate] = useState([])
+    const[transactionExchangeRate, setTransactionExchangeRate] = useState([]);
     const[convertedAmount, setConvertedAmount] =useState([]);
+    const[budgetCategory, setBudgetCategory] = useState("");
     
     const userDefaultCurrency = "USD"
     const navigate = useNavigate();
@@ -55,7 +56,7 @@ export default function TransactionAdd() {
             headers:{"Content-Type":"application/json",
             Authorization: 'Bearer ' + localStorage.getItem('token')},
             }).then(res=>res.json()).then(trip=>{
-            const transaction = {name, description, currency, amount, trip, favorite: false, username, userDefaultCurrency, convertedAmount, date}
+            const transaction = {name, description, currency, amount, trip, favorite: false, username, userDefaultCurrency, convertedAmount, date, budgetCategory}
             console.log(JSON.stringify(transaction))
 
 
@@ -134,12 +135,25 @@ const currencyArr = Object.keys(currencies);
 
             <label for="amount">Transaction Amount</label><br />
             <input type = "text" name = "amount" id="amount" onChange = {(e)=>setAmount(e.target.value)} /><br />
-
+            
+            <label htmlFor="budgetCategory" className="trip-button">Budget Category:</label>
+            <br/>
+            <select id="budgetCategory" name="budgetCategory" onChange = {(e)=>setBudgetCategory(e.target.value)}>
+            <option value="">-</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Food">Food</option>
+            <option value="Lodging">Lodging</option>
+            <option value="Recreation">Recreation</option>
+            <option value="Souveneirs">Souveneirs</option>
+            <option value="Other">Other</option>
+            </select>
+            <br/><br/>
+            
             <label for="trip">Applies to Trip</label><br />
             <select id="trip" name="trip" onChange = {(e)=>setTripID(e.target.value)}>
                 <option value="">-</option>
                 {trips.map(t=>(
-                    <option value={t.id}>{t.name}</option>
+                    <option value={t.id}>{t.destination} {t.name}</option>
                 ))}
             </select><br />
 
