@@ -99,7 +99,7 @@ export default function TripAdd() {
             <label htmlFor='startDate' className='form-label'>Travel Dates:</label>
             <div>
       <ReactDatePicker
-        placeholder="Enter trip dates"
+        placeholderText="Enter trip dates"
         selected={startDate}
         customInput={<CustomInput/>} 
         onChange={handleChange}

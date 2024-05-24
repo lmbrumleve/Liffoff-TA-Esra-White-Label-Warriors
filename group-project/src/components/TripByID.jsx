@@ -72,7 +72,7 @@ export default function TripByID(props) {
 
             {transactions.map(ans=>(
             <tr>
-                <td>{ans.date}</td>
+                <td>{format(ans.date, 'P')}</td>
                 <td>{ans.name}</td>
                 <td>{ans.description}</td>
                 <td>{ans.amount} {ans.currency}</td>

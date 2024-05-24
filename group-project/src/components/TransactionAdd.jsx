@@ -47,7 +47,9 @@ export default function TransactionAdd() {
         // console.log(convertedAmount)
         console.log(currency)
         fetchTransactionExchangeRate();
-        const date = format(new Date(), 'P');
+        // const date = format(new Date(), 'P');
+        const date = new Date();
+
 
         fetch(`http://localhost:8080/trips/searchByID?ID=${tripID}`, {
             headers:{"Content-Type":"application/json",
