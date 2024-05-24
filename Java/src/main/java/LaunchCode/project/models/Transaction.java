@@ -24,6 +24,8 @@ public class Transaction {
 
     private String date;
 
+    private String budgetCategory;
+
     @ManyToOne
     @JoinColumn(name="trip_id")
     private Trip trip;
@@ -115,6 +117,14 @@ public class Transaction {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getBudgetCategory() {
+        return budgetCategory;
+    }
+
+    public void setBudgetCategory(String budgetCategory) {
+        this.budgetCategory = budgetCategory;
     }
 
     public int getID() {

@@ -82,6 +82,7 @@ export default function TripByID(props) {
                 <th>Date of Transaction</th>
                 <th>Transaction</th>
                 <th>Description</th>
+                <th>Budget Category</th>
                 <th>Amount</th>
                 <th>Amount ({userDefaultCurrency})</th>
             </tr>
@@ -91,6 +92,7 @@ export default function TripByID(props) {
                 <td>{format(ans.date, 'P')}</td>
                 <td>{ans.name}</td>
                 <td>{ans.description}</td>
+                <td>{ans.budgetCategory}</td>
                 <td>{ans.amount} {ans.currency}</td>
                 <td>{ans.convertedAmount} {userDefaultCurrency}</td>
 {/*                 <td>{convertCurrency(ans.currency, ans.amount)}</td> */}
