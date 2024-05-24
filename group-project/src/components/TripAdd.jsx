@@ -29,6 +29,7 @@ export default function TripAdd() {
     const [budget, setBudget] = useState(0)
     const [startDate, setStartDate] = useState(new Date())
     const [endDate, setEndDate] = useState(new Date())
+    const [duration, setDuration] = useState(0)
     const [username, setUsername] = useState("")
     // const [trip, setTrip] = useState({
     //     name: "",
@@ -58,11 +59,20 @@ export default function TripAdd() {
             const [startDate, endDate] = range;
             setStartDate(startDate);
             setEndDate(endDate);
+
+
+            var diff = new Date(endDate - startDate);
+            console.log(diff)
+            // date difference in days
+            var days = diff/1000/60/60/24;
+            setDuration(days +1)
+            console.log(days)
+ 
           };
 
     function addTrip(e) {
         e.preventDefault()
-        const trip = {name, destination, budget, username, startDate, endDate}
+        const trip = {name, destination, budget, username, startDate, endDate, duration}
         console.log(trip)
         fetch("http://localhost:8080/trips/add", {
             method:"POST",
@@ -72,7 +82,7 @@ export default function TripAdd() {
                 }
         ).then(
             ()=>{console.log("New trip record sent")}
-        ).then(navigate("/trips"))
+        ).then(navigate("/myTrips"))
     }
     return(
     <div>
@@ -85,8 +95,8 @@ export default function TripAdd() {
             <select id="name" name="name" onChange = {(e)=>setName(e.target.value)}>
             <option value="">-</option>
             <option value="Vacation">Vacation</option>
-            <option value="Work Trip">Work Trip</option>
-            <option value="Medical Tourism Trip">Medical Tourism Trip</option>
+            <option value="Business">Business</option>
+            <option value="Medical Tourism">Medical Tourism</option>
             </select>
             <br/><br/>
             <label htmlFor="destination"className="trip-button">Destination: </label>
@@ -105,6 +115,7 @@ export default function TripAdd() {
         onChange={handleChange}
         startDate={startDate}
         endDate={endDate}
+        duration={endDate - startDate}
         selectsRange
       />
       </div>

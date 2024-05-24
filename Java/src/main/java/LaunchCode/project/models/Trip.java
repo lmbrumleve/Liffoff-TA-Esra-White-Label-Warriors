@@ -23,6 +23,8 @@ public class Trip {
 
     private Date endDate;
 
+    private double duration;
+
     @JsonIgnore
     @OneToMany(mappedBy = "trip")
     private List<Transaction> transactions = new ArrayList<>();
@@ -90,5 +92,13 @@ public class Trip {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
     }
 }

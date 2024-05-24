@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import {useForm} from 'react-hook-form'
 import NavBar from "./NavBar.jsx"
+import { Button, Card } from "react-bootstrap"
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever.js"
+
 
     export default function tripUpdate(){
 
@@ -41,7 +44,7 @@ import NavBar from "./NavBar.jsx"
             Authorization: 'Bearer ' + localStorage.getItem('token')},
             body:JSON.stringify(trip)
         }).then((response)=>{
-            navigate('/trips');
+            navigate('/myTrips');
         }).catch((error)=>{
             console.log(error);
         })
@@ -52,15 +55,50 @@ import NavBar from "./NavBar.jsx"
         setTrip({...trip, [e.target.name]: value});
     }
 
+    const deleteTrip = async (id)=>{
+        await fetch("http://localhost:8080/trips/" + id,{
+            method:"DELETE",
+            headers:{"Content-Type":"application/json",
+            Authorization: 'Bearer ' + localStorage.getItem('token')}
+        }).then(()=>console.log("trip deleted"))
+        }
+
+  const handleDelete = (e,id)=>{
+      e.preventDefault();
+
+      const fetchTripTransactions = async (id)=>{
+         const response = await fetch("http://localhost:8080/transactions/searchByTripID?ID=" + id,{
+              headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}).then((res)=>res.json())
+          console.log(response);
+          deleteTripTransactions(response);
+          }
+
+      fetchTripTransactions(id);
+      //deleteTripTransactions(response);
+      deleteTrip(id);
+      deleteTrip(id);
+
+      //navigate("/trips/delete/" + id);
+  }
+
     return(
     <>
         <NavBar/>
-        <h2>Update Trip {id}</h2>
 
+        <h2>Update Trip {id}</h2>
+<Card className="shadow">
         <form method="PUT">
 
-            <label for="name">Trip Name</label><br />
-            <input type="text" name="name" value={trip.name} id="name" onChange = {(e)=>handleChange(e)}/><br />
+            <label for="name">Trip Purpose</label><br />
+            {/* <input type="text" name="name" value={trip.name} id="name" onChange = {(e)=>handleChange(e)}/><br /> */}
+            <select id="name" name="name" onChange = {(e)=>handleChange(e)}>
+            <option value="">{trip.name}</option>
+            <option value="Vacation">Vacation</option>
+            <option value="Business">Business</option>
+            <option value="Medical Tourism">Medical Tourism</option>
+            </select>
+            <br/>
+
 
             <label for="destination">Destination</label><br />
             <input type="text" name="destination" value={trip.destination} id="destination" onChange = {(e)=>handleChange(e)}/><br />
@@ -68,8 +106,16 @@ import NavBar from "./NavBar.jsx"
             <label for="budget">Budget</label><br />
             <input type="text" name="budget" value={trip.budget} id="budget" onChange = {(e)=>handleChange(e)}/><br />
 
-            <br /><input type="submit" value="Update Trip!" className="btn btn-primary" onClick={updateTrip}/>
+            <label for="startDate">Start Date:</label><br />
+
+            <label for="endDate">End Date:</label><br />
+
+
+            <br />
+            <Button className="btn btn-outline-primary trip-button" size="sm" onClick={(e)=>handleDelete(e,trip.id)}><DeleteForeverIcon/></Button>
+            <input type="submit" value="Update Trip!" className="btn btn-primary trip-button" onClick={updateTrip}/>
 
         </form>
+        </Card>
     </>)
     }

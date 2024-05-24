@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import NavBar from "./NavBar.jsx"
 import { format } from "date-fns"
+import TotalTransactionsChart from "./TotalTransactionsChart.jsx"
+import { Card } from "react-bootstrap"
+import { Box } from "@mui/material"
 
 export default function TripByID(props) {
 
@@ -57,13 +60,26 @@ export default function TripByID(props) {
         <br/>
         <br/>
         <br/>
-        <h1>Transaction Log: {trip.destination} {trip.name}</h1>
+        <h1>{trip.destination} {trip.name}</h1>
         <hr/>
-
+        <Box
+    sx={{
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      padding: "32px 64px",
+      gap: "16px",
+    }}
+    >
+        <Card><TotalTransactionsChart/>
+        </Card>
+        </Box>
+        <Card>
+            <Card.Title className="bold-font">Transactions</Card.Title>
+            <hr/>
         <table>
-            <br/>
             <tr>
-                <th>Date</th>
+                <th>Date of Transaction</th>
                 <th>Transaction</th>
                 <th>Description</th>
                 <th>Amount</th>
@@ -91,6 +107,7 @@ export default function TripByID(props) {
                     <td className="bold-font">Total Spent: {totalSpent} {userDefaultCurrency}</td>
                 </tr>
         </table>
+        </Card>
             <br/>
         <Link to="/trips" className="btn btn-primary trip-button">Back to all trips</Link>
 

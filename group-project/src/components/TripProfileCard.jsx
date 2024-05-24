@@ -5,10 +5,17 @@ import axios from 'axios';
 import { TextField, Box } from '@mui/material';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
+import UpdateIcon from '@mui/icons-material/Update';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function ProfileCard() {
 
+  const userDefaultCurrency = "USD"
   const [trips, setTrips] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(()=>{
 
@@ -28,6 +35,11 @@ export default function ProfileCard() {
         console.log(trips);
 }, []);
 
+const handleUpdate = (e,id)=>{
+  e.preventDefault();
+  navigate('/trips/update/' + id);
+}
+
   return (
     <>
 
@@ -44,11 +56,25 @@ export default function ProfileCard() {
     <Card style={{ width: '18rem' }} className='shadow'>
     {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
     <Card.Body>
-      <Card.Title>{trip.name}</Card.Title>
+      <div className="position-top-right button-spacing">
+    <Button className="btn btn-primary trip-button" size="sm" onClick={(e)=>handleUpdate(e,trip.id)}><UpdateIcon/></Button>
+    </div>
+      <br/>
+      <br/>
+      <Card.Title>{trip.destination} </Card.Title>
+      <hr/>
+
       <Card.Text>
-        {trip.description}
+      {trip.name}
       </Card.Text>
-        <Link className="btn btn-primary" to="/trips/ID/:ID">View Trip Profile</Link>
+      <Card.Text>{format(trip.startDate, 'MMM d, YYY')} ({trip.duration} days)</Card.Text>
+
+      {/* <Card.Text>      Trip duration: {trip.duration} days */}
+{/* </Card.Text> */}
+      {/* <Card.Text>
+        {format(trip.startDate, 'P')} - {format(trip.endDate, 'P')}
+      </Card.Text> */}
+        <Link className="btn btn-primary" to={`/trips/ID/${trip.id}`}>View Trip Profile</Link>
     </Card.Body>
   </Card>
 ))}
