@@ -9,6 +9,7 @@ import { Box } from "@mui/material"
 import TransactionsByCategoryDoughnut from "./TransactionsByCategoryDoughnut.jsx"
 import TransactionsPercentSpentDoughnut from "./TransactionsPercentSpentDoughnut.jsx"
 import { Doughnut } from "react-chartjs-2"
+import { DeleteForever, Update } from "@mui/icons-material"
 
 export default function TripByID(props) {
 
@@ -55,15 +56,15 @@ export default function TripByID(props) {
             total+=numAmount;
         }
 
-    // setTotalSpent(total);
-    // console.log(totalSpent)
-    // })
+    setTotalSpent(total);
+    console.log(totalSpent)
+    })
 
     // console.log(trip.budget)
     // useEffect(()=> {
     //     setTotalBudgeted(trip.budget);
     //     console.log(totalBudgeted)
-    })
+    // })
 
     return (
     <div>
@@ -86,31 +87,14 @@ export default function TripByID(props) {
     >
 
         <Card>
-        <h2>Overall</h2>
-        <Doughnut
-            data={{
-              labels: ["Amount Spent", "Amount Remaining"],
-              datasets:[
-                {
-                    label: "Total",
-                    data: [{totalSpent}, {totalBudgeted}]
-                    // backgroundColor:[
-                    //     "rgba(43, 63, 229, 0.8)",
-                    //     "rgba(250, 192, 19, 0.8)",
-                    //     "rgba(253, 135, 135, 0.8)",
-                    // ]
-
-                }
-              ]
-            }}
-        />        
+          <TransactionsPercentSpentDoughnut/>      
         </Card>
         
         <Card><TransactionsByCategoryDoughnut/></Card>
         
         </Box>
         <Card>
-            <Card.Title className="bold-font">Transactions</Card.Title>
+            <h2>Transactions</h2>
             <hr/>
         <table>
             <tr>
@@ -131,11 +115,12 @@ export default function TripByID(props) {
                 <td>{ans.amount} {ans.currency}</td>
                 <td>{ans.convertedAmount} {userDefaultCurrency}</td>
 {/*                 <td>{convertCurrency(ans.currency, ans.amount)}</td> */}
-                <button className="btn btn-primary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}>Update</button>
-                <button className="btn btn-outline-primary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}>Delete</button>
+                <button className="btn btn-secondary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}><Update/></button>
+                <button className="btn btn-outline-secondary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}><DeleteForever/></button>
             </tr>
             ))}
                 <tr>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
