@@ -5,11 +5,13 @@ import NavBar from "./components/NavBar.jsx"
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Star, StarBorder } from "@mui/icons-material";
+import { Star, StarBorder, Update } from "@mui/icons-material";
 import Checkbox from "@mui/material/Checkbox";
 import checked from "@mui/material/Checkbox";
 import { set } from "date-fns/fp/set";
 import { format } from "date-fns";
+import { DeleteForever } from "@mui/icons-material";
+import { Button, Card } from "react-bootstrap";
 
 
 
@@ -131,9 +133,15 @@ console.log(totalSpent)
     return(
         <>
             <NavBar />
-            <Link to="/transactions/add" className="btn btn-outline-primary transaction-button"><span>➕</span></Link>
             <br/>
             <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
+            <Card>
+            <Button to="/transactions/add" size="sm" className="position-top-right btn btn-outline-primary transaction-button"><span>➕</span></Button>
 
             <h1>Transaction History</h1>
             <hr/>
@@ -145,6 +153,7 @@ console.log(totalSpent)
                     <th>Transaction</th>
                     <th>Note</th>
                     <th>Trip</th>
+                    <th>Category</th>
                     <th>Amount</th>
                     <th>Amount ({userDefaultCurrency})</th>
                     <th></th>
@@ -156,11 +165,12 @@ console.log(totalSpent)
                     <td>{format(ans.date, "P")}</td>
                     <td>{ans.name}</td>
                     <td>{ans.description}</td>
-                    <td>{ans.trip.destination} ({ans.trip.name})</td>
+                    <td><Link to={`/trips/ID/${ans.trip.id}`}>{ans.trip.destination} ({ans.trip.name})</Link></td>
+                    <td>{ans.budgetCategory}</td>
                     <td>{ans.amount} {ans.currency}</td>
                     <td>{ans.convertedAmount} {userDefaultCurrency}</td>
-                    <td><button className="btn btn-primary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
-                    <td><button className="btn btn-outline-primary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}>Delete</button></td>
+                    <td><button className="btn btn-primary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></button></td>
+                    <td><button className="btn btn-outline-primary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}><DeleteForever/></button></td>
                     <td>
                     <FormControlLabel
                             control = {
@@ -183,11 +193,14 @@ console.log(totalSpent)
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
 
                     <td className="bold-font">Total Spent: {totalSpent} {userDefaultCurrency}</td>
                 </tr>
 
             </table>
+            </Card>
             <br/>
             <Link to="/transactions/search" className="btn btn-primary trip-button">Search Transactions</Link>
             <br/>
