@@ -10,6 +10,7 @@ import TransactionsByCategoryDoughnut from "./TransactionsByCategoryDoughnut.jsx
 import TransactionsPercentSpentDoughnut from "./TransactionsPercentSpentDoughnut.jsx"
 import { Doughnut } from "react-chartjs-2"
 import { DeleteForever, Update } from "@mui/icons-material"
+import AddIcon from '@mui/icons-material/Add';
 
 export default function TripByID(props) {
 
@@ -70,7 +71,10 @@ export default function TripByID(props) {
     <div>
 
         <NavBar/>
-        <Link to="/transactions/add" className="btn btn-outline-primary transaction-button"><span>➕</span></Link>
+        <br/>
+        <br/>
+        <br/>
+        <Link to="/transactions/add" className="btn btn-outline-primary transaction-button"><AddIcon/></Link>
         <br/>
         <br/>
         <br/>

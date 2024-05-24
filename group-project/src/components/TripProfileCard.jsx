@@ -61,7 +61,7 @@ const handleUpdate = (e,id)=>{
     </div>
       <br/>
       <br/>
-      <Card.Title>{trip.destination} </Card.Title>
+      <h4>{trip.destination} </h4>
       <hr/>
 
       <Card.Text>

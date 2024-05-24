@@ -13,7 +13,7 @@ import { format } from "date-fns";
 import { DeleteForever } from "@mui/icons-material";
 import { Button, Card } from "react-bootstrap";
 import { pink, yellow } from "@mui/material/colors";
-
+import AddIcon from '@mui/icons-material/Add';
 
 
 export default function Transactions(props) {
@@ -142,7 +142,7 @@ console.log(totalSpent)
             <br/>
 
             <Card>
-            <Button to="/transactions/add" size="sm" className="position-top-right btn btn-outline-primary transaction-button"><span>➕</span></Button>
+            <Button to="/transactions/add" size="sm" className="position-top-right btn btn-outline-primary transaction-button"><AddIcon/></Button>
 
             <h1>Transaction History</h1>
             <hr/>
